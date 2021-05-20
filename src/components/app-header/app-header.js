@@ -22,7 +22,7 @@ export default class AppHeader extends React.Component {
                         </AppHeaderItem>
                     </ul>
                 </nav>
-                <div className={headerStyles.header__logo}>
+                <div className={ headerStyles.header__logo }>
                     <Logo/>
                 </div>
             </header>

@@ -1,7 +1,7 @@
 .header {
     position: relative;
     min-height: 88px;
-    width: 100%;
+    border: 2px solid #4C4CFF;
 }
 
 .header__nav {
@@ -12,13 +12,20 @@
     display: flex;
     list-style-type: none;
     margin: 0;
+    padding: 0;
 }
 
 .header__logo {
     display: block;
     position: absolute;
     left: calc(50% - 145px);
-    top: calc(50% - 28px);
+    top: calc(50% - 24px);
     border: 1px dashed #4C4CFF;
     cursor: pointer;
+}
+
+@media screen and (max-width: 1279px) {
+    .header {
+        padding: 0 20px;
+    }
 }

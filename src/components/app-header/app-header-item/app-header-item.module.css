@@ -1,7 +1,6 @@
 .header__item {
     display: flex;
     flex-direction: row;
-    border: 1px dashed #4C4CFF;
     border-radius: 40px;
     cursor: pointer;
 }
@@ -15,16 +14,11 @@
 }
 
 .header__iconWrapper {
-    border: 1px dashed #4C4CFF;
     padding: 0;
     max-height: 24px;
 }
 
 .header__iconWrapper:last-child {
     margin: 0;
-}
-
-.header__text {
-    border: 1px dashed #4C4CFF;
 }
 
