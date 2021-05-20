@@ -1,0 +1,24 @@
+.header {
+    position: relative;
+    min-height: 88px;
+    width: 100%;
+}
+
+.header__nav {
+
+}
+
+.header__list {
+    display: flex;
+    list-style-type: none;
+    margin: 0;
+}
+
+.header__logo {
+    display: block;
+    position: absolute;
+    left: calc(50% - 145px);
+    top: calc(50% - 28px);
+    border: 1px dashed #4C4CFF;
+    cursor: pointer;
+}
