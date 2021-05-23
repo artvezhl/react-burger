@@ -1,5 +1,6 @@
 import React from "react";
-import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+
+import Ingredient from "../ingredient/ingredient";
 
 export default class Ingredients extends React.Component {
     render() {
@@ -20,40 +21,11 @@ export default class Ingredients extends React.Component {
                 }}>
                     {
                         this.props.data.map(item => {
-                            if (item.type === this.props.activeMealType)
-                                return (
-                                    <li
-                                        className="dashed"
-                                        key={item._id}
-                                        style={{
-                                            display: 'flex',
-                                            flexDirection: 'column',
-                                            alignItems: 'center',
-                                            position: "relative"
-                                        }}
-                                    >
-                                        <img className="dashed" src={item.image} alt={item.name}/>
-                                        <div className="text text_type_digits-default mt-1 mb-1 dashed" style={{
-                                            display: "flex",
-                                        }}>
-                                            <p style={{
-                                                margin: 0,
-                                                marginRight: 9,
-                                            }}>{item.price}  </p>
-                                            <CurrencyIcon className="ml-2" type="primary dashed" />
-                                        </div>
-                                        <p className="text text_type_main-default dashed" style={{
-                                            textAlign: "center",
-                                            paddingBottom: 24,
-                                        }}>{item.name}</p>
-                                        <Counter count={1} size="default" style={{
-                                            position: 'relative',
-                                            top: 0,
-                                            bottom: 0,
-                                        }} />
-                                    </li>
-                                )
-                            return null;
+                            if (item.type === this.props.activeMealType) {
+                                return <Ingredient item={ item } />;
+                            } else {
+                                return null;
+                            }
                         })
                     }
 
