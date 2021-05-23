@@ -1,6 +1,16 @@
 .root {
     padding: 40px 0;
+    --text: #F2F2F3;
+    --text-dark: #8585AD;
     --grey: #2F2F37;
     --accent: #4C4CFF;
+    --background: #1C1C21;
 }
 
+::-webkit-scrollbar { width: 8px; height: 3px;}
+::-webkit-scrollbar-button {  background-color: var(--grey); }
+::-webkit-scrollbar-track {  background-color: var(--grey); }
+::-webkit-scrollbar-track-piece { background-color: var(--grey);}
+::-webkit-scrollbar-thumb { height: 50px; background-color: var(--text-dark); }
+::-webkit-scrollbar-corner { background-color: var(--background);}
+::-webkit-resizer { background-color: #666;}
