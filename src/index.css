@@ -13,4 +13,4 @@
 ::-webkit-scrollbar-track-piece { background-color: var(--grey);}
 ::-webkit-scrollbar-thumb { height: 50px; background-color: var(--text-dark); }
 ::-webkit-scrollbar-corner { background-color: var(--background);}
-::-webkit-resizer { background-color: #666;}
+::-webkit-resizer { background-color: var(--grey);}
