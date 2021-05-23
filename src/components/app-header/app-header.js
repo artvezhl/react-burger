@@ -6,6 +6,10 @@ import { BurgerIcon, ListIcon, ProfileIcon, Logo } from '@ya.praktikum/react-dev
 
 
 export default class AppHeader extends React.Component {
+    state = {
+        isActiveItem: false,
+    }
+
     render() {
         return (
             <header className={ headerStyles.header }>

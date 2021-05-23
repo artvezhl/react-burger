@@ -3,6 +3,11 @@
     flex-direction: row;
     border-radius: 40px;
     cursor: pointer;
+    color: var(--text-inactive-color);
+}
+
+.header__item:hover {
+    color: var(--text);
 }
 
 .header__item:last-child {

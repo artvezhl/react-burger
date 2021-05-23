@@ -1,7 +1,6 @@
 import React from "react";
 
 import { data } from '../../utils/data';
-import ingredientsStyles from './burger-ingredients.css';
 import IngredientsTabs from "./ingredients-tabs/ingredients-tabs";
 import Ingredients from "./ingredients/ingredients";
 
@@ -38,10 +37,9 @@ export default class BurgerIngredients extends React.Component {
                     activeMeal={ this.state.activeMeal }
                     changeMeal={ this.onTabClick }
                 />
+
                 <Ingredients
-                    title={ this.state.activeMeal }
                     data={ data }
-                    activeMealType={ this.state.activeMealType }
                 />
             </section>
         );
