@@ -16,6 +16,7 @@
 
 .header__item:first-child {
     margin-right: 8px;
+    color: var(--text);
 }
 
 .header__iconWrapper {

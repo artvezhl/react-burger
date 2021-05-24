@@ -16,13 +16,15 @@ export default class AppHeader extends React.Component {
                 <nav className={ headerStyles.header__nav }>
                     <ul className={ headerStyles.header__list }>
                         <AppHeaderItem text="Конструктор">
-                            <BurgerIcon type="primary"/>
+                            <BurgerIcon type="primary" />
                         </AppHeaderItem>
-                        <AppHeaderItem text="Лента заказов">
-                            <ListIcon type="primary" />
+                        <AppHeaderItem
+                            text="Лента заказов">
+                            <ListIcon type="secondary"
+                                      />
                         </AppHeaderItem>
                         <AppHeaderItem text="Личный кабинет">
-                            <ProfileIcon type="primary" />
+                            <ProfileIcon type="secondary" />
                         </AppHeaderItem>
                     </ul>
                 </nav>

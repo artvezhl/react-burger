@@ -17,7 +17,7 @@ export default class Ingredients extends React.Component {
                 {
                     this.titles.map((title, i) => {
                         return (
-                            <>
+                            <React.Fragment key={ i }>
                                 <h4 className="text text_type_main-medium dashed mb-6">{ title }</h4>
                                 <ul className={`${ingredientStyles.ingredients__list} dashed`}>
                                     {this.props.data.map(item => {
@@ -26,7 +26,7 @@ export default class Ingredients extends React.Component {
                                         }
                                     )}
                                 </ul>
-                            </>
+                            </React.Fragment>
                         )
                     })
                 }
