@@ -21,8 +21,10 @@ export default class Ingredients extends React.Component {
                                 <h4 className="text text_type_main-medium dashed mb-6">{ title }</h4>
                                 <ul className={`${ingredientStyles.ingredients__list} dashed`}>
                                     {this.props.data.map(item => {
-                                        if (item.type === this.mealsTypes[i])
-                                        return (<Ingredient key={ item._id } item={ item } />);
+                                        if (item.type === this.mealsTypes[i]) {
+                                            return (<Ingredient key={ item._id } item={ item } />);
+                                        }
+                                        return null;
                                         }
                                     )}
                                 </ul>

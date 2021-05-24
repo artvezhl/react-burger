@@ -1,0 +1,13 @@
+.constructor__total {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.constructor__total > button {
+    margin-left: 40px;
+}
+
+.constructor__price {
+    margin-right: 10px;
+}

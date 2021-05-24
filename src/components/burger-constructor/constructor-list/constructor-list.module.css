@@ -1,0 +1,7 @@
+.constructorList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 49vh;
+    overflow-y: scroll;
+}

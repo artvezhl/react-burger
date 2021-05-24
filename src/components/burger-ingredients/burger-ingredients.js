@@ -22,6 +22,9 @@ export default class BurgerIngredients extends React.Component {
             case 'Начинки':
                 mealType = 'main';
                 break;
+            default:
+                mealType = 'bun';
+                break;
         }
         this.setState({
             activeMeal: meal,
