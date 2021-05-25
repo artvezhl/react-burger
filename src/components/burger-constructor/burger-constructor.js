@@ -10,7 +10,7 @@ export default class BurgerConstructor extends React.Component {
         return (
             <section className={`${constructorStyles.constructor} mr-5 pt-25 pr-4 pl-4`}>
                 <ConstructorList/>
-                <ConstructorTotal/>
+                <ConstructorTotal popupOpen={ this.props.popupOpen }/>
             </section>
         );
     }
