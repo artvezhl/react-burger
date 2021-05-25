@@ -1,19 +1,21 @@
 import React from 'react';
-import appStyles from './App.css';
+import appStyles from './App.module.css';
 
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
+import IdPopup from "../popups/id-popup";
 
 function App() {
   return (
-      <div className="root__section">
-        <AppHeader/>
-        <main className="main">
+      <>
+        <main className={appStyles.main}>
+            <AppHeader/>
             <BurgerIngredients />
             <BurgerConstructor/>
         </main>
-      </div>
+        <IdPopup/>
+      </>
   );
 }
 

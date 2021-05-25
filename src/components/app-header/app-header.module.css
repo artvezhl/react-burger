@@ -1,6 +1,7 @@
 .header {
     position: relative;
     min-height: 88px;
+    grid-area: header;
 }
 
 .header__nav {

@@ -1,5 +1,5 @@
-.constructor {
-    grid-area: constructor;
+.ingredients {
+    grid-area: ingredients;
     width: 100%;
     max-width: 600px;
     max-height: calc(100vh - (var(--rootPadding) * 2) - 88px);

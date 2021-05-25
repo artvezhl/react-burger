@@ -1,6 +1,7 @@
 import React from "react";
 
 import { data } from '../../utils/data';
+import ingredientsStyles from './burger-ingredients.module.css'
 import IngredientsTabs from "./ingredients-tabs/ingredients-tabs";
 import Ingredients from "./ingredients/ingredients";
 
@@ -34,7 +35,7 @@ export default class BurgerIngredients extends React.Component {
 
     render() {
         return (
-            <section className={`solid ml-5 pt-10`}>
+            <section className={`${ingredientsStyles.ingredients} solid ml-5 mr-10 pt-10`}>
                 <h2 className="text text_type_main-large dashed pb-2">Соберите бургер</h2>
                 <IngredientsTabs
                     activeMeal={ this.state.activeMeal }
