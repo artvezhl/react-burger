@@ -9,7 +9,7 @@ export default class IdPopup extends React.Component {
         return (
             <div className={ popupStyles.popup__overlay }>
                 <div className={`${popupStyles.popup__content} pt-30 pb-30 pl-25 pr-25`}>
-                    <img onClick={this.props.popupHandler} className={ popupStyles.popup__cross } src={ cross } alt="закрытие окна"/>
+                    <img onClick={this.props.onClose} className={ popupStyles.popup__cross } src={ cross } alt="закрытие окна"/>
                     <p className={`text text_type_digits-large mb-8 ${ popupStyles.order__number }`}>034526</p>
                     <h4  className={`text text_type_main-medium mb-15 ${ popupStyles.popup__text_type_centered }`}>идентификатор заказа</h4>
                     <img className={ popupStyles.popup__done } src={ doneButton } alt="подтвердить заказ"/>

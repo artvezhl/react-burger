@@ -9,7 +9,7 @@ export default class ConstructorTotal extends React.Component {
             <div className={`${totalStyles.constructor__total} mt-10 mb-9`}>
                 <p className={`${ totalStyles.constructor__price } text text_type_digits-medium`}>610</p>
                 <CurrencyIcon type="primary" />
-                <Button onClick={this.props.popupOpen} type="primary" size="large">
+                <Button onClick={this.props.onOpen} type="primary" size="large">
                     Оформить заказ
                 </Button>
             </div>

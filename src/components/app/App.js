@@ -7,10 +7,14 @@ import BurgerConstructor from "../burger-constructor/burger-constructor";
 import IdPopup from "../popups/id-popup";
 
 function App() {
-    const [isPopupOpened, setIsPopupOpen] = React.useState(false);
+    const [visible, setVisible] = React.useState(false);
 
-    function popupHandler() {
-        setIsPopupOpen(!isPopupOpened);
+    const openModal = () => {
+        setVisible(true);
+    }
+
+    const closeModal = () => {
+        setVisible(false);
     }
 
     return (
@@ -18,9 +22,9 @@ function App() {
         <main className={appStyles.main}>
             <AppHeader/>
             <BurgerIngredients />
-            <BurgerConstructor popupOpen={popupHandler} />
+            <BurgerConstructor onClick={openModal} />
         </main>
-        { isPopupOpened && <IdPopup popupHandler={popupHandler}/> }
+        { visible && <IdPopup onClose={closeModal}/> }
       </>
     );
 }
