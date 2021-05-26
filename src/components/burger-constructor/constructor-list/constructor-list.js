@@ -6,7 +6,7 @@ import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burg
 export default class ConstructorList extends React.Component {
     render() {
         return (
-            <div className={ listStyles.constructorList }>
+            <div className={ listStyles.commonList }>
                 <article>
                     <ConstructorElement
                         type="top"
@@ -16,7 +16,48 @@ export default class ConstructorList extends React.Component {
                         thumbnail={'https://code.s3.yandex.net/react/code/bun-02.png'}
                     />
                 </article>
-                <article className={ listStyles.item }>
+                <div className={ listStyles.constructorList }>
+                    <article className={ listStyles.item }>
+                        <DragIcon type="primary" />
+                        <ConstructorElement
+                            text="Говяжий метеорит (отбивная)"
+                            price={350}
+                            thumbnail={'https://code.s3.yandex.net/react/code/meat-04.png'}
+                        />
+                    </article>
+                    <article className={ listStyles.item }>
+                        <DragIcon type="primary" />
+                        <ConstructorElement
+                            text="Говяжий метеорит (отбивная)"
+                            price={350}
+                            thumbnail={'https://code.s3.yandex.net/react/code/meat-04.png'}
+                        />
+                    </article>
+                    <article className={ listStyles.item }>
+                        <DragIcon type="primary" />
+                        <ConstructorElement
+                            text="Говяжий метеорит (отбивная)"
+                            price={350}
+                            thumbnail={'https://code.s3.yandex.net/react/code/meat-04.png'}
+                        />
+                    </article>
+                    <article className={ listStyles.item }>
+                        <DragIcon type="primary" />
+                        <ConstructorElement
+                            text="Говяжий метеорит (отбивная)"
+                            price={350}
+                            thumbnail={'https://code.s3.yandex.net/react/code/meat-04.png'}
+                        />
+                    </article>
+                    <article className={ listStyles.item }>
+                        <DragIcon type="primary" />
+                        <ConstructorElement
+                            text="Говяжий метеорит (отбивная)"
+                            price={350}
+                            thumbnail={'https://code.s3.yandex.net/react/code/meat-04.png'}
+                        />
+                    </article>
+                    <article className={ listStyles.item }>
                     <DragIcon type="primary" />
                     <ConstructorElement
                         text="Говяжий метеорит (отбивная)"
@@ -24,46 +65,7 @@ export default class ConstructorList extends React.Component {
                         thumbnail={'https://code.s3.yandex.net/react/code/meat-04.png'}
                     />
                 </article>
-                <article className={ listStyles.item }>
-                    <DragIcon type="primary" />
-                    <ConstructorElement
-                        text="Говяжий метеорит (отбивная)"
-                        price={350}
-                        thumbnail={'https://code.s3.yandex.net/react/code/meat-04.png'}
-                    />
-                </article>
-                <article className={ listStyles.item }>
-                    <DragIcon type="primary" />
-                    <ConstructorElement
-                        text="Говяжий метеорит (отбивная)"
-                        price={350}
-                        thumbnail={'https://code.s3.yandex.net/react/code/meat-04.png'}
-                    />
-                </article>
-                <article className={ listStyles.item }>
-                    <DragIcon type="primary" />
-                    <ConstructorElement
-                        text="Говяжий метеорит (отбивная)"
-                        price={350}
-                        thumbnail={'https://code.s3.yandex.net/react/code/meat-04.png'}
-                    />
-                </article>
-                <article className={ listStyles.item }>
-                    <DragIcon type="primary" />
-                    <ConstructorElement
-                        text="Говяжий метеорит (отбивная)"
-                        price={350}
-                        thumbnail={'https://code.s3.yandex.net/react/code/meat-04.png'}
-                    />
-                </article>
-                <article className={ listStyles.item }>
-                    <DragIcon type="primary" />
-                    <ConstructorElement
-                        text="Говяжий метеорит (отбивная)"
-                        price={350}
-                        thumbnail={'https://code.s3.yandex.net/react/code/meat-04.png'}
-                    />
-                </article>
+                </div>
                 <article>
                     <ConstructorElement
                         type="bottom"
