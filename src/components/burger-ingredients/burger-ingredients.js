@@ -1,6 +1,5 @@
 import React from "react";
 
-import { data } from '../../utils/data';
 import ingredientsStyles from './burger-ingredients.module.css'
 import IngredientsTabs from "./ingredients-tabs/ingredients-tabs";
 import Ingredients from "./ingredients/ingredients";
@@ -43,7 +42,7 @@ export default class BurgerIngredients extends React.Component {
                 />
 
                 <Ingredients
-                    data={ data }
+                    data={ this.props.data }
                 />
             </section>
         );

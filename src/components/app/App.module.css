@@ -1,10 +1,8 @@
 .main {
     display: grid;
-    grid-template-areas: "header header"
-                         "ingredients constructor";
-    grid-gap: 0;
     max-width: 1280px;
     margin: 0 auto;
-    padding: var(--rootPadding) 0;
-    height: calc(100vh - (var(--rootPadding) * 2));
+    height: calc(100vh - (var(--rootPadding) * 2) - 88px);
+    grid-template-areas: "ingredients constructor";
+    grid-gap: 0;
 }

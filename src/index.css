@@ -1,5 +1,6 @@
 .root {
     position: relative;
+    padding: var(--rootPadding) 0;
     --text: #F2F2F3;
     --text-dark: #8585AD;
     --grey: #2F2F37;

@@ -1,9 +1,9 @@
 import React from "react";
 
-import totalStyles from './constructor-total.module.css';
+import totalStyles from './constructor-cart.module.css';
 import { CurrencyIcon, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 
-export default class ConstructorTotal extends React.Component {
+export default class ConstructorCart extends React.Component {
     render() {
         return (
             <div className={`${totalStyles.constructor__total} mt-10 mb-9`}>

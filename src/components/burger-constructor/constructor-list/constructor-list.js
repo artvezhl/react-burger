@@ -7,7 +7,7 @@ export default class ConstructorList extends React.Component {
     render() {
         return (
             <div className={ listStyles.commonList }>
-                <article>
+                <article className="mr-2">
                     <ConstructorElement
                         type="top"
                         isLocked={true}
@@ -66,7 +66,7 @@ export default class ConstructorList extends React.Component {
                     />
                 </article>
                 </div>
-                <article>
+                <article className="mr-2">
                     <ConstructorElement
                         type="bottom"
                         isLocked={true}

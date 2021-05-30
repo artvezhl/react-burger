@@ -1,6 +1,7 @@
 import React from 'react';
 import appStyles from './App.module.css';
 
+import { data } from '../../utils/data';
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
@@ -19,9 +20,9 @@ function App() {
 
     return (
       <>
+        <AppHeader/>
         <main className={appStyles.main}>
-            <AppHeader/>
-            <BurgerIngredients />
+            <BurgerIngredients data={ data } />
             <BurgerConstructor onClick={openModal} />
         </main>
         { visible && <IdPopup onClose={closeModal}/> }

@@ -2,25 +2,30 @@
     position: relative;
     min-height: 88px;
     grid-area: header;
+    background: var(--background);
+    display: flex;
+    justify-content: center;
 }
 
 .header__nav {
-
+    max-width: 1280px;
+    width: 100%;
 }
 
 .header__list {
-    display: flex;
+    display: grid;
+    grid-template-columns: 178px 197px 3fr 2fr;
     list-style-type: none;
     margin: 0;
     padding: 0;
+    width: 100%;
 }
 
 .header__logo {
-    display: block;
-    position: absolute;
-    left: calc(50% - 145px);
-    top: calc(50% - 24px);
+    display: flex;
     cursor: pointer;
+    justify-content: center;
+    align-items: center;
 }
 
 @media screen and (max-width: 1279px) {
