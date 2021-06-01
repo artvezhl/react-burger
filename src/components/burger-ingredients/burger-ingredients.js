@@ -4,13 +4,13 @@ import ingredientsStyles from './burger-ingredients.module.css'
 import IngredientsTabs from "./ingredients-tabs/ingredients-tabs";
 import Ingredients from "./ingredients/ingredients";
 
-export default class BurgerIngredients extends React.Component {
-    state = {
-        activeMeal: 'Булки',
-        activeMealType: 'bun',
-    }
+export default function BurgerIngredients({ data }) {
+    const [activeMeal, setActiveMeal] = React.useState({
+        name: 'Булки',
+        type: 'bun',
+    });
 
-    onTabClick = meal => {
+    const onTabClick = meal => {
         let mealType = '';
         switch (meal) {
             case 'Булки':
@@ -26,25 +26,22 @@ export default class BurgerIngredients extends React.Component {
                 mealType = 'bun';
                 break;
         }
-        this.setState({
-            activeMeal: meal,
-            activeMealType: mealType,
+        setActiveMeal({
+            name: meal,
+            type: mealType,
         })
     }
 
-    render() {
-        return (
-            <section className={`${ingredientsStyles.ingredients} ml-5 mr-10 pt-10`}>
-                <h2 className="text text_type_main-large pb-2">Соберите бургер</h2>
-                <IngredientsTabs
-                    activeMeal={ this.state.activeMeal }
-                    changeMeal={ this.onTabClick }
-                />
-
-                <Ingredients
-                    data={ this.props.data }
-                />
-            </section>
-        );
-    }
+    return (
+        <section className={`${ingredientsStyles.ingredients} ml-5 mr-10 pt-10`}>
+            <h2 className="text text_type_main-large pb-2">Соберите бургер</h2>
+            <IngredientsTabs
+                activeMeal={ activeMeal.name }
+                changeMeal={ onTabClick }
+            />
+            <Ingredients
+                data={ data }
+            />
+        </section>
+    );
 }
