@@ -1,0 +1,6 @@
+.constructor {
+    grid-area: constructor;
+    width: 100%;
+    max-width: 600px;
+    max-height: calc(100vh - 88px);
+}

@@ -1,0 +1,6 @@
+.ingredients {
+    grid-area: ingredients;
+    width: 100%;
+    max-width: 600px;
+    max-height: calc(100vh - 88px);
+}

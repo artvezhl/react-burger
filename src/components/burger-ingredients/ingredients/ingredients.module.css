@@ -1,0 +1,12 @@
+.ingredients {
+    max-height: calc(100vh - 300px);
+    overflow-y: scroll;
+}
+
+.ingredients__list {
+    list-style-type: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+

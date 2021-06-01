@@ -1,0 +1,31 @@
+.commonList {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 16px;
+    height: calc(100vh - 240px - 88px);
+    padding-right: 8px;
+}
+
+.commonList .bothSides {
+    margin-right: 16px;
+    margin-left: 26px;
+}
+
+.constructorList {
+    overflow-y: scroll;
+    align-items: flex-end;
+}
+
+.constructorList > article {
+    max-height: 80px;
+    max-width: 100%;
+    margin-bottom: 16px;
+    margin-right: 8px;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
