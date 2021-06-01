@@ -26,6 +26,8 @@
 .header__iconWrapper {
     padding: 0;
     max-height: 24px;
+    display: flex;
+    gap: 8px;
 }
 
 .header__iconWrapper:last-child {

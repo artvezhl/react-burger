@@ -1,5 +1,5 @@
 import React from 'react';
-import appStyles from './App.module.css';
+import appStyles from './app.module.css';
 
 import { data } from '../../utils/data';
 import AppHeader from "../app-header/app-header";

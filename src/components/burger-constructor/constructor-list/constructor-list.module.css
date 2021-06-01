@@ -3,11 +3,12 @@
     flex-direction: column;
     align-items: flex-end;
     gap: 16px;
-    height: 49vh;
+    height: calc(100vh - 240px - 88px);
     padding-right: 8px;
 }
 
-.commonList > article {
+.commonList .bothSides {
+    margin-right: 16px;
     margin-left: 26px;
 }
 
@@ -20,6 +21,7 @@
     max-height: 80px;
     max-width: 100%;
     margin-bottom: 16px;
+    margin-right: 8px;
 }
 
 .item {
