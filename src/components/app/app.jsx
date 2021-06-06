@@ -14,6 +14,7 @@ function App() {
     const [isLoading, setIsLoading] = React.useState(true);
     const [hasError, setHasError] = React.useState(false);
     const [visible, setVisible] = React.useState(false);
+    const modalRef = React.useRef(null);
 
     useEffect(() => {
         const ingredientsData = async () => {
@@ -30,13 +31,17 @@ function App() {
         }
 
         ingredientsData();
-    }, [])
+    }, []);
+
+    useEffect(() => {
+
+    });
 
     const openModal = () => {
         setVisible(true);
     }
 
-    const closeModal = () => {
+    const closeModal = (e) => {
         setVisible(false);
     }
 
@@ -54,7 +59,7 @@ function App() {
             </main>
         }
         { visible &&
-            <ModalOverlay>
+            <ModalOverlay ref={modalRef} onClose={ closeModal }>
                 <Modal title={'Детали ингредиента'} onClose={ closeModal }/>
             </ModalOverlay>
         }
