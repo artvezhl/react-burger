@@ -5,7 +5,9 @@ import { URL } from '../../constants';
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
-import IdPopup from "../popups/id-popup";
+// import IdPopup from "../popups/id-popup";
+import Modal from "../modal/modal";
+import ModalOverlay from "../modal/modal-overlay";
 
 function App() {
     const [data, setData] = React.useState([]);
@@ -51,7 +53,11 @@ function App() {
                 <BurgerConstructor onClick={ openModal } />
             </main>
         }
-        { visible && <IdPopup onClose={ closeModal }/> }
+        { visible &&
+            <ModalOverlay>
+                <Modal title={'Детали ингредиента'} onClose={ closeModal }/>
+            </ModalOverlay>
+        }
       </>
     );
 }

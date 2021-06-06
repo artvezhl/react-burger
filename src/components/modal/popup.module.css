@@ -30,12 +30,16 @@
     margin: 0 auto;
 }
 
+.popup__base {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .popup__cross {
     width: 18px;
     height: 18px;
-    position: absolute;
-    top: 60px;
-    right: 48px;
+    margin-left: auto;
     cursor: pointer;
 }
 
@@ -50,4 +54,9 @@
 
 .popup__text_type_centered:last-child {
     color: var(--text-dark);
+}
+
+.popup__title {
+    justify-self: flex-start;
+    align-self: start;
 }
