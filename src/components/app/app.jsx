@@ -5,16 +5,16 @@ import { URL } from '../../constants';
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
-// import IdPopup from "../popups/id-popup";
 import Modal from "../modal/modal";
 import ModalOverlay from "../modal/modal-overlay";
+import OrderDetails from "../modal/order-details";
+import IngredientDetails from "../modal/ingredient-details";
 
 function App() {
     const [data, setData] = React.useState([]);
     const [isLoading, setIsLoading] = React.useState(true);
     const [hasError, setHasError] = React.useState(false);
     const [visible, setVisible] = React.useState(false);
-    const modalRef = React.useRef(null);
 
     useEffect(() => {
         const ingredientsData = async () => {
@@ -59,8 +59,11 @@ function App() {
             </main>
         }
         { visible &&
-            <ModalOverlay ref={modalRef} onClose={ closeModal }>
-                <Modal title={'Детали ингредиента'} onClose={ closeModal }/>
+            <ModalOverlay onClose={ closeModal }>
+                <Modal title={'Детали ингредиента'} onClose={ closeModal }>
+                    {/*<OrderDetails/>*/}
+                    <IngredientDetails/>
+                </Modal>
             </ModalOverlay>
         }
       </>
