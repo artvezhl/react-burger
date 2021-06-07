@@ -4,7 +4,7 @@ import ingredientsStyles from './burger-ingredients.module.css'
 import IngredientsTabs from "./ingredients-tabs/ingredients-tabs";
 import Ingredients from "./ingredients/ingredients";
 
-export default function BurgerIngredients({ data }) {
+export default function BurgerIngredients(props) {
     const [activeMeal, setActiveMeal] = React.useState({
         name: 'Булки',
         type: 'bun',
@@ -40,7 +40,10 @@ export default function BurgerIngredients({ data }) {
                 changeMeal={ onTabClick }
             />
             <Ingredients
-                data={ data }
+                // data={ data }
+                // setDetailsData={ setDetailsData }
+                // onClick={ openModal }
+                { ...props }
             />
         </section>
     );

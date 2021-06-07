@@ -1,12 +1,29 @@
-import React from "react";
+import React, {useRef, useEffect} from "react";
 import PropTypes from 'prop-types';
 
 import ingredientStyles from './ingredient.module.css';
 import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
-export default function Ingredient({ ingredient }) {
+export default function Ingredient({ ingredient, setDetailsData, onClick }) {
+    const ingredientRef = useRef(null);
+
+    useEffect(() => {
+        ingredientRef.current.addEventListener('click', () => {
+            setDetailsData(ingredient);
+            onClick();
+        });
+        // setDetailsData(ingredient);
+        return () => {
+            ingredientRef.current.removeEventListener('click', () => {
+                setDetailsData(ingredient);
+                onClick();
+            });
+            // setDetailsData({});
+        }
+    })
+
     return (
-        <li className={ ingredientStyles.ingredient }>
+        <li ref={ingredientRef} className={ ingredientStyles.ingredient }>
             <img src={ ingredient.image } alt={ ingredient.name }/>
             <div className={`${ ingredientStyles.ingredient__priceWrapper } text text_type_digits-default mt-1 mb-1`}>
                 <p className={ ingredientStyles.ingredient__price }>{ ingredient.price }</p>
