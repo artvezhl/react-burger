@@ -1,7 +1,8 @@
 import React from "react";
 import {createPortal} from "react-dom";
+import PropTypes from "prop-types";
 
-import ModalOverlay from "./modal-overlay";
+import ModalOverlay from "./modal-overlay.jsx";
 import popupStyles from './popup.module.css'
 import cross from '../../images/cross.svg';
 
@@ -24,4 +25,10 @@ export default function Modal({ title, onClose, children }) {
             </ModalOverlay>
         </>
     ), modalRoot);
+}
+
+Modal.propTypes = {
+    title: PropTypes.string.isRequired,
+    onClose: PropTypes.func.isRequired,
+    children: PropTypes.element.isRequired,
 }

@@ -8,17 +8,17 @@ export default function Ingredient({ ingredient, setDetailsData, onClick }) {
     const ingredientRef = useRef(null);
 
     useEffect(() => {
-        ingredientRef.current.addEventListener('click', () => {
+        const ingrdt = ingredientRef.current;
+
+        ingrdt.addEventListener('click', () => {
             setDetailsData(ingredient);
             onClick();
         });
-        // setDetailsData(ingredient);
         return () => {
-            ingredientRef.current.removeEventListener('click', () => {
+            ingrdt.removeEventListener('click', () => {
                 setDetailsData(ingredient);
                 onClick();
             });
-            // setDetailsData({});
         }
     })
 
@@ -38,9 +38,11 @@ export default function Ingredient({ ingredient, setDetailsData, onClick }) {
 }
 
 Ingredient.propTypes = {
-    item: PropTypes.shape({
+    ingredient: PropTypes.shape({
         name: PropTypes.string.isRequired,
         price: PropTypes.number.isRequired,
         image: PropTypes.string.isRequired,
     }),
+    setDetailsData: PropTypes.func.isRequired,
+    onClick: PropTypes.func.isRequired,
 }

@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import ingredientsStyles from './burger-ingredients.module.css'
 import IngredientsTabs from "./ingredients-tabs/ingredients-tabs";
@@ -40,11 +41,15 @@ export default function BurgerIngredients(props) {
                 changeMeal={ onTabClick }
             />
             <Ingredients
-                // data={ data }
-                // setDetailsData={ setDetailsData }
-                // onClick={ openModal }
                 { ...props }
             />
         </section>
     );
+}
+
+BurgerIngredients.propTypes = {
+    props: PropTypes.shape({
+        title: PropTypes.string.isRequired,
+        onClose: PropTypes.func.isRequired,
+    })
 }

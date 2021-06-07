@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import appStyles from './app.module.css';
 
 import { URL } from '../../constants';
+import { orderData } from "../../utils/data";
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
@@ -61,12 +62,12 @@ function App() {
         }
         { visible &&
             <Modal
-                title={Object.keys(ingredientsDetails).length? 'Детали ингредиента' : null}
+                title={Object.keys(ingredientsDetails).length ? 'Детали ингредиента' : ''}
                 onClose={ closeModal }
             >
                 { Object.keys(ingredientsDetails).length ?
-                    <IngredientDetails {...ingredientsDetails}/> :
-                    <OrderDetails/>
+                    <IngredientDetails {...ingredientsDetails} /> :
+                    <OrderDetails orderNumber={orderData.number} />
                 }
             </Modal>
         }

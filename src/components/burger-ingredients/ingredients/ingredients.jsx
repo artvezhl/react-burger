@@ -59,4 +59,6 @@ Ingredients.propTypes = {
             type: PropTypes.string.isRequired,
         })
     ).isRequired,
+    setDetailsData: PropTypes.func.isRequired,
+    openModal: PropTypes.func.isRequired,
 }
