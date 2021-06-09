@@ -28,6 +28,10 @@
     align-items: center;
 }
 
+.header__link {
+    max-height: 50px;
+}
+
 @media screen and (max-width: 1279px) {
     .header {
         padding: 0 20px;

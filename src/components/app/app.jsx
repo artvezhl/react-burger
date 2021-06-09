@@ -7,8 +7,8 @@ import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import Modal from "../modal/modal";
-import OrderDetails from "../modal/order-details";
-import IngredientDetails from "../modal/ingredient-details";
+import OrderDetails from "../order-details/order-details";
+import IngredientDetails from "../ingredient-details/ingredient-details";
 
 function App() {
     const [data, setData] = useState([]);
@@ -21,9 +21,13 @@ function App() {
         const ingredientsData = async () => {
             try {
                 const res = await fetch(URL);
-                const data = await res.json();
-                setData(data.data);
-                setIsLoading(false);
+                if (res.ok) {
+                    const data = await res.json();
+                    setData(data.data);
+                    setIsLoading(false);
+                } else {
+                    throw Error('something wrong');
+                }
             } catch (e) {
                 setIsLoading(false);
                 setHasError(true);
@@ -33,10 +37,6 @@ function App() {
 
         ingredientsData();
     }, []);
-
-    useEffect(() => {
-
-    });
 
     const openModal = () => {
         setVisible(true);

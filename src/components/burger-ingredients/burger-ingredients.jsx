@@ -46,10 +46,3 @@ export default function BurgerIngredients(props) {
         </section>
     );
 }
-
-BurgerIngredients.propTypes = {
-    props: PropTypes.shape({
-        title: PropTypes.string.isRequired,
-        onClose: PropTypes.func.isRequired,
-    })
-}

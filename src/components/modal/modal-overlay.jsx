@@ -1,32 +1,20 @@
 import React, {useEffect} from "react";
-import {createPortal} from "react-dom";
 import PropTypes from "prop-types";
 
 import popupStyles from "./popup.module.css";
 
-const modalRoot = document.getElementById("react-modals");
-
-export default function ModalOverlay({ onClose, children }) {
-    function onEscClick(e) {
-        if (e.key === "Escape") onClose();
-    }
-
+export default function ModalOverlay({ onClose, onEscPress, children }) {
     useEffect(() => {
-        document.addEventListener("keydown", onEscClick);
+        document.addEventListener("keydown", onEscPress);
         return () => {
-            document.addEventListener("keydown", onEscClick);
+            document.addEventListener("keydown", onEscPress);
         }
     })
 
-    return createPortal(
-        (
-            <div className={popupStyles.popup__overlay}
-                 onClick={onClose}
-            >
-                {children}
-            </div>
-        ),
-        modalRoot
+    return (
+        <div className={popupStyles.popup__overlay} onClick={onClose}>
+            {children}
+        </div>
     );
 }
 

@@ -17,9 +17,9 @@ export default function AppHeader() {
                         <ListIcon type="secondary"
                                   />
                     </AppHeaderItem>
-                    <div className={ headerStyles.header__logo }>
-                        <Logo/>
-                    </div>
+                    <li className={`mt-4 mb-4 ${headerStyles.header__logo}`}>
+                        <a className={ headerStyles.header__link } href=""><Logo/></a>
+                    </li>
                     <AppHeaderItem text="Личный кабинет">
                         <ProfileIcon type="secondary" />
                     </AppHeaderItem>
