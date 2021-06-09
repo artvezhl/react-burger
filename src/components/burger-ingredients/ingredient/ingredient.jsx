@@ -1,23 +1,39 @@
-import React, {useRef, useEffect} from "react";
+import React, {useRef, useEffect, useState} from "react";
 import PropTypes from 'prop-types';
 
 import ingredientStyles from './ingredient.module.css';
 import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import IngredientDetails from "../../ingredient-details/ingredient-details";
+import Modal from "../../modal/modal";
 
-export default function Ingredient({ ingredient, setDetailsData, onClick }) {
+export default function Ingredient({ ingredient, setDetailsData }) {
     const ingredientRef = useRef(null);
+    const [visibleModal, setVisibleModal] = useState(false);
+
+    const openModal = () => {
+        setVisibleModal(true);
+    }
+
+    const closeModal = () => {
+        setVisibleModal(false);
+    }
+
+    const modal = (
+        <Modal title='Детали ингредиента' onClose={ closeModal }>
+            <IngredientDetails {...ingredient} />
+        </Modal>
+    );
+
 
     useEffect(() => {
         const ingrdt = ingredientRef.current;
 
         ingrdt.addEventListener('click', () => {
-            setDetailsData(ingredient);
-            onClick();
+            openModal();
         });
         return () => {
             ingrdt.removeEventListener('click', () => {
-                setDetailsData(ingredient);
-                onClick();
+                openModal();
             });
         }
     })
@@ -33,6 +49,7 @@ export default function Ingredient({ ingredient, setDetailsData, onClick }) {
                 className={`text text_type_main-default ${ ingredientStyles.ingredient__name }`}
             >{ ingredient.name }</p>
             <Counter count={1} size="default"/>
+            { visibleModal && modal }
         </li>
     );
 }
@@ -43,6 +60,4 @@ Ingredient.propTypes = {
         price: PropTypes.number.isRequired,
         image: PropTypes.string.isRequired,
     }),
-    setDetailsData: PropTypes.func.isRequired,
-    onClick: PropTypes.func.isRequired,
 }

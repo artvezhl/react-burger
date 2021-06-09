@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import ingredientStyles from './ingredients.module.css';
 import Ingredient from "../ingredient/ingredient";
 
-export default function Ingredients({ data, setDetailsData, openModal }) {
+export default function Ingredients({ data, setDetailsData }) {
     return (
         <div className={`${ingredientStyles.ingredients} mt-10 mb-6 pl-1 pr-1`}> {(
             <>
@@ -16,7 +16,6 @@ export default function Ingredients({ data, setDetailsData, openModal }) {
                             key={ item._id }
                             ingredient={ item }
                             setDetailsData={setDetailsData}
-                            onClick={openModal}
                         />);
                         }
                     )}
@@ -29,7 +28,6 @@ export default function Ingredients({ data, setDetailsData, openModal }) {
                                     key={ item._id }
                                     ingredient={ item }
                                     setDetailsData={setDetailsData}
-                                    onClick={openModal}
                                 />);
                         }
                     )}
@@ -42,7 +40,6 @@ export default function Ingredients({ data, setDetailsData, openModal }) {
                                             key={ item._id }
                                             ingredient={ item }
                                             setDetailsData={setDetailsData}
-                                            onClick={openModal}
                                         />);
                                 }
                             )}
@@ -59,6 +56,4 @@ Ingredients.propTypes = {
             type: PropTypes.string.isRequired,
         })
     ).isRequired,
-    setDetailsData: PropTypes.func.isRequired,
-    openModal: PropTypes.func.isRequired,
 }
