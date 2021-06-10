@@ -17,7 +17,6 @@ export default function ConstructorCart() {
         setVisibleModal(false);
     }
 
-
     const modal = (
         <Modal onClose={ closeModal }>
             <OrderDetails orderNumber={orderData.number} />

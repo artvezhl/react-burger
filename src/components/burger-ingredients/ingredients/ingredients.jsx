@@ -1,10 +1,25 @@
-import React from "react";
+import React, {useState} from "react";
 import PropTypes from 'prop-types';
 
 import ingredientStyles from './ingredients.module.css';
 import Ingredient from "../ingredient/ingredient";
+import Modal from "../../modal/modal";
+import IngredientDetails from "../../ingredient-details/ingredient-details";
 
 export default function Ingredients({ data, setDetailsData }) {
+    const [isModalVisible, setVisibleModal] = useState(false);
+    const [inModalIngredient, setIngredient] = useState({});
+
+    const openModal = (ingredient) => {
+        setIngredient(ingredient);
+        setVisibleModal(true);
+    }
+
+    const closeModal = () => {
+        setVisibleModal(false);
+        setIngredient({});
+    }
+
     return (
         <div className={`${ingredientStyles.ingredients} mt-10 mb-6 pl-1 pr-1`}> {(
             <>
@@ -15,7 +30,8 @@ export default function Ingredients({ data, setDetailsData }) {
                         return (<Ingredient
                             key={ item._id }
                             ingredient={ item }
-                            setDetailsData={setDetailsData}
+                            openModal={ openModal }
+                            closeModal={ closeModal }
                         />);
                         }
                     )}
@@ -27,7 +43,8 @@ export default function Ingredients({ data, setDetailsData }) {
                                 return (<Ingredient
                                     key={ item._id }
                                     ingredient={ item }
-                                    setDetailsData={setDetailsData}
+                                    openModal={ openModal }
+                                    closeModal={ closeModal }
                                 />);
                         }
                     )}
@@ -39,13 +56,19 @@ export default function Ingredients({ data, setDetailsData }) {
                                         return (<Ingredient
                                             key={ item._id }
                                             ingredient={ item }
-                                            setDetailsData={setDetailsData}
+                                            openModal={ openModal }
+                                            closeModal={ closeModal }
                                         />);
                                 }
                             )}
                         </ul>
             </>
-        )}</div>
+        )}
+            { isModalVisible &&
+            <Modal title='Детали ингредиента' onClose={ closeModal }>
+                <IngredientDetails {...inModalIngredient} />
+            </Modal> }
+        </div>
     );
 }
 
@@ -56,4 +79,5 @@ Ingredients.propTypes = {
             type: PropTypes.string.isRequired,
         })
     ).isRequired,
+    setDetailsData: PropTypes.func,
 }
