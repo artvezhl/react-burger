@@ -1,16 +1,9 @@
-import React, {useEffect} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 
 import popupStyles from "./popup.module.css";
 
-export default function ModalOverlay({ onClose, onEscPress, children }) {
-    useEffect(() => {
-        document.addEventListener("keydown", onEscPress);
-        return () => {
-            document.addEventListener("keydown", onEscPress);
-        }
-    })
-
+export default function ModalOverlay({ onClose, children }) {
     return (
         <div className={popupStyles.popup__overlay} onClick={onClose}>
             {children}
