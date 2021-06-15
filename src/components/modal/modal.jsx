@@ -18,11 +18,10 @@ export default function Modal({ title, onClose, children }) {
         return () => {
             document.addEventListener("keydown", onEscKeyDown);
         }
-    })
+    },[])
 
     return createPortal(
         (
-        <>
             <ModalOverlay onClose={onClose} >
                 <div className={`${popupStyles.popup__content} pt-10 pb-15 pl-10 pr-10`} onClick={e => e.stopPropagation()}>
                     <div className={`mb-4 ${popupStyles.popup__base}`}>
@@ -35,7 +34,6 @@ export default function Modal({ title, onClose, children }) {
                     {children}
                 </div>
             </ModalOverlay>
-        </>
     ), modalRoot);
 }
 
