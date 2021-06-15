@@ -1,0 +1,14 @@
+.order__number {
+    text-align: center;
+    text-shadow: 0 0 16px rgba(51, 51, 255, 0.25), 0 0 8px rgba(51, 51, 255, 0.25), 0 4px 32px rgba(51, 51, 255, 0.5);
+}
+
+.order__text_type_centered {
+    text-align: center;
+}
+
+.order__done {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto;
+}
