@@ -4,8 +4,8 @@ import totalStyles from './constructor-cart.module.css';
 import { CurrencyIcon, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../../modal/modal";
 import OrderDetails from "../../order-details/order-details";
-import { orderData } from "../../../utils/data";
 import {ConstructorContext} from "../../../services/constructorContext";
+import PropTypes from "prop-types";
 
 export default function ConstructorCart() {
     const { constructorState } = useContext(ConstructorContext);
@@ -23,7 +23,7 @@ export default function ConstructorCart() {
 
     const modal = (
         <Modal onClose={ closeModal }>
-            <OrderDetails orderNumber={orderData.number} />
+            <OrderDetails />
         </Modal>
     );
 
@@ -37,4 +37,10 @@ export default function ConstructorCart() {
             { visibleModal && modal }
         </div>
     );
+}
+
+OrderDetails.propTypes = {
+    constructorState: PropTypes.shape({
+        total: PropTypes.number.isRequired,
+    })
 }

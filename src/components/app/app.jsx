@@ -24,6 +24,8 @@ const constructorReducer = (state, action) => {
                 ...state,
                 orderNumber: action.payload,
             }
+        default:
+            throw new Error(`Wrong type of action: ${action.type}`);
     }
 }
 

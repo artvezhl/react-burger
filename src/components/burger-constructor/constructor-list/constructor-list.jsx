@@ -3,6 +3,8 @@ import React, {useContext, useEffect} from "react";
 import listStyles from './constructor-list.module.css';
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { ConstructorContext } from "../../../services/constructorContext";
+import PropTypes from "prop-types";
+import OrderDetails from "../../order-details/order-details";
 
 export default function ConstructorList() {
     const { constructorState, constructorDispatcher } = useContext(ConstructorContext);
@@ -61,4 +63,12 @@ export default function ConstructorList() {
             </article>
         </div>
     )
+}
+
+OrderDetails.propTypes = {
+    constructorState: PropTypes.shape({
+        ingredients: PropTypes.shape(Object),
+        bunName: PropTypes.string.isRequired,
+    }),
+    constructorDispatcher: PropTypes.func,
 }

@@ -8,11 +8,11 @@ import { ORDER_URL } from "../../constants";
 
 export default function OrderDetails() {
     const { constructorState, constructorDispatcher } = useContext(ConstructorContext);
-    const { orderNumber } = constructorState;
+    const { ingredients, orderNumber } = constructorState;
 
     useEffect(() => {
         const ingredientsID = [];
-        constructorState.ingredients.forEach(ingredient => ingredientsID.push(ingredient._id));
+        ingredients.forEach(ingredient => ingredientsID.push(ingredient._id));
         const orderNumberData = async () => {
             try {
                 const res = await fetch(ORDER_URL, {
@@ -31,14 +31,14 @@ export default function OrderDetails() {
                         payload: data.order.number,
                     });
                 } else {
-                    throw Error('Error when attempt to receive order');
+                    throw new Error('Error when attempt to receive order');
                 }
             } catch(e) {
                 console.log(e);
             }
         }
         orderNumberData();
-    }, [constructorState.ingredients])
+    }, [ingredients, constructorDispatcher]);
 
     return (
         <>
@@ -55,5 +55,9 @@ export default function OrderDetails() {
 }
 
 OrderDetails.propTypes = {
-    orderNumber: PropTypes.string.isRequired,
+    constructorState: PropTypes.shape({
+        ingredients: PropTypes.shape(Object),
+        orderNumber: PropTypes.string.isRequired,
+    }),
+    constructorDispatcher: PropTypes.func,
 }
