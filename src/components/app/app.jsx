@@ -19,6 +19,11 @@ const constructorReducer = (state, action) => {
                 ...state,
                 total: action.payload,
             }
+        case 'order':
+            return {
+                ...state,
+                orderNumber: action.payload,
+            }
     }
 }
 
@@ -46,6 +51,7 @@ function App() {
                             ingredients: data.data,
                             bunName: 'Краторная булка N-200i',
                             total: 0,
+                            orderNumber: 0
                         },
                     });
                     setIsLoading(false);

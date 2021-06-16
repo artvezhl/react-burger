@@ -6,30 +6,32 @@ import doneButton from "../../images/done.svg";
 import {ConstructorContext} from "../../services/constructorContext";
 import { ORDER_URL } from "../../constants";
 
-export default function OrderDetails({ orderNumber }) {
-    const { constructorState } = useContext(ConstructorContext);
+export default function OrderDetails() {
+    const { constructorState, constructorDispatcher } = useContext(ConstructorContext);
+    const { orderNumber } = constructorState;
 
     useEffect(() => {
         const ingredientsID = [];
         constructorState.ingredients.forEach(ingredient => ingredientsID.push(ingredient._id));
-        console.log(ingredientsID);
         const orderNumberData = async () => {
             try {
                 const res = await fetch(ORDER_URL, {
                     method: 'POST',
                     headers: {
-                        // 'Content-Type': 'application/json',
-                        // 'Access-Control-Allow-Origin': '*',
-                        // 'Access-Control-Expose-Headers': 'Authorization',
-                        // 'Content-Type': 'application/json; charset=utf-8',
+                        'Content-Type': 'application/json',
                     },
-                    body: {
+                    body: JSON.stringify ({
                         "ingredients": ingredientsID,
-                    },
+                    }),
                 })
-                console.log(res);
                 if (res.ok) {
-                    console.log('OK');
+                    const data = await res.json();
+                    constructorDispatcher({
+                        type: 'order',
+                        payload: data.order.number,
+                    });
+                } else {
+                    throw Error('Error when attempt to receive order');
                 }
             } catch(e) {
                 console.log(e);
