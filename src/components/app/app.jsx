@@ -14,11 +14,6 @@ const constructorReducer = (state, action) => {
     switch (action.type) {
         case 'render':
             return action.payload;
-        case 'bun':
-            return {
-                ...state,
-                bunName: action.payload,
-            }
         case 'total':
             return {
                 ...state,

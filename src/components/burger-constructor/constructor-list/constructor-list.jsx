@@ -9,7 +9,6 @@ export default function ConstructorList() {
     const { ingredients, bunName } = constructorState;
 
     const [bun] = ingredients.filter(ingredient => ingredient.type === 'bun' && ingredient.name === bunName);
-    // const bun = constructorDispatcher({ type: 'bun', payload: 'Краторная булка N-200i' });
 
     const cartTotal = (ingredients) => {
         let total = bun.price * 2;
