@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from "react";
+import React, {useContext} from "react";
 
 import orderStyles from "./order-details.module.css";
 import doneButton from "../../images/done.svg";
