@@ -5,13 +5,37 @@ import { CurrencyIcon, Button } from "@ya.praktikum/react-developer-burger-ui-co
 import Modal from "../../modal/modal";
 import OrderDetails from "../../order-details/order-details";
 import {ConstructorContext} from "../../../services/constructorContext";
-import PropTypes from "prop-types";
+import {ORDER_URL} from "../../../constants";
 
 export default function ConstructorCart() {
-    const { constructorState } = useContext(ConstructorContext);
-    const { total } = constructorState;
+    const { constructorState, constructorDispatcher } = useContext(ConstructorContext);
+    const { total, ingredientsIDs } = constructorState;
 
     const [visibleModal, setVisibleModal] = useState(false);
+    const getOrderNumber = async () => {
+        try {
+            const res = await fetch(ORDER_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify ({
+                    "ingredients": ingredientsIDs,
+                }),
+            })
+            if (res.ok) {
+                const data = await res.json();
+                constructorDispatcher({
+                    type: 'order',
+                    payload: data.order.number,
+                });
+            } else {
+                throw new Error('Error when attempt to receive order');
+            }
+        } catch(e) {
+            console.log(e);
+        }
+    }
 
     const openModal = () => {
         setVisibleModal(true);
@@ -27,20 +51,24 @@ export default function ConstructorCart() {
         </Modal>
     );
 
+    const orderHandler = () => {
+        getOrderNumber()
+            .then(() => {
+                openModal();
+            })
+            .catch(e => {
+                console.log(e);
+            });
+    }
+
     return (
         <div className={`${totalStyles.constructor__total} mt-10 mb-9`}>
             <p className={`${ totalStyles.constructor__price } text text_type_digits-medium`}>{total}</p>
             <CurrencyIcon type="primary" />
-            <Button onClick={openModal} type="primary" size="large">
+            <Button onClick={orderHandler} type="primary" size="large">
                 Оформить заказ
             </Button>
             { visibleModal && modal }
         </div>
     );
-}
-
-OrderDetails.propTypes = {
-    constructorState: PropTypes.shape({
-        total: PropTypes.number.isRequired,
-    })
 }

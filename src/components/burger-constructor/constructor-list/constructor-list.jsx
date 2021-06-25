@@ -23,8 +23,17 @@ export default function ConstructorList() {
         });
     }
 
+    const setIngredientsIDs = (ingredients) => {
+        const ingredientsIDs = ingredients.map(ingredient => ingredient._id);
+        constructorDispatcher({
+            type: 'ingredients',
+            payload: ingredientsIDs,
+        })
+    }
+
     useEffect(() => {
         cartTotal(ingredients);
+        setIngredientsIDs(ingredients);
     }, [ingredients]);
 
     return (

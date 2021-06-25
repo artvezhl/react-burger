@@ -24,6 +24,11 @@ const constructorReducer = (state, action) => {
                 ...state,
                 orderNumber: action.payload,
             }
+        case 'ingredients':
+            return  {
+                ...state,
+                ingredientsIDs: action.payload,
+            }
         default:
             throw new Error(`Wrong type of action: ${action.type}`);
     }
@@ -33,11 +38,9 @@ function App() {
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [hasError, setHasError] = useState(false);
-    // const [constructorState, setConstructorState] = useState({});
     const [constructorState, constructorDispatcher] = useReducer(
         constructorReducer,
-        initialConstructorState,
-        undefined
+        initialConstructorState
     );
 
     useEffect(() => {

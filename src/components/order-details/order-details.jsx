@@ -1,44 +1,12 @@
 import React, {useContext, useEffect} from "react";
-import PropTypes from "prop-types";
 
 import orderStyles from "./order-details.module.css";
 import doneButton from "../../images/done.svg";
 import {ConstructorContext} from "../../services/constructorContext";
-import { ORDER_URL } from "../../constants";
 
 export default function OrderDetails() {
-    const { constructorState, constructorDispatcher } = useContext(ConstructorContext);
-    const { ingredients, orderNumber } = constructorState;
-
-    useEffect(() => {
-        const ingredientsID = [];
-        ingredients.forEach(ingredient => ingredientsID.push(ingredient._id));
-        const orderNumberData = async () => {
-            try {
-                const res = await fetch(ORDER_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify ({
-                        "ingredients": ingredientsID,
-                    }),
-                })
-                if (res.ok) {
-                    const data = await res.json();
-                    constructorDispatcher({
-                        type: 'order',
-                        payload: data.order.number,
-                    });
-                } else {
-                    throw new Error('Error when attempt to receive order');
-                }
-            } catch(e) {
-                console.log(e);
-            }
-        }
-        orderNumberData();
-    }, [ingredients, constructorDispatcher]);
+    const { constructorState } = useContext(ConstructorContext);
+    const { orderNumber } = constructorState;
 
     return (
         <>
@@ -52,12 +20,4 @@ export default function OrderDetails() {
                 готовности на орбитальной станции</p>
         </>
     );
-}
-
-OrderDetails.propTypes = {
-    constructorState: PropTypes.shape({
-        ingredients: PropTypes.shape(Object),
-        orderNumber: PropTypes.string.isRequired,
-    }),
-    constructorDispatcher: PropTypes.func,
 }
