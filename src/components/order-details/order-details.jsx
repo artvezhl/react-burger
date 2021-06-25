@@ -1,10 +1,13 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, {useContext, useEffect} from "react";
 
 import orderStyles from "./order-details.module.css";
 import doneButton from "../../images/done.svg";
+import {ConstructorContext} from "../../services/constructorContext";
 
-export default function OrderDetails({ orderNumber }) {
+export default function OrderDetails() {
+    const { constructorState } = useContext(ConstructorContext);
+    const { orderNumber } = constructorState;
+
     return (
         <>
             <p className={`text text_type_digits-large ml-15 mr-15 mb-8 ${orderStyles.order__number}`}>{orderNumber}</p>
@@ -17,8 +20,4 @@ export default function OrderDetails({ orderNumber }) {
                 готовности на орбитальной станции</p>
         </>
     );
-}
-
-OrderDetails.propTypes = {
-    orderNumber: PropTypes.string.isRequired,
 }

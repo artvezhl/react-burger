@@ -8,6 +8,7 @@
 }
 
 .commonList .bothSides {
+    width: 90%;
     margin-right: 16px;
     margin-left: 26px;
 }
