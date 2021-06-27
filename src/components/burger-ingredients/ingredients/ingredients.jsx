@@ -1,5 +1,6 @@
 import React, {useState} from "react";
-import PropTypes from 'prop-types';
+import {useDispatch} from "react-redux";
+import {REMOVE_INGREDIENT_DETAILS, SET_INGREDIENT_DETAILS} from "../../../services/actions/ingredient-details";
 
 import ingredientStyles from './ingredients.module.css';
 import Ingredient from "../ingredient/ingredient";
@@ -8,16 +9,21 @@ import IngredientDetails from "../../ingredient-details/ingredient-details";
 
 export default function Ingredients({ data }) {
     const [isModalVisible, setVisibleModal] = useState(false);
-    const [inModalIngredient, setIngredient] = useState({});
+    const dispatch = useDispatch();
 
     const openModal = (ingredient) => {
-        setIngredient(ingredient);
+        dispatch({
+            type: SET_INGREDIENT_DETAILS,
+            details: ingredient,
+        })
         setVisibleModal(true);
     }
 
     const closeModal = () => {
         setVisibleModal(false);
-        setIngredient({});
+        dispatch({
+            type: REMOVE_INGREDIENT_DETAILS,
+        })
     }
 
     return (
@@ -66,18 +72,8 @@ export default function Ingredients({ data }) {
         )}
             { isModalVisible &&
             <Modal title='Детали ингредиента' onClose={ closeModal }>
-                <IngredientDetails {...inModalIngredient} />
+                <IngredientDetails/>
             </Modal> }
         </div>
     );
-}
-
-Ingredients.propTypes = {
-    data: PropTypes.arrayOf(
-        PropTypes.shape({
-            _id: PropTypes.string.isRequired,
-            type: PropTypes.string.isRequired,
-        })
-    ).isRequired,
-    setDetailsData: PropTypes.func,
 }

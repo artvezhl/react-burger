@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 
 import { ingredientsReducer } from './burger-ingredients';
 import { constructorReducer } from './burger-constructor';
+import { ingredientDetailsReducer } from './ingredient-details';
 
 // import { RENDER_INGREDIENTS, GET_INGREDIENTS_IDS, GET_ORDER_NUMBER, GET_TOTAL_AMOUNT } from '../actions';
 //
@@ -42,4 +43,5 @@ import { constructorReducer } from './burger-constructor';
 export const rootReducer = combineReducers({
     ingredients: ingredientsReducer,
     burger: constructorReducer,
+    details: ingredientDetailsReducer,
 })
