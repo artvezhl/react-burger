@@ -6,11 +6,12 @@ import { ConstructorContext } from "../../../services/constructorContext";
 import PropTypes from "prop-types";
 import OrderDetails from "../../order-details/order-details";
 
-export default function ConstructorList() {
+export default function ConstructorList({ ingredients }) {
     const { constructorState, constructorDispatcher } = useContext(ConstructorContext);
-    const { ingredients, bunName } = constructorState;
+    // const { ingredients, bunName } = constructorState;
 
-    const [bun] = ingredients.filter(ingredient => ingredient.type === 'bun' && ingredient.name === bunName);
+    // const [bun] = ingredients.filter(ingredient => ingredient.type === 'bun' && ingredient.name === bunName);
+    const [bun] = ingredients.filter(ingredient => ingredient.type === 'bun');
 
     const cartTotal = (ingredients) => {
         let total = bun.price * 2;

@@ -8,7 +8,6 @@ const initialState = {
     items: [],
     ingredientsRequest: false,
     ingredientsFailed: false,
-    bunName: 'Краторная булка N-200i',
 };
 
 export const ingredientsReducer = (state = initialState, action) => {

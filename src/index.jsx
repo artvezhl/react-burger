@@ -8,7 +8,7 @@ import App from './components/app/app.jsx';
 import reportWebVitals from './reportWebVitals';
 import {applyMiddleware, compose, createStore} from "redux";
 import thunk from "redux-thunk";
-import {rootReducer} from "./services/reducers";
+import { rootReducer } from "./services/reducers";
 
 const composeEnhancers =
     typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
