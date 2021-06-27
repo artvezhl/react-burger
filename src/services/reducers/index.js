@@ -1,9 +1,14 @@
 import { combineReducers } from 'redux';
 
+import { ingredientsReducer } from './burger-ingredients';
+
 import { RENDER_INGREDIENTS, GET_INGREDIENTS_IDS, GET_ORDER_NUMBER, GET_TOTAL_AMOUNT } from '../actions';
+
 
 const initialState = {
     ingredients: [],
+    ingredientsRequest: false,
+    ingredientsFailed: false,
     constructorIngredients: [],
     currentIngredient: {},
     order: null,
@@ -34,5 +39,5 @@ const constructorReducer = (state = initialState, action) => {
 }
 
 export const rootReducer = combineReducers({
-    ingredients: constructorReducer,
+    ingredients: ingredientsReducer,
 })

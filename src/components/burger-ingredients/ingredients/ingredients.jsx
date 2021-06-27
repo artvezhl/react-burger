@@ -6,7 +6,7 @@ import Ingredient from "../ingredient/ingredient";
 import Modal from "../../modal/modal";
 import IngredientDetails from "../../ingredient-details/ingredient-details";
 
-export default function Ingredients({ data, setDetailsData }) {
+export default function Ingredients({ data }) {
     const [isModalVisible, setVisibleModal] = useState(false);
     const [inModalIngredient, setIngredient] = useState({});
 

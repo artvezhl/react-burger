@@ -4,3 +4,9 @@
     max-width: 600px;
     max-height: calc(100vh - 88px);
 }
+
+.ingredients__loading {
+    height: 100%;
+    text-align: center;
+    margin-top: 30px;
+}

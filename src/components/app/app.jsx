@@ -1,23 +1,12 @@
 import React, {useState, useEffect, useReducer} from 'react';
-import appStyles from './app.module.css';
-import { compose, createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
 
+import appStyles from './app.module.css';
 import { URL } from '../../constants';
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 
-import { rootReducer } from "../../services/reducers";
 import { ConstructorContext } from "../../services/constructorContext";
-
-const composeEnhancers =
-    typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-        ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
-        : compose;
-const enhancer = composeEnhancers(applyMiddleware(thunk));
-
-const store = createStore(rootReducer, enhancer);
 
 const initialConstructorState = {};
 
@@ -94,7 +83,7 @@ function App() {
             }
             { !isLoading && !hasError &&
                 <main className={appStyles.main}>
-                    <BurgerIngredients data={ data }/>
+                    <BurgerIngredients/>
                     <BurgerConstructor/>
                 </main>
             }
