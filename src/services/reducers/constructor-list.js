@@ -1,4 +1,8 @@
-import { ADD_INGREDIENT } from "../actions/burger-constructor";
+import {
+    ADD_INGREDIENT,
+    SET_TOTAL,
+    SET_INGREDIENTS_IDS
+} from "../actions/constructor-list";
 
 const initialState = {
     ingredients: [
@@ -59,6 +63,8 @@ const initialState = {
             "__v": 0
         }
     ],
+    total: 0,
+    ingredientIDs: [],
     bunName: 'Краторная булка N-200i',
 }
 
@@ -68,6 +74,18 @@ export const constructorReducer = (state = initialState, action) => {
             return {
                 ...state,
                 items: state.items.push(action.ingredient),
+            }
+        }
+        case SET_TOTAL: {
+            return {
+                ...state,
+                total: action.total,
+            }
+        }
+        case SET_INGREDIENTS_IDS: {
+            return {
+                ...state,
+                ingredientIDs: action.IDs,
             }
         }
         default: {

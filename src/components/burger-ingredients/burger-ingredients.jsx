@@ -20,7 +20,7 @@ export default function BurgerIngredients() {
 
     useEffect(() => {
         dispatch(getIngredients());
-    }, [])
+    }, [dispatch])
 
     const onTabClick = meal => {
         let mealType = '';

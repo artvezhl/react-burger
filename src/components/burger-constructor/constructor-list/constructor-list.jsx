@@ -1,16 +1,16 @@
-import React, {useContext, useEffect} from "react";
+import React, {useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import { SET_TOTAL, SET_INGREDIENTS_IDS } from "../../../services/actions/constructor-list";
 
 import listStyles from './constructor-list.module.css';
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { ConstructorContext } from "../../../services/constructorContext";
 import PropTypes from "prop-types";
 import OrderDetails from "../../order-details/order-details";
 
-export default function ConstructorList({ ingredients }) {
-    const { constructorState, constructorDispatcher } = useContext(ConstructorContext);
-    // const { ingredients, bunName } = constructorState;
+export default function ConstructorList() {
+    const ingredients = useSelector(state => state.burger.ingredients);
+    const dispatch = useDispatch();
 
-    // const [bun] = ingredients.filter(ingredient => ingredient.type === 'bun' && ingredient.name === bunName);
     const [bun] = ingredients.filter(ingredient => ingredient.type === 'bun');
 
     const cartTotal = (ingredients) => {
@@ -18,24 +18,24 @@ export default function ConstructorList({ ingredients }) {
         ingredients.forEach(ingredient => {
             if (ingredient.type !== 'bun') total += ingredient.price;
         });
-        constructorDispatcher({
-            type: 'total',
-            payload: total
+        dispatch({
+            type: SET_TOTAL,
+            total: total
         });
     }
 
     const setIngredientsIDs = (ingredients) => {
         const ingredientsIDs = ingredients.map(ingredient => ingredient._id);
-        constructorDispatcher({
-            type: 'ingredients',
-            payload: ingredientsIDs,
+        dispatch({
+            type: SET_INGREDIENTS_IDS,
+            IDs: ingredientsIDs,
         })
     }
 
     useEffect(() => {
         cartTotal(ingredients);
         setIngredientsIDs(ingredients);
-    }, [ingredients]);
+    }, [cartTotal, setIngredientsIDs, ingredients]);
 
     return (
         <div className={ listStyles.commonList }>

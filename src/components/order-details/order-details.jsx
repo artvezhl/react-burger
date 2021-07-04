@@ -1,12 +1,20 @@
-import React, {useContext} from "react";
+import React, {useEffect} from "react";
 
 import orderStyles from "./order-details.module.css";
 import doneButton from "../../images/done.svg";
-import {ConstructorContext} from "../../services/constructorContext";
+import {useDispatch, useSelector} from "react-redux";
+import { getOrderNumber } from "../../services/actions/order-details";
 
 export default function OrderDetails() {
-    const { constructorState } = useContext(ConstructorContext);
-    const { orderNumber } = constructorState;
+    const { ingredientIDs, orderNumber } = useSelector(state => ({
+        ingredientIDs: state.burger.ingredientIDs,
+        orderNumber: state.order.number,
+    }));
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getOrderNumber(ingredientIDs));
+    }, [dispatch, ingredientIDs])
 
     return (
         <>
