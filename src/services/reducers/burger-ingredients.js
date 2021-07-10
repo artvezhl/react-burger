@@ -1,13 +1,15 @@
 import {
     GET_INGREDIENTS,
     GET_INGREDIENTS_SUCCESS,
-    GET_INGREDIENTS_FAILED
+    GET_INGREDIENTS_FAILED,
+    SET_ACTIVE_TAB,
 } from '../actions/burger-ingredients';
 
 const initialState = {
     items: [],
     ingredientsRequest: false,
     ingredientsFailed: false,
+    activeTab: 'Булки',
 };
 
 export const ingredientsReducer = (state = initialState, action) => {
@@ -32,6 +34,12 @@ export const ingredientsReducer = (state = initialState, action) => {
                 ...state,
                 ingredientsFailed: true,
             };
+        }
+        case SET_ACTIVE_TAB: {
+            return {
+                ...state,
+                activeTab: action.tab,
+            }
         }
         default: {
             return state;
