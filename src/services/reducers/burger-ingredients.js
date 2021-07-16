@@ -3,10 +3,13 @@ import {
     GET_INGREDIENTS_SUCCESS,
     GET_INGREDIENTS_FAILED,
     SET_ACTIVE_TAB,
+    SET_INGREDIENT_COUNT,
+    INCREASE_INGREDIENT_COUNT,
+    DECREASE_INGREDIENT_COUNT,
 } from '../actions/burger-ingredients';
 
 const initialState = {
-    items: [],
+    ingredients: [],
     ingredientsRequest: false,
     ingredientsFailed: false,
     activeTab: 'Булки',
@@ -24,7 +27,10 @@ export const ingredientsReducer = (state = initialState, action) => {
         case GET_INGREDIENTS_SUCCESS: {
             return {
                 ...state,
-                items: action.ingredients,
+                ingredients: action.ingredients.map(ingredient => ({
+                    ...ingredient,
+                    ingredientCount: 0,
+                })),
                 ingredientsRequest: false,
                 ingredientsFailed: false,
             };
@@ -39,6 +45,34 @@ export const ingredientsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 activeTab: action.tab,
+            }
+        }
+        case INCREASE_INGREDIENT_COUNT: {
+            return {
+                ...state,
+                ingredients: state.ingredients.map(ingredient => {
+                    if (ingredient._id === action.ingredientId) {
+                        return {
+                            ...ingredient,
+                            ingredientCount: ingredient.ingredientCount += 1,
+                        }
+                    }
+                    return ingredient;
+                })
+            }
+        }
+        case DECREASE_INGREDIENT_COUNT: {
+            return {
+                ...state,
+                ingredients: state.ingredients.map(ingredient => {
+                    if (ingredient._id === action.ingredientId) {
+                        return {
+                            ...ingredient,
+                            ingredientCount: ingredient.ingredientCount -= 1,
+                        }
+                    }
+                    return ingredient;
+                })
             }
         }
         default: {

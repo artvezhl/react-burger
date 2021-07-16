@@ -7,9 +7,8 @@ import Ingredients from "./ingredients/ingredients";
 import {getIngredients, SET_ACTIVE_TAB} from "../../services/actions/burger-ingredients";
 
 export default function BurgerIngredients() {
-    const ingredientsRef = useRef(null);
     const { ingredients, isLoading, hasError, activeTab } = useSelector(state => ({
-        ingredients: state.ingredients.items,
+        ingredients: state.ingredients.ingredients,
         isLoading: state.ingredients.ingredientsRequest,
         hasError: state.ingredients.ingredientsFailed,
         activeTab: state.ingredients.activeTab,
@@ -45,7 +44,7 @@ export default function BurgerIngredients() {
     const ingredientsContent = hasError
         ? <div className={`text text_type_main-medium ${ingredientsStyles.ingredients__loading}`}>Что-то пошло не так, перезагрузите страницу</div>
         : !isLoading && !hasError && ingredients.length
-        ? <Ingredients data={ingredients} ref={ingredientsRef} />
+        ? <Ingredients data={ingredients} />
         : <div className={`text text_type_main-large ${ingredientsStyles.ingredients__loading}`}>Здесь Вы увидите ингредиенты для бургера ...</div>;
 
     return (

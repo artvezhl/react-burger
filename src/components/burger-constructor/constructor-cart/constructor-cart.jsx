@@ -29,7 +29,8 @@ export default function ConstructorCart() {
     }
 
     return (
-        <div className={`${totalStyles.constructor__total} mt-10 mb-9`}>
+        total
+        ? <div className={`${totalStyles.constructor__total} mt-10 mb-9`}>
             <p className={`${ totalStyles.constructor__price } text text_type_digits-medium`}>{total}</p>
             <CurrencyIcon type="primary" />
             <Button onClick={orderHandler} type="primary" size="large">
@@ -37,5 +38,6 @@ export default function ConstructorCart() {
             </Button>
             { visibleModal && modal }
         </div>
+        : ''
     );
 }

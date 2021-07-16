@@ -30,7 +30,6 @@ export default function Ingredients({ data }) {
 
     const tabScrollChange = (inView, entry) => {
         if (inView) {
-            console.log(inView, entry.target.firstChild.innerHTML);
             dispatch({
                 type: SET_ACTIVE_TAB,
                 tab: entry.target.firstChild.innerHTML,
@@ -41,7 +40,7 @@ export default function Ingredients({ data }) {
     return (
         <div className={`${ingredientStyles.ingredients} mt-10 mb-6 pl-1 pr-1`}> {(
             <>
-                <InView as="div" threshold={1} onChange={tabScrollChange}>
+                <InView as="div" threshold={0.8} onChange={tabScrollChange}>
                     <h4 className="text text_type_main-medium mb-6">Булки</h4>
                     <ul className={ingredientStyles.ingredients__list}>
                         {data.map(item => {
