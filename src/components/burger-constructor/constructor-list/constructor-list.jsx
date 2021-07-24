@@ -1,23 +1,56 @@
-import React, {useEffect} from "react";
+import React, {memo, useEffect, useCallback} from "react";
 import {useDispatch, useSelector} from "react-redux";
+import { useDrop } from "react-dnd";
+
+// TODO
+// - изменить логику счетчиков у ингредиентов (сделать чтобы они просто сравнивали массивы свои и массив бургера и по итогу выдавали результат счетчиков)
+
+import { ConstructorIngredient } from "../constructor-ingredient/constructor-ingredient";
 import {
     SET_TOTAL,
     SET_INGREDIENTS_IDS,
     ADD_INGREDIENT,
-    REMOVE_INGREDIENT
+    MOVE_CARD,
+    SET_INGREDIENT_INDEX,
 } from "../../../services/actions/constructor-list";
-import {DECREASE_INGREDIENT_COUNT, INCREASE_INGREDIENT_COUNT} from "../../../services/actions/burger-ingredients";
+import {INCREASE_INGREDIENT_COUNT} from "../../../services/actions/burger-ingredients";
 
 import listStyles from './constructor-list.module.css';
-import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import {useDrop} from "react-dnd";
+import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 
-export default function ConstructorList() {
+export const ConstructorList = memo(function ConstructorList() {
     const { bun, ingredients } = useSelector(state => ({
         bun: state.burger.bun,
         ingredients: state.burger.ingredients,
     }));
     const dispatch = useDispatch();
+    // const findCard = useCallback((id) => {
+    //     const card = ingredients.filter((i) => `${i.id}` === id)[0];
+    //     return {
+    //         card,
+    //         index: ingredients.indexOf(card),
+    //     };
+    // }, [ingredients]);
+    // const moveCard = useCallback((id, atIndex) => {
+    //     const { card, index } = findCard(id);
+    //     dispatch({
+    //         type: MOVE_CARD,
+    //         index: index,
+    //         card: card,
+    //         atIndex: atIndex
+    //     })
+    // }, [findCard, ingredients]);
+    const moveCard = (index, atIndex) => {
+        const dragIngredient = ingredients.filter(i => i.index === index)[0];
+        const newIngredients = [...ingredients];
+        newIngredients.splice(index, 1);
+        newIngredients.splice(atIndex, 0, dragIngredient);
+
+        dispatch({
+            type: MOVE_CARD,
+            ingredients: newIngredients,
+        })
+    }
     const [, listRef] = useDrop({
         accept: 'ingredient',
         drop(item) {
@@ -29,13 +62,13 @@ export default function ConstructorList() {
                 type: INCREASE_INGREDIENT_COUNT,
                 ingredientId: item._id,
             });
-
         }
     })
 
     useEffect(() => {
         cartTotal(ingredients);
         setIngredientsIDs(ingredients);
+        // setIngredientsIndex();
     }, [bun, ingredients]);
 
     const cartTotal = (ingredients) => {
@@ -57,17 +90,10 @@ export default function ConstructorList() {
         })
     }
 
-    const removeIngredient = (e, id) => {
-        if (e.target.closest('.constructor-element__action')) {
-            dispatch({
-                type: REMOVE_INGREDIENT,
-                id: id,
-            })
-            dispatch({
-                type: DECREASE_INGREDIENT_COUNT,
-                ingredientId: id,
-            })
-        };
+    const setIngredientsIndex = () => {
+        dispatch({
+            type: SET_INGREDIENT_INDEX
+        })
     }
 
     const topBunMarkup =
@@ -92,21 +118,30 @@ export default function ConstructorList() {
             />
         </article>;
 
+    const renderIngredients = (ingredient, index) => {
+        // dispatch({
+        //     type: SET_INGREDIENT_INDEX,
+        //     ingredient: ingredientWithIndex
+        // })
+        return (
+            <ConstructorIngredient
+                key={index}
+                ingredient={ingredient}
+                index={index}
+                moveCard={moveCard}
+                // findCard={findCard}
+                setIngredientsIndex={setIngredientsIndex}
+            />
+        );
+    }
+
     const ingredientsMarkup =
         <div className={ listStyles.constructorList }>
             {
                 !ingredients.length
-                    ? <h3 className="text text_type_main-medium text_color_inactive pl-10 pt-1 pl-7">А теперь выберите ингредиенты для бургера</h3>
-                    : ingredients.filter(ingredient => ingredient.type !== 'bun').map(ingredient => (
-                        <article onClick={(e) => removeIngredient(e, ingredient._id)} className={ listStyles.item } key={ingredient._id}>
-                            <DragIcon type="primary" />
-                            <ConstructorElement
-                                text={ingredient.name}
-                                price={ingredient.price}
-                                thumbnail={ingredient.image}
-                            />
-                        </article>
-                    ))
+                    ? <h3 className="text text_type_main-medium text_color_inactive pl-10 pt-1 pl-7">
+                        А теперь выберите ингредиенты для бургера</h3>
+                    : ingredients.map((ingredient, index) => renderIngredients(ingredient, index))
             }
         </div>;
 
@@ -122,4 +157,4 @@ export default function ConstructorList() {
             {content}
         </div>
     )
-}
+})
