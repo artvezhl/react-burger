@@ -61,14 +61,14 @@ export const constructorReducer = (state = initialState, action) => {
             }
         }
         case MOVE_CARD: {
+            const dragIngredient = state.ingredients.filter(i => i.index === action.index)[0];
+            const newIngredients = [...state.ingredients];
+            newIngredients.splice(action.index, 1);
+            newIngredients.splice(action.atIndex, 0, dragIngredient);
+
             return {
                 ...state,
-                // ingredients: update(state.ingredients, {
-                //     $splice: [
-                //         [action.index, 1],
-                //         [action.atIndex, 0, action.card],
-                //     ]}),
-                ingredients: action.ingredients,
+                ingredients: newIngredients,
             }
         }
         default: {

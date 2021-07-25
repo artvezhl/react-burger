@@ -24,31 +24,12 @@ export const ConstructorList = memo(function ConstructorList() {
         ingredients: state.burger.ingredients,
     }));
     const dispatch = useDispatch();
-    // const findCard = useCallback((id) => {
-    //     const card = ingredients.filter((i) => `${i.id}` === id)[0];
-    //     return {
-    //         card,
-    //         index: ingredients.indexOf(card),
-    //     };
-    // }, [ingredients]);
-    // const moveCard = useCallback((id, atIndex) => {
-    //     const { card, index } = findCard(id);
-    //     dispatch({
-    //         type: MOVE_CARD,
-    //         index: index,
-    //         card: card,
-    //         atIndex: atIndex
-    //     })
-    // }, [findCard, ingredients]);
-    const moveCard = (index, atIndex) => {
-        const dragIngredient = ingredients.filter(i => i.index === index)[0];
-        const newIngredients = [...ingredients];
-        newIngredients.splice(index, 1);
-        newIngredients.splice(atIndex, 0, dragIngredient);
 
+    const moveCard = (index, atIndex) => {
         dispatch({
             type: MOVE_CARD,
-            ingredients: newIngredients,
+            index: index,
+            atIndex: atIndex,
         })
     }
     const [, listRef] = useDrop({
@@ -68,7 +49,6 @@ export const ConstructorList = memo(function ConstructorList() {
     useEffect(() => {
         cartTotal(ingredients);
         setIngredientsIDs(ingredients);
-        // setIngredientsIndex();
     }, [bun, ingredients]);
 
     const cartTotal = (ingredients) => {
@@ -83,7 +63,7 @@ export const ConstructorList = memo(function ConstructorList() {
     }
 
     const setIngredientsIDs = (ingredients) => {
-        const ingredientsIDs = ingredients.map(ingredient => ingredient._id);
+        const ingredientsIDs = ingredients.map(ingredient => ingredient._id).concat(bun._id);
         dispatch({
             type: SET_INGREDIENTS_IDS,
             IDs: ingredientsIDs,
@@ -119,17 +99,12 @@ export const ConstructorList = memo(function ConstructorList() {
         </article>;
 
     const renderIngredients = (ingredient, index) => {
-        // dispatch({
-        //     type: SET_INGREDIENT_INDEX,
-        //     ingredient: ingredientWithIndex
-        // })
         return (
             <ConstructorIngredient
                 key={index}
                 ingredient={ingredient}
                 index={index}
                 moveCard={moveCard}
-                // findCard={findCard}
                 setIngredientsIndex={setIngredientsIndex}
             />
         );

@@ -3,6 +3,7 @@ import {ORDER_URL} from "../../constants";
 export const GET_ORDER_NUMBER = 'GET_ORDER_NUMBER';
 export const GET_ORDER_NUMBER_SUCCESS = 'GET_ORDER_NUMBER_SUCCESS';
 export const GET_ORDER_NUMBER_FAILED = 'GET_ORDER_NUMBER_FAILED';
+export const RESET_ORDER_NUMBER = 'RESET_ORDER_NUMBER';
 
 export function getOrderNumber(orderIDs) {
     return function (dispatch) {
@@ -26,6 +27,7 @@ export function getOrderNumber(orderIDs) {
                             type: GET_ORDER_NUMBER_SUCCESS,
                             number: res.order.number,
                         })
+                        return res.order.number;
                     })
                 } else {
                     dispatch({

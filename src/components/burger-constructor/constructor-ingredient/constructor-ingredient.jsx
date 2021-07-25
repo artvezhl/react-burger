@@ -1,15 +1,15 @@
-import React, {memo, useEffect, useRef, useState} from "react";
+import React, {memo, useEffect, useRef} from "react";
 import {useDispatch} from "react-redux";
 import {useDrag, useDrop} from "react-dnd";
 
+// TODO - прописать здесь проверку пропсов
+
 import listStyles from "../constructor-list/constructor-list.module.css";
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { REMOVE_INGREDIENT, SET_INGREDIENT_INDEX } from "../../../services/actions/constructor-list";
+import { REMOVE_INGREDIENT } from "../../../services/actions/constructor-list";
 import { DECREASE_INGREDIENT_COUNT } from "../../../services/actions/burger-ingredients";
 
-export const ConstructorIngredient = memo(function ({ ingredient, index, moveCard, findCard, setIngredientsIndex }) {
-    // const originalIndex = findCard(ingredient._id).index;
-    // const [ingredientId, setIngredientId] = useState(index);
+export const ConstructorIngredient = memo(function ({ ingredient, index, moveCard, setIngredientsIndex }) {
     const cardRef = useRef(null);
     const {_id, name, price, image} = ingredient;
     const dispatch = useDispatch();
@@ -60,31 +60,6 @@ export const ConstructorIngredient = memo(function ({ ingredient, index, moveCar
             isDragging: monitor.isDragging()
         })
     })
-    // const [{ isDragging }, drag] = useDrag(() => ({
-    //     type: 'item',
-    //     item: { _id, originalIndex },
-    //     collect: (monitor) => ({
-    //         isDragging: monitor.isDragging(),
-    //     }),
-    //     end: (item, monitor) => {
-    //         const { _id: droppedId, originalIndex } = item;
-    //         const didDrop = monitor.didDrop();
-    //         if (!didDrop) {
-    //             moveCard(droppedId, originalIndex);
-    //         }
-    //     },
-    // }), [_id, originalIndex, moveCard]);
-    //
-    // const [, drop] = useDrop(() => ({
-    //     accept: 'item',
-    //     canDrop: () => false,
-    //     hover({ id: draggedId }) {
-    //         if (draggedId !== _id) {
-    //             const { index: overIndex } = findCard(_id);
-    //             moveCard(draggedId, overIndex);
-    //         }
-    //     },
-    // }), [findCard, moveCard]);
 
     const removeIngredient = (e, id, index) => {
         if (e.target.closest('.constructor-element__action')) {
@@ -108,13 +83,9 @@ export const ConstructorIngredient = memo(function ({ ingredient, index, moveCar
     drag(drop(cardRef));
 
     return (
-        // !isDragging &&
             <article
                 ref={cardRef}
-                // ref={drag}
                 style={{opacity}}
-                // ref={(node) => drag(drop(node))}
-                // index={ingredientId}
                 onClick={(e) => removeIngredient(e, _id, index)}
                 className={ listStyles.item }
             >
