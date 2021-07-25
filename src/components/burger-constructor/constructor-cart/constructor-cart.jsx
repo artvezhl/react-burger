@@ -1,14 +1,16 @@
 import React, {useState} from "react";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
 import totalStyles from './constructor-cart.module.css';
 import { CurrencyIcon, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../../modal/modal";
 import OrderDetails from "../../order-details/order-details";
+import {RESET_ORDER_NUMBER} from "../../../services/actions/order-details";
 
 export default function ConstructorCart() {
     const [visibleModal, setVisibleModal] = useState(false);
     const total = useSelector(state => state.burger.total);
+    const dispatch = useDispatch();
 
     const openModal = () => {
         setVisibleModal(true);
@@ -16,6 +18,9 @@ export default function ConstructorCart() {
 
     const closeModal = () => {
         setVisibleModal(false);
+        dispatch({
+            type: RESET_ORDER_NUMBER,
+        })
     }
 
     const modal = (
