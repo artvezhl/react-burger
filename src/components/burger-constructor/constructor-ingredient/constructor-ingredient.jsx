@@ -1,8 +1,7 @@
 import React, {memo, useEffect, useRef} from "react";
 import {useDispatch} from "react-redux";
 import {useDrag, useDrop} from "react-dnd";
-
-// TODO - прописать здесь проверку пропсов
+import PropTypes from 'prop-types';
 
 import listStyles from "../constructor-list/constructor-list.module.css";
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -98,3 +97,15 @@ export const ConstructorIngredient = memo(function ({ ingredient, index, moveCar
             </article>
     );
 })
+
+ConstructorIngredient.propTypes = {
+    ingredient: PropTypes.shape({
+        _id: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        price: PropTypes.number.isRequired,
+        image: PropTypes.string.isRequired,
+    }),
+    index: PropTypes.number.isRequired,
+    moveCard: PropTypes.func.isRequired,
+    setIngredientsIndex: PropTypes.func.isRequired,
+}
