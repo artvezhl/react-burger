@@ -30,3 +30,11 @@
     align-items: center;
     gap: 8px;
 }
+
+.item > div {
+    flex-grow: 1;
+}
+
+.item > div > span > span:first-of-type {
+    width: 100%;
+}

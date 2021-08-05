@@ -1,41 +1,16 @@
-import React, {useContext, useState} from "react";
+import React, {useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
 
 import totalStyles from './constructor-cart.module.css';
 import { CurrencyIcon, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../../modal/modal";
 import OrderDetails from "../../order-details/order-details";
-import {ConstructorContext} from "../../../services/constructorContext";
-import {ORDER_URL} from "../../../constants";
+import {RESET_ORDER_NUMBER} from "../../../services/actions/order-details";
 
 export default function ConstructorCart() {
-    const { constructorState, constructorDispatcher } = useContext(ConstructorContext);
-    const { total, ingredientsIDs } = constructorState;
-
     const [visibleModal, setVisibleModal] = useState(false);
-    const getOrderNumber = async () => {
-        try {
-            const res = await fetch(ORDER_URL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify ({
-                    "ingredients": ingredientsIDs,
-                }),
-            })
-            if (res.ok) {
-                const data = await res.json();
-                constructorDispatcher({
-                    type: 'order',
-                    payload: data.order.number,
-                });
-            } else {
-                throw new Error('Error when attempt to receive order');
-            }
-        } catch(e) {
-            console.log(e);
-        }
-    }
+    const total = useSelector(state => state.burger.total);
+    const dispatch = useDispatch();
 
     const openModal = () => {
         setVisibleModal(true);
@@ -43,6 +18,9 @@ export default function ConstructorCart() {
 
     const closeModal = () => {
         setVisibleModal(false);
+        dispatch({
+            type: RESET_ORDER_NUMBER,
+        })
     }
 
     const modal = (
@@ -52,17 +30,12 @@ export default function ConstructorCart() {
     );
 
     const orderHandler = () => {
-        getOrderNumber()
-            .then(() => {
-                openModal();
-            })
-            .catch(e => {
-                console.log(e);
-            });
+        openModal();
     }
 
     return (
-        <div className={`${totalStyles.constructor__total} mt-10 mb-9`}>
+        total
+        ? <div className={`${totalStyles.constructor__total} mt-10 mb-9`}>
             <p className={`${ totalStyles.constructor__price } text text_type_digits-medium`}>{total}</p>
             <CurrencyIcon type="primary" />
             <Button onClick={orderHandler} type="primary" size="large">
@@ -70,5 +43,6 @@ export default function ConstructorCart() {
             </Button>
             { visibleModal && modal }
         </div>
+        : ''
     );
 }

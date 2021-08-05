@@ -18,7 +18,7 @@ export default function Modal({ title, onClose, children }) {
         return () => {
             document.addEventListener("keydown", onEscKeyDown);
         }
-    },[])
+    },[onEscKeyDown])
 
     return createPortal(
         (

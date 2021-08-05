@@ -2,7 +2,7 @@ import React from "react";
 
 import constructorStyles from './burger-constructor.module.css'
 
-import ConstructorList from "./constructor-list/constructor-list";
+import { ConstructorList } from "./constructor-list/constructor-list";
 import ConstructorCart from "./constructor-cart/constructor-cart";
 
 export default function BurgerConstructor() {
