@@ -1,21 +1,30 @@
 import React from 'react';
-import { BrowserRouter as Router, Route} from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
 import AppHeader from "../app-header/app-header";
-import { HomePage, LoginPage } from "../../pages";
+import styles from './app.module.css';
+import { HomePage, LoginPage, NotFoundPage } from "../../pages";
 
 function App() {
     return (
         <>
             <AppHeader/>
-            <Router>
-                <Route path="/" exact={true}>
-                    <HomePage />
-                </Route>
-                <Route path="/login" exact={true}>
-                    <LoginPage />
-                </Route>
-            </Router>
+            <main className={styles.main}>
+                <Router>
+                    <Switch>
+                        <Route path="/" exact={true}>
+                            <HomePage />
+                        </Route>
+                        <Route path="/login" exact={true}>
+                            <LoginPage />
+                        </Route>
+                        <Route>
+                            <NotFoundPage />
+                        </Route>
+                    </Switch>
+                </Router>
+            </main>
+
         </>
     );
 }

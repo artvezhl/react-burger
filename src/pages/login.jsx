@@ -7,9 +7,6 @@ export function LoginPage () {
     return (
         <main className={loginStyles.main}>
             <AuthForm />
-            {/*<div className={loginStyles.form}>*/}
-
-            {/*</div>*/}
         </main>
     );
 }
