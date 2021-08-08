@@ -1,22 +1,21 @@
 import React from 'react';
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import { BrowserRouter as Router, Route} from 'react-router-dom';
 
-import appStyles from './app.module.css';
 import AppHeader from "../app-header/app-header";
-import BurgerIngredients from "../burger-ingredients/burger-ingredients";
-import BurgerConstructor from "../burger-constructor/burger-constructor";
+import { HomePage, LoginPage } from "../../pages";
 
 function App() {
     return (
         <>
             <AppHeader/>
-            <main className={appStyles.main}>
-                <DndProvider backend={HTML5Backend}>
-                    <BurgerIngredients/>
-                    <BurgerConstructor/>
-                </DndProvider>
-            </main>
+            <Router>
+                <Route path="/" exact={true}>
+                    <HomePage />
+                </Route>
+                <Route path="/login" exact={true}>
+                    <LoginPage />
+                </Route>
+            </Router>
         </>
     );
 }

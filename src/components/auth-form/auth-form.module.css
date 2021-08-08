@@ -1,0 +1,44 @@
+.auth {
+    max-width: 480px;
+    width: 100vw;
+}
+
+.auth__text {
+    text-align: center;
+    color: var(--text-dark);
+    margin-bottom: 0;
+}
+
+.auth__link {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+.auth__link:hover {
+    text-decoration: underline;
+}
+
+.form {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.form > button {
+    margin: 0 auto 76px;
+}
+
+.title {
+    text-align: center;
+}
+
+.form > div {
+    width: 100%;
+    margin-bottom: 24px;
+}
+
+.form > div > div {
+    width: 100%;
+}
+
