@@ -4,10 +4,8 @@ import PropTypes from 'prop-types';
 
 import ingredientStyles from './ingredient.module.css';
 import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import {useSelector} from "react-redux";
 
 export default function Ingredient({ ingredient, openModal }) {
-    const burgerIngredients = useSelector(state => state.burger.ingredients);
     const [, ingredientRef] = useDrag({
         type: 'ingredient',
         item: ingredient

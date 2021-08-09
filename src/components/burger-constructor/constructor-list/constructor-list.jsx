@@ -46,12 +46,7 @@ export const ConstructorList = memo(function ConstructorList() {
         }
     })
 
-    useEffect(() => {
-        cartTotal(ingredients);
-        setIngredientsIDs(ingredients);
-    }, [bun, ingredients]);
-
-    const cartTotal = (ingredients) => {
+    const cartTotal = useCallback(() => {
         let total = bun.price * 2;
         ingredients.forEach(ingredient => {
             if (ingredient.type !== 'bun') total += ingredient.price;
@@ -60,21 +55,26 @@ export const ConstructorList = memo(function ConstructorList() {
             type: SET_TOTAL,
             total: total
         });
-    }
+    }, [ingredients, bun.price, dispatch]);
 
-    const setIngredientsIDs = (ingredients) => {
+    const setIngredientsIDs = useCallback(() => {
         const ingredientsIDs = ingredients.map(ingredient => ingredient._id).concat(bun._id);
         dispatch({
             type: SET_INGREDIENTS_IDS,
             IDs: ingredientsIDs,
         })
-    }
+    }, [ingredients, bun._id, dispatch]);
 
-    const setIngredientsIndex = () => {
+    useEffect(() => {
+        cartTotal();
+        setIngredientsIDs();
+    }, [bun, ingredients, cartTotal, setIngredientsIDs]);
+
+    const setIngredientsIndex = useCallback(() => {
         dispatch({
             type: SET_INGREDIENT_INDEX
         })
-    }
+    }, [dispatch]);
 
     const topBunMarkup =
         <article className={listStyles.bothSides}>

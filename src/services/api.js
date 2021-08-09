@@ -1,8 +1,7 @@
-import React from "react";
-
-const forgotUrl = 'https://norma.nomoreparties.space/api/password-reset'
+const forgotUrl = 'https://norma.nomoreparties.space/api/password-reset';
 
 export const forgotPassword = async (email) => {
+    console.log(email);
     const result = await fetch(forgotUrl, {
         method: 'POST',
         headers: {

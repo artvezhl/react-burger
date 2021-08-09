@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 
 import registerStyles from "./register.module.css";
 import AuthForm from "../components/auth-form/auth-form";
