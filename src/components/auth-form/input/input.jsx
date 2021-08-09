@@ -19,10 +19,6 @@ export default function FormInput({
 
     const setIcon = placeholder !== 'Пароль' ? '' : inputType === 'password' ? 'ShowIcon' : 'HideIcon';
 
-    // useEffect(() => {
-    //     setIcon = ;
-    // }, []);
-
     return (
         <Input
             type={inputType}

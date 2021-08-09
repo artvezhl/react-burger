@@ -3,7 +3,14 @@ import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
 import AppHeader from "../app-header/app-header";
 import styles from './app.module.css';
-import { HomePage, LoginPage, NotFoundPage } from "../../pages";
+import {
+    HomePage,
+    LoginPage,
+    RegisterPage,
+    NotFoundPage,
+    ForgotPasswordPage,
+    ResetPasswordPage
+} from "../../pages";
 
 function App() {
     return (
@@ -17,6 +24,15 @@ function App() {
                         </Route>
                         <Route path="/login" exact={true}>
                             <LoginPage />
+                        </Route>
+                        <Route path="/register" exact={true}>
+                            <RegisterPage />
+                        </Route>
+                        <Route path="/forgot-password" exact={true}>
+                            <ForgotPasswordPage />
+                        </Route>
+                        <Route path="/reset-password" exact={true}>
+                            <ResetPasswordPage />
                         </Route>
                         <Route>
                             <NotFoundPage />
