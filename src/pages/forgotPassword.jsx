@@ -11,10 +11,12 @@ import { forgotPassword } from "../services/api";
 export function ForgotPasswordPage() {
     const [email, setEmail] = useState('');
     const inputRef = useRef(null);
+    // TODO проверять на соответствие email
     // const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
 
-    const onSubmit = async () => {
-        await forgotPassword(email);
+    const onSubmit = (e) => {
+        e.preventDefault();
+        forgotPassword(email)
         // setTimeout(() => inputRef.current.focus(), 0);
 
     }

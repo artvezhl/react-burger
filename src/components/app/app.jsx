@@ -9,15 +9,16 @@ import {
     RegisterPage,
     NotFoundPage,
     ForgotPasswordPage,
-    ResetPasswordPage
+    ResetPasswordPage,
+    ProfilePage
 } from "../../pages";
 
 function App() {
     return (
         <>
+        <Router>
             <AppHeader/>
             <main className={styles.main}>
-                <Router>
                     <Switch>
                         <Route path="/" exact={true}>
                             <HomePage />
@@ -34,13 +35,15 @@ function App() {
                         <Route path="/reset-password" exact={true}>
                             <ResetPasswordPage />
                         </Route>
+                        <Route path="/profile" exact={true}>
+                            <ProfilePage />
+                        </Route>
                         <Route>
                             <NotFoundPage />
                         </Route>
                     </Switch>
-                </Router>
             </main>
-
+        </Router>
         </>
     );
 }
