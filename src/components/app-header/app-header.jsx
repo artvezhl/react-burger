@@ -8,23 +8,23 @@ import {Link, useLocation} from "react-router-dom";
 export default function AppHeader() {
     const { pathname } = useLocation();
 
-    // const onClickHandler = () => console.log(location);
+    const iconTypeHandler = (path) => pathname === path ? 'primary' : 'secondary';
 
     return (
         <header className={ headerStyles.header }>
             <nav className={ headerStyles.header__nav }>
                 <ul className={ headerStyles.header__list }>
                     <AppHeaderItem text="Конструктор">
-                        <BurgerIcon type={pathname === '/' ? 'primary' : 'secondary'} />
+                        <BurgerIcon type={iconTypeHandler('/')} />
                     </AppHeaderItem>
                     <AppHeaderItem text="Лента заказов" path="/orders">
-                        <ListIcon type={pathname === '/orders' ? 'primary' : 'secondary'} />
+                        <ListIcon type={iconTypeHandler('/orders')} />
                     </AppHeaderItem>
                     <li className={`mt-4 mb-4 ${headerStyles.header__logo}`} >
                         <Link className={ headerStyles.header__link } to="/"><Logo/></Link>
                     </li>
                     <AppHeaderItem text="Личный кабинет" path="/profile">
-                        <ProfileIcon  type={pathname === '/profile' ? 'primary' : 'secondary'} />
+                        <ProfileIcon type={iconTypeHandler('/profile')} />
                     </AppHeaderItem>
                 </ul>
             </nav>

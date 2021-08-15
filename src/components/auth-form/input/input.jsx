@@ -8,8 +8,9 @@ export default function FormInput({
     name = '',
     error = false,
     errorText = 'Ошибка',
+    form,
+    inputHandler,
                                   }) {
-    const [value, setValue] = useState('');
     const [inputType, setInputType] = useState(type);
     const inputRef = useRef(null);
     const onIconClick = () => {
@@ -23,9 +24,9 @@ export default function FormInput({
         <Input
             type={inputType}
             placeholder={placeholder}
-            onChange={e => setValue(e.target.value)}
+            onChange={e => inputHandler(e)}
             icon={setIcon}
-            value={value}
+            value={form[name]}
             name={name}
             error={error}
             ref={inputRef}
