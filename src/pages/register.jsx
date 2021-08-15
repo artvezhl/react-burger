@@ -5,7 +5,7 @@ import registerStyles from "./register.module.css";
 import AuthForm from "../components/auth-form/auth-form";
 import formStyles from "../components/auth-form/auth-form.module.css";
 import FormInput from "../components/auth-form/input/input";
-import { loginRequest } from "../services/actions/auth";
+import { registerRequest } from "../services/actions/auth";
 
 import {Button} from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
@@ -20,8 +20,6 @@ export function RegisterPage () {
 
     const dispatch = useDispatch();
 
-    const auth = useAuth();
-
     const onChange = e => {
         setForm({ ...form, [e.target.name]: e.target.value });
     };
@@ -29,9 +27,9 @@ export function RegisterPage () {
     const register = useCallback(
         e => {
             e.preventDefault();
-            dispatch(loginRequest(form));
+            dispatch(registerRequest(form));
         },
-        [dispatch, loginRequest, form]
+        [dispatch, registerRequest, form]
     );
 
     return (
