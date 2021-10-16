@@ -2,6 +2,7 @@ import React, { useState, useCallback } from "react";
 
 import registerStyles from "./register.module.css";
 import AuthForm from "../components/auth-form/auth-form";
+import { formHandler as onChange } from "../utils";
 import formStyles from "../components/auth-form/auth-form.module.css";
 import { registerRequest } from "../services/actions/auth";
 
@@ -16,12 +17,7 @@ export function RegisterPage () {
         password: "",
         name: ""
     });
-
     const dispatch = useDispatch();
-
-    const onChange = e => {
-        setForm({ ...form, [e.target.name]: e.target.value });
-    };
 
     const register = useCallback(
         e => {
@@ -41,7 +37,7 @@ export function RegisterPage () {
                         type={"text"}
                         placeholder={"Имя"}
                         value={form.name}
-                        onChange={onChange}
+                        onChange={(e) => onChange(e, setForm, form)}
                         name={'name'}
                         // error={codeError}
                         // errorText={'Поле не может быть пустым'}
@@ -51,7 +47,7 @@ export function RegisterPage () {
                         type={"email"}
                         placeholder={"E-mail"}
                         value={form.email}
-                        onChange={onChange}
+                        onChange={(e) => onChange(e, setForm, form)}
                         name={'email'}
                         // error={codeError}
                         // errorText={'Поле не может быть пустым'}

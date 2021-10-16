@@ -1,3 +1,7 @@
+export const formHandler = (e, setForm, form) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+};
+
 export function setCookie(name, value, props) {
     props = props || {};
     let exp = props.expires;

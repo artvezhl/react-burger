@@ -1,4 +1,10 @@
-import { REGISTER_USER, REGISTER_USER_SUCCESS, REGISTER_USER_FAILED } from '../actions/auth';
+import {
+    REGISTER_USER,
+    REGISTER_USER_SUCCESS,
+    REGISTER_USER_FAILED,
+    AUTHORIZE_USER,
+    AUTHORIZE_USER_SUCCESS, AUTHORIZE_USER_FAILED
+} from '../actions/auth';
 
 const initialUserState = {
     user: null,
@@ -16,7 +22,6 @@ export const authReducer = (state = initialUserState, action) => {
             }
         }
         case REGISTER_USER_SUCCESS: {
-            console.log('here SUCCESS ', action)
             return {
                 ...state,
                 user: action.user,
@@ -26,6 +31,28 @@ export const authReducer = (state = initialUserState, action) => {
             }
         }
         case REGISTER_USER_FAILED: {
+            return {
+                ...state,
+                userDataFailed: true,
+            }
+        }
+        case AUTHORIZE_USER: {
+            return {
+                ...state,
+                userDataRequest: true,
+            }
+        }
+        case AUTHORIZE_USER_SUCCESS: {
+            console.log('USER SUCCESS');
+            return {
+                ...state,
+                user: action.user,
+                accessToken: action.token,
+                userDataRequest: false,
+                userDataFailed: false,
+            }
+        }
+        case AUTHORIZE_USER_FAILED: {
             return {
                 ...state,
                 userDataFailed: true,
