@@ -1,19 +1,26 @@
-import React, {useRef} from "react";
+import React, {useCallback, useMemo, useState} from "react";
 
 import profileStyles from './profile.module.css';
 import { Input } from "@ya.praktikum/react-developer-burger-ui-components";
-import {Link} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 
 export function ProfilePage() {
-    const nameRef = useRef(null);
-    const loginRef = useRef(null);
-    const passwordRef = useRef(null);
+    const [name, setName] = useState('Artem');
+    const [login, setLogin] = useState('vezhl@yandex.ru');
+    const [password, setPassword] = useState('832y53025235');
+    const { pathname } = useLocation();
+    // const nameRef = useRef(null);
+    // const loginRef = useRef(null);
+    // const passwordRef = useRef(null);
+    const activeRouteHandler = useCallback((path) => {
+        return path === pathname ? profileStyles.profile__link_isActive : profileStyles.profile__link
+    }, [pathname]);
 
     return (
         <div className={profileStyles.profile}>
             <ul className={`pl-5 ${profileStyles.profile__list}`}>
-                <li className={profileStyles.profile__item}>
-                    <Link to="/profile" className={`text text_type_main-medium ${profileStyles.profile__link}`}>Профиль</Link>
+                <li className={profileStyles.profile__item }>
+                    <Link to="/profile" className={`text text_type_main-medium ${activeRouteHandler("/profile")}`}>Профиль</Link>
                 </li>
                 <li className={profileStyles.profile__item}>
                     <Link to="/profile/orders" className={`text text_type_main-medium ${profileStyles.profile__link}`}>История заказов</Link>
@@ -22,37 +29,48 @@ export function ProfilePage() {
                     <a href="/" className={`text text_type_main-medium ${profileStyles.profile__link}`}>Выход</a>
                 </li>
             </ul>
+            {/*TODO сделать текст темным если не меняется*/}
             <div className={profileStyles.profile__inputs}>
                 <Input
-                    type={'text'}
-                    placeholder={'Имя'}
-                    // onChange={e => setEmail(e.target.value)}
-                    // value={name}
-                    name={'email'}
-                    error={false}
-                    ref={nameRef}
-                    errorText={'Ошибка'}
+                    type={"text"}
+                    placeholder={"Имя"}
+                    value={name}
+                    icon={'EditIcon'}
+                    onChange={e => {
+                        setName(e.target.value);
+                        // setCodeError(false);
+                    }}
+                    name={'name'}
+                    // error={codeError}
+                    // errorText={'Поле не может быть пустым'}
+                    size={'default'}
                 />
                 <Input
-                    type={'email'}
-                    placeholder={'Логин'}
-                    // onChange={e => setEmail(e.target.value)}
-                    // value={name}
+                    type={"text"}
+                    placeholder={"Логин"}
+                    value={login}
+                    icon={'EditIcon'}
+                    onChange={e => {
+                        setLogin(e.target.value);
+                        // setCodeError(false);
+                    }}
                     name={'login'}
-                    error={false}
-                    ref={loginRef}
-                    errorText={'Ошибка'}
+                    // error={codeError}
+                    // errorText={'Поле не может быть пустым'}
                     size={'default'}
                 />
                 <Input
                     type={'password'}
-                    placeholder={'Пароль'}
-                    // onChange={e => setEmail(e.target.value)}
-                    // value={name}
+                    placeholder={"Пароль"}
+                    value={password}
+                    icon={'EditIcon'}
+                    onChange={e => {
+                        setPassword(e.target.value);
+                        // setCodeError(false);
+                    }}
                     name={'password'}
-                    error={false}
-                    ref={passwordRef}
-                    errorText={'Ошибка'}
+                    // error={codeError}
+                    // errorText={'Поле не может быть пустым'}
                     size={'default'}
                 />
             </div>

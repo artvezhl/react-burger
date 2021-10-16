@@ -13,6 +13,15 @@
 }
 
 .profile__link {
+    color: var(--text-dark);
+    text-decoration: none;
+}
+
+.profile__link:hover {
+    color: var(--text);
+}
+
+.profile__link_isActive {
     color: var(--text);
     text-decoration: none;
 }
@@ -29,5 +38,9 @@
 
 .profile__inputs > div > div {
     width: 100%;
+}
+
+.profile__input {
+    color: var(--text);
 }
 
