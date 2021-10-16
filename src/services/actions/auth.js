@@ -7,6 +7,9 @@ export const REGISTER_USER_FAILED = 'REGISTER_USER_FAILED';
 export const AUTHORIZE_USER = 'AUTHORIZE_USER';
 export const AUTHORIZE_USER_SUCCESS = 'AUTHORIZE_USER_SUCCESS';
 export const AUTHORIZE_USER_FAILED = 'AUTHORIZE_USER_FAILED';
+export const REFRESH_TOKEN = 'REFRESH_TOKEN';
+export const REFRESH_TOKEN_SUCCESS = 'REFRESH_TOKEN_SUCCESS';
+export const REFRESH_TOKEN_FAILED = 'REFRESH_TOKEN_FAILED';
 
 export const registerRequest = form => {
     return function (dispatch) {
@@ -54,7 +57,7 @@ export const registerRequest = form => {
 export const loginRequest = form => {
     return function (dispatch) {
         dispatch({
-            type: AUTHORIZE_USER,
+            type: REFRESH_TOKEN,
         })
 
         fetch(LOGIN_URL, {
@@ -89,7 +92,53 @@ export const loginRequest = form => {
             }
         }).catch(() => {
             dispatch({
-                type: REGISTER_USER_FAILED,
+                type: AUTHORIZE_USER_FAILED,
+            })
+        })
+    }
+};
+
+export const refreshToken = () => {
+    return function (dispatch) {
+        dispatch({
+            type: REFRESH_TOKEN,
+        })
+
+        const refreshToken = getCookie('refreshToken');
+
+        fetch(TOKEN_URL, {
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache',
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            redirect: 'follow',
+            referrerPolicy: 'no-referrer',
+            body: JSON.stringify({
+                "token": refreshToken
+            } )
+        }).then(res => {
+            if (res && res.ok) {
+                res.json().then(data => {
+                    const token = data.accessToken.split(' ')[1];
+                    if (data.refreshToken) {
+                        setCookie('refreshToken', data.refreshToken);
+                    }
+                    dispatch({
+                        type: REFRESH_TOKEN_SUCCESS,
+                        token: token,
+                    })
+                })
+            } else {
+                dispatch({
+                    type: REFRESH_TOKEN_FAILED,
+                })
+            }
+        }).catch(() => {
+            dispatch({
+                type: REFRESH_TOKEN_FAILED,
             })
         })
     }
