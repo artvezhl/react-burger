@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, {useState} from "react";
 
 import registerStyles from "./register.module.css";
 import AuthForm from "../components/auth-form/auth-form";
@@ -7,18 +7,21 @@ import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-component
 import {Link} from "react-router-dom";
 
 import { forgotPassword } from "../services/api";
+const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
 
 export function ForgotPasswordPage() {
     const [email, setEmail] = useState('');
-    const inputRef = useRef(null);
-    // TODO проверять на соответствие email
-    // const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+    const [error, setError] = useState(false);
 
     const onSubmit = (e) => {
         e.preventDefault();
-        forgotPassword(email)
-        // setTimeout(() => inputRef.current.focus(), 0);
-
+        if (email.match(emailPattern)) {
+            forgotPassword(email)
+                .then((result) => console.log(result))
+                .catch(result => console.log(result.success));
+        } else {
+            setError(true);
+        }
     }
 
     return (
@@ -29,12 +32,14 @@ export function ForgotPasswordPage() {
                     <Input
                         type={'email'}
                         placeholder={'Укажите e-mail'}
-                        onChange={e => setEmail(e.target.value)}
+                        onChange={e => {
+                            setEmail(e.target.value);
+                            if (error) setError(false);
+                        }}
                         value={email}
                         name={'email'}
-                        error={false}
-                        ref={inputRef}
-                        errorText={'Ошибка'}
+                        error={error}
+                        errorText={'Неверный формат email'}
                         size={'default'}
                     />
                     <Button type="primary" size="medium" onClick={onSubmit}>

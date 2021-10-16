@@ -25,19 +25,20 @@ export const registerRequest = form => {
         }).then(res => {
             if (res && res.ok) {
                 res.json().then(data => {
-                    const token = data.accessToken.split(' ')[1];
-                    if (data.refreshToken) {
-                        setCookie('token', data.refreshToken);
-                    }
-                    dispatch({
-                        type: REGISTER_USER_SUCCESS,
-                        user: data.user,
-                        token: token,
-                    })
-                })
-            } else {
-                dispatch({
-                    type: REGISTER_USER_FAILED,
+                    console.log('data - ', data);
+            //         const token = data.accessToken.split(' ')[1];
+            //         if (data.refreshToken) {
+            //             setCookie('token', data.refreshToken);
+            //         }
+            //         dispatch({
+            //             type: REGISTER_USER_SUCCESS,
+            //             user: data.user,
+            //             token: token,
+            //         })
+            //     })
+            // } else {
+            //     dispatch({
+            //         type: REGISTER_USER_FAILED,
                 })
             }
         }).catch(() => {

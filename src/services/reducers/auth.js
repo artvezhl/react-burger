@@ -1,7 +1,7 @@
 import { REGISTER_USER, REGISTER_USER_SUCCESS, REGISTER_USER_FAILED } from '../actions/auth';
 
 const initialUserState = {
-    user: {},
+    user: null,
     accessToken: '',
     userDataRequest: false,
     userDataFailed: false,
@@ -16,7 +16,6 @@ export const authReducer = (state = initialUserState, action) => {
             }
         }
         case REGISTER_USER_SUCCESS: {
-            // console.log('action.user', action.user);
             return {
                 ...state,
                 user: action.user,

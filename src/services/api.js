@@ -1,48 +1,39 @@
-const forgotURL = 'https://norma.nomoreparties.space/api/password-reset';
-const resetURL = 'https://norma.nomoreparties.space/api/password-reset/reset';
+import { FORGOT_URL, RESET_URL } from "./constants";
 
 export const forgotPassword = async (email) => {
     console.log(email);
-    const result = await fetch(forgotURL, {
+    const result = await fetch(FORGOT_URL, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json;charset=utf-8'
         },
-        body: {
+        body: JSON.stringify({
             email: email,
-        }
+        })
     });
 
     if (result.ok) {
-        // TODO
-        // В случае успеха пользователь направляется на маршрут /reset-password,
-        // а на введённый имейл приходит инструкция с кодом для восстановления пароля.
-        // Пока вы не знаете, как реализовывать переадресацию, поэтому к перенаправлению
-        // пользователя мы рекомендуем вернуться на следующем этапе проектной работы.
         return await result.json();
     } else {
         console.log(result.status)
     }
-
-    // const data = await result.json();
-
-    console.log('result', result);
 }
 
 export const resetPassword = async (password, code) => {
     console.log(password, code);
-    const result = await fetch(resetURL, {
+    const result = await fetch(RESET_URL, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json;charset=utf-8'
         },
-        body: {
+        body: JSON.stringify({
             "password": password,
             "token": code
-        }
+        })
     });
 
     if (result.ok) {
+        console.log('result is OK', result);
         // TODO
         // Для реализации этой функциональности потребуется создать пользователя.
         // Вы можете сделать это, отправив POST запрос к эндпоинту
@@ -54,12 +45,13 @@ export const resetPassword = async (password, code) => {
         //     "name": "Username"
         // }
 
-        return await result.json();
+        // return await result.json();
     } else {
+        console.log('result is not OK', result)
         console.log(result.status)
     }
 
     // const data = await result.json();
 
-    console.log('result', result);
+    // console.log('result', result);
 }

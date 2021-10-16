@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
 import AppHeader from "../app-header/app-header";
 import styles from './app.module.css';
+import { ProtectedRoute } from "../protected-route/ProtectedRoute";
 import {
     HomePage,
     LoginPage,
@@ -35,9 +36,11 @@ function App() {
                         <Route path="/reset-password" exact={true}>
                             <ResetPasswordPage />
                         </Route>
-                        <Route path="/profile" exact={true}>
+                        {/*<ProtectedRoute path="/profile">*/}
+                        <Route path="/profile"> exact={true}>
                             <ProfilePage />
                         </Route>
+                        {/*</ProtectedRoute>*/}
                         <Route>
                             <NotFoundPage />
                         </Route>
