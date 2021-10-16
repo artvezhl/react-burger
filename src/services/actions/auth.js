@@ -1,5 +1,5 @@
-import { REGISTER_URL } from "../constants";
-import { setCookie } from "../utils";
+import { LOGIN_URL, REGISTER_URL, LOGOUT_URL, TOKEN_URL } from "../constants";
+import { setCookie, getCookie } from "../../utils";
 
 export const REGISTER_USER = 'REGISTER_USER';
 export const REGISTER_USER_SUCCESS = 'REGISTER_USER_SUCCESS';
@@ -25,20 +25,20 @@ export const registerRequest = form => {
         }).then(res => {
             if (res && res.ok) {
                 res.json().then(data => {
-                    console.log('data - ', data);
-            //         const token = data.accessToken.split(' ')[1];
-            //         if (data.refreshToken) {
-            //             setCookie('token', data.refreshToken);
-            //         }
-            //         dispatch({
-            //             type: REGISTER_USER_SUCCESS,
-            //             user: data.user,
-            //             token: token,
-            //         })
-            //     })
-            // } else {
-            //     dispatch({
-            //         type: REGISTER_USER_FAILED,
+                    // console.log('data - ', data);
+                    const token = data.accessToken.split(' ')[1];
+                    if (data.refreshToken) {
+                        setCookie('refreshToken', data.refreshToken);
+                    }
+                    dispatch({
+                        type: REGISTER_USER_SUCCESS,
+                        user: data.user,
+                        token: token,
+                    })
+                })
+            } else {
+                dispatch({
+                    type: REGISTER_USER_FAILED,
                 })
             }
         }).catch(() => {

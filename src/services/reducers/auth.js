@@ -16,6 +16,7 @@ export const authReducer = (state = initialUserState, action) => {
             }
         }
         case REGISTER_USER_SUCCESS: {
+            console.log('here SUCCESS ', action)
             return {
                 ...state,
                 user: action.user,

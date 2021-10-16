@@ -12,9 +12,9 @@ import {useDispatch, useSelector} from "react-redux";
 export function RegisterPage () {
     const user = useSelector(state => state.auth.user);
     const [form, setForm] = useState({
-        "email": "",
-        "password": "",
-        "name": ""
+        email: "",
+        password: "",
+        name: ""
     });
 
     const dispatch = useDispatch();
@@ -37,10 +37,43 @@ export function RegisterPage () {
                 ? <AuthForm>
                 <form className={formStyles.form}>
                     <h2 className={`text text_type_main-medium mb-6 ${formStyles.title}`}>Регистрация</h2>
-                    <Input placeholder="Имя" name="name" form={form} inputHandler={onChange} />
-                    <Input placeholder="E-mail" type="email" name="email" form={form} inputHandler={onChange} />
-                    <Input placeholder="Пароль" type="password" name="password" icon="" form={form} inputHandler={onChange} />
-                    <Button type="primary" size="medium" onClick={register} >
+                    <Input
+                        type={"text"}
+                        placeholder={"Имя"}
+                        value={form.name}
+                        onChange={onChange}
+                        name={'name'}
+                        // error={codeError}
+                        // errorText={'Поле не может быть пустым'}
+                        size={'default'}
+                    />
+                    <Input
+                        type={"email"}
+                        placeholder={"E-mail"}
+                        value={form.email}
+                        onChange={onChange}
+                        name={'email'}
+                        // error={codeError}
+                        // errorText={'Поле не может быть пустым'}
+                        size={'default'}
+                    />
+                    {/*TODO сделать чтобы пароль можно было скрывать и открывать при нажатии на иконку с глазом*/}
+                    <Input
+                        type={"password"}
+                        placeholder={"Пароль"}
+                        value={form.password}
+                        onChange={onChange}
+                        name={'password'}
+                        icon={'ShowIcon'}
+                        // error={codeError}
+                        // errorText={'Поле не может быть пустым'}
+                        size={'default'}
+                    />
+                    <Button
+                        type="primary"
+                        size="medium"
+                        onClick={register}
+                    >
                         Зарегистрироваться
                     </Button>
                 </form>

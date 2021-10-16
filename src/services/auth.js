@@ -1,7 +1,7 @@
 import {useState} from "react";
 
 // import { loginRequest } from "./actions/auth";
-import { setCookie } from "./utils";
+import { setCookie } from "../utils";
 
 const auth = {
     isAuthenticated: false,
