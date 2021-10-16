@@ -3,7 +3,13 @@ import {
     REGISTER_USER_SUCCESS,
     REGISTER_USER_FAILED,
     AUTHORIZE_USER,
-    AUTHORIZE_USER_SUCCESS, AUTHORIZE_USER_FAILED, REFRESH_TOKEN, REFRESH_TOKEN_SUCCESS, REFRESH_TOKEN_FAILED
+    AUTHORIZE_USER_SUCCESS,
+    AUTHORIZE_USER_FAILED,
+    REFRESH_TOKEN,
+    REFRESH_TOKEN_SUCCESS,
+    REFRESH_TOKEN_FAILED,
+    LOGOUT,
+    LOGOUT_SUCCESS, LOGOUT_FAILED
 } from '../actions/auth';
 
 const initialUserState = {
@@ -72,6 +78,27 @@ export const authReducer = (state = initialUserState, action) => {
             }
         }
         case REFRESH_TOKEN_FAILED: {
+            return {
+                ...state,
+                userDataFailed: true,
+            }
+        }
+        case LOGOUT: {
+            return {
+                ...state,
+                userDataRequest: true,
+            }
+        }
+        case LOGOUT_SUCCESS: {
+            return {
+                ...state,
+                user: action.user,
+                accessToken: action.token,
+                userDataRequest: false,
+                userDataFailed: false,
+            }
+        }
+        case LOGOUT_FAILED: {
             return {
                 ...state,
                 userDataFailed: true,

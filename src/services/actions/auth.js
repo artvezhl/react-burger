@@ -10,6 +10,9 @@ export const AUTHORIZE_USER_FAILED = 'AUTHORIZE_USER_FAILED';
 export const REFRESH_TOKEN = 'REFRESH_TOKEN';
 export const REFRESH_TOKEN_SUCCESS = 'REFRESH_TOKEN_SUCCESS';
 export const REFRESH_TOKEN_FAILED = 'REFRESH_TOKEN_FAILED';
+export const LOGOUT = 'LOGOUT';
+export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
+export const LOGOUT_FAILED = 'LOGOUT_FAILED';
 
 export const registerRequest = form => {
     return function (dispatch) {
@@ -78,7 +81,6 @@ export const loginRequest = form => {
                     if (data.refreshToken) {
                         setCookie('refreshToken', data.refreshToken);
                     }
-                    console.log('HERE');
                     dispatch({
                         type: AUTHORIZE_USER_SUCCESS,
                         user: data.user,
@@ -139,6 +141,51 @@ export const refreshToken = () => {
         }).catch(() => {
             dispatch({
                 type: REFRESH_TOKEN_FAILED,
+            })
+        })
+    }
+};
+
+export const logoutRequest = () => {
+    return function (dispatch) {
+        dispatch({
+            type: REGISTER_USER,
+        })
+
+        const refreshToken = getCookie('refreshToken');
+
+        fetch(LOGOUT_URL, {
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache',
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            redirect: 'follow',
+            referrerPolicy: 'no-referrer',
+            body: JSON.stringify({
+                "token": refreshToken
+            } )
+        }).then(res => {
+            if (res && res.ok) {
+                res.json().then(data => {
+                    if (data.success) {
+                        dispatch({
+                            type: LOGOUT_SUCCESS,
+                            user: null,
+                            token: '',
+                        })
+                    } else {
+                        dispatch({
+                            type: LOGOUT_FAILED,
+                        })
+                    }
+                })
+            }
+        }).catch(() => {
+            dispatch({
+                type: LOGOUT_FAILED,
             })
         })
     }

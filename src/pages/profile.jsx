@@ -3,18 +3,27 @@ import React, {useCallback, useMemo, useState} from "react";
 import profileStyles from './profile.module.css';
 import { Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, useLocation} from "react-router-dom";
+import {loginRequest, logoutRequest} from "../services/actions/auth";
+import {useDispatch} from "react-redux";
 
 export function ProfilePage() {
     const [name, setName] = useState('Artem');
     const [login, setLogin] = useState('vezhl@yandex.ru');
     const [password, setPassword] = useState('832y53025235');
     const { pathname } = useLocation();
-    // const nameRef = useRef(null);
-    // const loginRef = useRef(null);
-    // const passwordRef = useRef(null);
+    const dispatch = useDispatch();
+
     const activeRouteHandler = useCallback((path) => {
         return path === pathname ? profileStyles.profile__link_isActive : profileStyles.profile__link
     }, [pathname]);
+
+    const logout = useCallback(
+        e => {
+            e.preventDefault();
+            dispatch(logoutRequest());
+        },
+        [dispatch]
+    );
 
     return (
         <div className={profileStyles.profile}>
@@ -26,7 +35,7 @@ export function ProfilePage() {
                     <Link to="/profile/orders" className={`text text_type_main-medium ${profileStyles.profile__link}`}>История заказов</Link>
                 </li>
                 <li className={profileStyles.profile__item}>
-                    <a href="/" className={`text text_type_main-medium ${profileStyles.profile__link}`}>Выход</a>
+                    <Link onClick={logout} to="/" className={`text text_type_main-medium ${profileStyles.profile__link}`}>Выход</Link>
                 </li>
             </ul>
             {/*TODO сделать текст темным если не меняется*/}
