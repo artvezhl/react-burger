@@ -1,15 +1,30 @@
-import React, {useCallback, useMemo, useState} from "react";
+import React, {useCallback, useEffect, useRef, useState} from "react";
 
 import profileStyles from './profile.module.css';
-import { Input } from "@ya.praktikum/react-developer-burger-ui-components";
+import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
+import { getCookie } from "../utils";
+import { getUserInfo, updateUserInfo } from "../services/api";
+import { formHandler as onChange } from "../utils";
 import {Link, useLocation} from "react-router-dom";
-import {loginRequest, logoutRequest} from "../services/actions/auth";
-import {useDispatch} from "react-redux";
+import {logoutRequest, SET_USER} from "../services/actions/auth";
+import {useDispatch, useSelector} from "react-redux";
+
+const onFocusInput = (inputRef) => inputRef.current.classList.add(`${profileStyles.profile__input_isActive}`);
+
+const onBlurInput = (inputRef) => inputRef.current.classList.remove(`${profileStyles.profile__input_isActive}`);
+
+const onIconClick = (inputRef) => inputRef.current.focus();
 
 export function ProfilePage() {
-    const [name, setName] = useState('Artem');
-    const [login, setLogin] = useState('vezhl@yandex.ru');
-    const [password, setPassword] = useState('832y53025235');
+    const [form, setForm] = useState({
+        name: '',
+        login: '',
+        password: ''
+    });
+    const user = useSelector(state => state.auth.user);
+    const nameRef = useRef(null);
+    const loginRef = useRef(null);
+    const passwordRef = useRef(null);
     const { pathname } = useLocation();
     const dispatch = useDispatch();
 
@@ -25,8 +40,56 @@ export function ProfilePage() {
         [dispatch]
     );
 
+    const resetChanges = useCallback((e) => {
+        e.preventDefault();
+        setForm({
+            ...form,
+            name: user.name,
+            login: user.email,
+            password: ''
+        })
+    }, [user, form]);
+
+    const updateInfo = useCallback(
+        () => {
+            const token = getCookie('accessToken');
+            updateUserInfo(form, token)
+                .then((data) => {
+                    const { name, email } = data.user;
+                    setForm({
+                        ...form,
+                        name: name,
+                        login: email,
+                        password: ''
+                    })
+                    dispatch({
+                        type: SET_USER,
+                        user: data.user
+                    })
+                }).catch(err => console.log(err));
+    }, [dispatch, form]);
+
+    useEffect(() => {
+        const token = getCookie('accessToken');
+        if (token) {
+            getUserInfo(token).then((data) => {
+                const { name, email } = data.user;
+                setForm({
+                    ...form,
+                    name: name,
+                    login: email
+                })
+                dispatch({
+                    type: SET_USER,
+                    user: data.user
+                });
+            }).catch(err => console.log(err))
+        }
+    }, [dispatch])
+
     return (
-        <div className={profileStyles.profile}>
+        (form.login && form.name)
+          ?  (<div className={profileStyles.profile}>
             <ul className={`pl-5 ${profileStyles.profile__list}`}>
                 <li className={profileStyles.profile__item }>
                     <Link to="/profile" className={`text text_type_main-medium ${activeRouteHandler("/profile")}`}>Профиль</Link>
@@ -38,51 +101,64 @@ export function ProfilePage() {
                     <Link onClick={logout} to="/" className={`text text_type_main-medium ${profileStyles.profile__link}`}>Выход</Link>
                 </li>
             </ul>
-            {/*TODO сделать текст темным если не меняется*/}
             <div className={profileStyles.profile__inputs}>
                 <Input
                     type={"text"}
                     placeholder={"Имя"}
-                    value={name}
+                    value={form.name}
                     icon={'EditIcon'}
-                    onChange={e => {
-                        setName(e.target.value);
-                        // setCodeError(false);
-                    }}
+                    onChange={e => onChange(e, setForm, form)}
+                    ref={nameRef}
                     name={'name'}
-                    // error={codeError}
-                    // errorText={'Поле не может быть пустым'}
+                    onFocus={() => onFocusInput(nameRef)}
+                    onBlur={() => onBlurInput(nameRef)}
+                    onIconClick={() => onIconClick(nameRef)}
                     size={'default'}
                 />
                 <Input
                     type={"text"}
                     placeholder={"Логин"}
-                    value={login}
+                    value={form.login}
                     icon={'EditIcon'}
-                    onChange={e => {
-                        setLogin(e.target.value);
-                        // setCodeError(false);
-                    }}
+                    onChange={e => onChange(e, setForm, form)}
                     name={'login'}
-                    // error={codeError}
-                    // errorText={'Поле не может быть пустым'}
+                    ref={loginRef}
+                    onFocus={() => onFocusInput(loginRef)}
+                    onBlur={() => onBlurInput(loginRef)}
+                    onIconClick={() => onIconClick(loginRef)}
                     size={'default'}
                 />
                 <Input
                     type={'password'}
                     placeholder={"Пароль"}
-                    value={password}
+                    value={form.password}
                     icon={'EditIcon'}
-                    onChange={e => {
-                        setPassword(e.target.value);
-                        // setCodeError(false);
-                    }}
+                    onChange={e => onChange(e, setForm, form)}
                     name={'password'}
-                    // error={codeError}
-                    // errorText={'Поле не может быть пустым'}
+                    ref={passwordRef}
+                    onFocus={() => onFocusInput(passwordRef)}
+                    onBlur={() => onBlurInput(passwordRef)}
+                    onIconClick={() => onIconClick(passwordRef)}
                     size={'default'}
                 />
+                <div className={profileStyles.profile__info_change}>
+                    <span
+                        className={`text text_type_main-default ${profileStyles.profile__info_cancel}`}
+                        onClick={resetChanges}
+                    >
+                        Отмена
+                    </span>
+                    <Button
+                        type="primary"
+                        size="medium"
+                        onClick={updateInfo}
+                    >
+                        Сохранить
+                    </Button>
+                </div>
             </div>
-        </div>
+        </div>)
+            : null
+
     );
 }

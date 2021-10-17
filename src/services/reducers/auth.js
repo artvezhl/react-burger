@@ -9,18 +9,24 @@ import {
     REFRESH_TOKEN_SUCCESS,
     REFRESH_TOKEN_FAILED,
     LOGOUT,
-    LOGOUT_SUCCESS, LOGOUT_FAILED
+    LOGOUT_SUCCESS, LOGOUT_FAILED, SET_USER
 } from '../actions/auth';
 
 const initialUserState = {
     user: null,
-    accessToken: '',
+    // accessToken: '',
     userDataRequest: false,
     userDataFailed: false,
 }
 
 export const authReducer = (state = initialUserState, action) => {
     switch (action.type) {
+        case SET_USER: {
+            return {
+                ...state,
+                user: action.user
+            }
+        }
         case REGISTER_USER: {
             return {
                 ...state,
@@ -31,7 +37,7 @@ export const authReducer = (state = initialUserState, action) => {
             return {
                 ...state,
                 user: action.user,
-                accessToken: action.token,
+                // accessToken: action.token,
                 userDataRequest: false,
                 userDataFailed: false,
             }
@@ -52,7 +58,7 @@ export const authReducer = (state = initialUserState, action) => {
             return {
                 ...state,
                 user: action.user,
-                accessToken: action.token,
+                // accessToken: action.token,
                 userDataRequest: false,
                 userDataFailed: false,
             }
@@ -72,7 +78,7 @@ export const authReducer = (state = initialUserState, action) => {
         case REFRESH_TOKEN_SUCCESS: {
             return {
                 ...state,
-                accessToken: action.token,
+                // accessToken: action.token,
                 userDataRequest: false,
                 userDataFailed: false,
             }
@@ -93,7 +99,7 @@ export const authReducer = (state = initialUserState, action) => {
             return {
                 ...state,
                 user: action.user,
-                accessToken: action.token,
+                // accessToken: action.token,
                 userDataRequest: false,
                 userDataFailed: false,
             }

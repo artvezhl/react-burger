@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from "react";
+import React, {useCallback, useRef, useState} from "react";
 
 import loginStyles from './login.module.css';
 import AuthForm from "../components/auth-form/auth-form";
@@ -11,11 +11,24 @@ import {useDispatch, useSelector} from "react-redux";
 
 export function LoginPage () {
     const user = useSelector(state => state.auth.user);
+    const [passwordInputIcon, setIcon] = useState('ShowIcon');
     const [form, setForm] = useState({
         "email": "",
         "password": "",
     });
+    const passwordRef = useRef(null);
+
     const dispatch = useDispatch();
+
+    const onIconClick = useCallback(() => {
+        if (passwordRef.current.type === 'password') {
+            passwordRef.current.type = 'text';
+            setIcon('HideIcon');
+        } else {
+            passwordRef.current.type = 'password';
+            setIcon('ShowIcon')
+        }
+    }, [passwordRef]);
 
     const login = useCallback(
         e => {
@@ -48,7 +61,9 @@ export function LoginPage () {
                         value={form.password}
                         onChange={(e) => onChange(e, setForm, form)}
                         name={'password'}
-                        icon={'ShowIcon'}
+                        icon={passwordInputIcon}
+                        ref={passwordRef}
+                        onIconClick={() => onIconClick(passwordRef)}
                         // error={codeError}
                         // errorText={'Поле не может быть пустым'}
                         size={'default'}

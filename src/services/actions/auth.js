@@ -1,6 +1,7 @@
 import { LOGIN_URL, REGISTER_URL, LOGOUT_URL, TOKEN_URL } from "../constants";
 import { setCookie, getCookie } from "../../utils";
 
+export const SET_USER = 'SET_USER';
 export const REGISTER_USER = 'REGISTER_USER';
 export const REGISTER_USER_SUCCESS = 'REGISTER_USER_SUCCESS';
 export const REGISTER_USER_FAILED = 'REGISTER_USER_FAILED';
@@ -35,13 +36,14 @@ export const registerRequest = form => {
             if (res && res.ok) {
                 res.json().then(data => {
                     const token = data.accessToken.split(' ')[1];
-                    if (data.refreshToken) {
+                    if (data.refreshToken && token) {
+                        setCookie('accessToken', token);
                         setCookie('refreshToken', data.refreshToken);
                     }
                     dispatch({
                         type: REGISTER_USER_SUCCESS,
                         user: data.user,
-                        token: token,
+                        // token: token,
                     })
                 })
             } else {
@@ -78,13 +80,14 @@ export const loginRequest = form => {
             if (res && res.ok) {
                 res.json().then(data => {
                     const token = data.accessToken.split(' ')[1];
-                    if (data.refreshToken) {
+                    if (token && data.refreshToken) {
+                        setCookie('accessToken', token);
                         setCookie('refreshToken', data.refreshToken);
                     }
                     dispatch({
                         type: AUTHORIZE_USER_SUCCESS,
                         user: data.user,
-                        token: token,
+                        // token: token,
                     })
                 })
             } else {
@@ -125,12 +128,13 @@ export const refreshToken = () => {
             if (res && res.ok) {
                 res.json().then(data => {
                     const token = data.accessToken.split(' ')[1];
-                    if (data.refreshToken) {
+                    if (token && data.refreshToken) {
+                        setCookie('accessToken', token);
                         setCookie('refreshToken', data.refreshToken);
                     }
                     dispatch({
                         type: REFRESH_TOKEN_SUCCESS,
-                        token: token,
+                        // token: token,
                     })
                 })
             } else {
@@ -171,10 +175,12 @@ export const logoutRequest = () => {
             if (res && res.ok) {
                 res.json().then(data => {
                     if (data.success) {
+                        setCookie('accessToken', '');
+                        setCookie('refreshToken', '');
                         dispatch({
                             type: LOGOUT_SUCCESS,
                             user: null,
-                            token: '',
+                            // token: '',
                         })
                     } else {
                         dispatch({

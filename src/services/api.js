@@ -1,4 +1,4 @@
-import { FORGOT_URL, RESET_URL } from "./constants";
+import {FORGOT_URL, GET_USER_INFO_URL, RESET_URL, SET_USER_INFO_URL} from "./constants";
 
 export const forgotPassword = async (email) => {
     console.log(email);
@@ -55,3 +55,37 @@ export const resetPassword = async (password, code) => {
 
     // console.log('result', result);
 }
+
+export const getUserInfo = async (token) => {
+    const response = await fetch(GET_USER_INFO_URL, {
+        method: 'GET',
+        headers: {
+            'Authorization': 'Bearer ' + token,
+            'Content-Type': 'application/json',
+        }
+    })
+
+    if (response && response.ok) {
+        return response.json();
+    } else {
+        console.log(response.message);
+    }
+}
+
+export const updateUserInfo = async (form, token) => {
+    const response = await fetch(SET_USER_INFO_URL, {
+        method: 'PATCH',
+        headers: {
+            'Authorization': 'Bearer ' + token,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(form)
+    })
+
+    if (response && response.ok) {
+        return response.json();
+    } else {
+        console.log(response.message);
+    }
+}
+

@@ -40,7 +40,31 @@
     width: 100%;
 }
 
-.profile__input {
+.profile__input_isActive {
+    color: var(--text) !important;
+}
+
+.profile__inputs input {
+    color: var(--text-dark);
+}
+
+/*.profile__input {*/
+/*    color: var(--text);*/
+/*}*/
+
+.profile__info_change {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.profile__info_cancel {
+    color: var(--accent);
+    padding-right: 28px;
+    cursor: pointer;
+}
+
+.profile__info_cancel:hover {
     color: var(--text);
 }
 
