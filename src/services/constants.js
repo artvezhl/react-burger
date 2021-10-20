@@ -1,7 +1,7 @@
 const LOGIN_URL = 'https://norma.nomoreparties.space/api/auth/login';
 const REGISTER_URL = 'https://norma.nomoreparties.space/api/auth/register';
 const LOGOUT_URL = 'https://norma.nomoreparties.space/api/auth/logout';
-const TOKEN_URL = 'POST https://norma.nomoreparties.space/api/auth/token';
+const TOKEN_URL = 'https://norma.nomoreparties.space/api/auth/token';
 const FORGOT_URL = 'https://norma.nomoreparties.space/api/password-reset';
 const RESET_URL = 'https://norma.nomoreparties.space/api/password-reset/reset';
 const GET_USER_INFO_URL = 'https://norma.nomoreparties.space/api/auth/user';

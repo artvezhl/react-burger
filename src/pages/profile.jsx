@@ -3,7 +3,7 @@ import React, {useCallback, useEffect, useRef, useState} from "react";
 import profileStyles from './profile.module.css';
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import { getCookie } from "../utils";
-import { getUserInfo, updateUserInfo } from "../services/api";
+import { updateUserInfo } from "../services/api";
 import { formHandler as onChange } from "../utils";
 import {Link, useLocation} from "react-router-dom";
 import {logoutRequest, SET_USER} from "../services/actions/auth";
@@ -70,25 +70,26 @@ export function ProfilePage() {
     }, [dispatch, form]);
 
     useEffect(() => {
-        const token = getCookie('accessToken');
-        if (token) {
-            getUserInfo(token).then((data) => {
-                const { name, email } = data.user;
+        console.log('user in profile', user);
+    //     const token = getCookie('accessToken');
+    //     if (token) {
+            // getUserInfo(token).then((data) => {
+            //     const { name, email } = data.user;
                 setForm({
                     ...form,
-                    name: name,
-                    login: email
+                    name: user.name,
+                    login: user.email
                 })
-                dispatch({
-                    type: SET_USER,
-                    user: data.user
-                });
-            }).catch(err => console.log(err))
-        }
+            //     dispatch({
+            //         type: SET_USER,
+            //         user: data.user
+            //     });
+            // }).catch(err => console.log(err))
+    //     }
     }, [dispatch])
 
     return (
-        (form.login && form.name)
+        (user)
           ?  (<div className={profileStyles.profile}>
             <ul className={`pl-5 ${profileStyles.profile__list}`}>
                 <li className={profileStyles.profile__item }>

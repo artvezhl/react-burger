@@ -1,4 +1,4 @@
-import React, {useCallback, useRef, useState} from "react";
+import React, {useCallback, useEffect, useRef, useState} from "react";
 
 import loginStyles from './login.module.css';
 import AuthForm from "../components/auth-form/auth-form";
@@ -10,12 +10,12 @@ import {loginRequest} from "../services/actions/auth";
 import {useDispatch, useSelector} from "react-redux";
 
 export function LoginPage () {
-    const user = useSelector(state => state.auth.user);
     const [passwordInputIcon, setIcon] = useState('ShowIcon');
     const [form, setForm] = useState({
         "email": "",
         "password": "",
     });
+    const user = useSelector(state => state.auth.user);
     const passwordRef = useRef(null);
 
     const dispatch = useDispatch();
@@ -38,65 +38,63 @@ export function LoginPage () {
         [dispatch, form]
     );
 
+    useEffect(() => {
+        console.log(user);
+    }, [])
+
     return (
         <div className={loginStyles.main}>
-            { !user
-            ? <AuthForm>
-                <form className={formStyles.form}>
-                    <h2 className={`text text_type_main-medium mb-6 ${formStyles.title}`}>Вход</h2>
-                    <Input
-                        type={"email"}
-                        placeholder={"E-mail"}
-                        value={form.email}
-                        onChange={(e) => onChange(e, setForm, form)}
-                        name={'email'}
-                        // error={codeError}
-                        // errorText={'Поле не может быть пустым'}
-                        size={'default'}
-                    />
-                    {/*TODO сделать чтобы пароль можно было скрывать и открывать при нажатии на иконку с глазом*/}
-                    <Input
-                        type={"password"}
-                        placeholder={"Пароль"}
-                        value={form.password}
-                        onChange={(e) => onChange(e, setForm, form)}
-                        name={'password'}
-                        icon={passwordInputIcon}
-                        ref={passwordRef}
-                        onIconClick={() => onIconClick(passwordRef)}
-                        // error={codeError}
-                        // errorText={'Поле не может быть пустым'}
-                        size={'default'}
-                    />
-                    <Button type="primary" size="medium" onClick={login}>
-                        Войти
-                    </Button>
-                </form>
-                <p
-                    className={`${formStyles.auth__text} text text_type_main-default mt-4`}
-                >
-                    Вы новый пользователь?
-                    <Link
-                        to="/register"
-                        className={formStyles.auth__link}
+                <AuthForm>
+                    <form className={formStyles.form}>
+                        <h2 className={`text text_type_main-medium mb-6 ${formStyles.title}`}>Вход</h2>
+                        <Input
+                            type={"email"}
+                            placeholder={"E-mail"}
+                            value={form.email}
+                            onChange={(e) => onChange(e, setForm, form)}
+                            name={'email'}
+                            // error={codeError}
+                            // errorText={'Поле не может быть пустым'}
+                            size={'default'}
+                        />
+                        <Input
+                            type={"password"}
+                            placeholder={"Пароль"}
+                            value={form.password}
+                            onChange={(e) => onChange(e, setForm, form)}
+                            name={'password'}
+                            icon={passwordInputIcon}
+                            ref={passwordRef}
+                            onIconClick={onIconClick}
+                            size={'default'}
+                        />
+                        <Button type="primary" size="medium" onClick={login}>
+                            Войти
+                        </Button>
+                    </form>
+                    <p
+                        className={`${formStyles.auth__text} text text_type_main-default mt-4`}
                     >
-                        Зарегистрироваться
-                    </Link>
-                </p>
-                <p
-                    className={`${formStyles.auth__text} text text_type_main-default mt-4`}
-                >
-                    Забыли пароль?
-                    <Link
-                        to="/forgot-password"
-                        className={formStyles.auth__link}
+                        Вы новый пользователь?
+                        <Link
+                            to="/register"
+                            className={formStyles.auth__link}
+                        >
+                            Зарегистрироваться
+                        </Link>
+                    </p>
+                    <p
+                        className={`${formStyles.auth__text} text text_type_main-default mt-4`}
                     >
-                        Восстановить пароль
-                    </Link>
-                </p>
-            </AuthForm>
-                : <Redirect to='/' />
-            }
-        </div>
+                        Забыли пароль?
+                        <Link
+                            to="/forgot-password"
+                            className={formStyles.auth__link}
+                        >
+                            Восстановить пароль
+                        </Link>
+                    </p>
+                </AuthForm>
+            </div>
     );
 }

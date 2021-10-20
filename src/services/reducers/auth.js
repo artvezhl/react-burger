@@ -9,12 +9,11 @@ import {
     REFRESH_TOKEN_SUCCESS,
     REFRESH_TOKEN_FAILED,
     LOGOUT,
-    LOGOUT_SUCCESS, LOGOUT_FAILED, SET_USER
+    LOGOUT_SUCCESS, LOGOUT_FAILED, SET_USER, TOKEN_EXPIRED
 } from '../actions/auth';
 
 const initialUserState = {
     user: null,
-    // accessToken: '',
     userDataRequest: false,
     userDataFailed: false,
 }

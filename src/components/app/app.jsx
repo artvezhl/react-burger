@@ -24,23 +24,21 @@ function App() {
                         <Route path="/" exact={true}>
                             <HomePage />
                         </Route>
-                        <Route path="/login" exact={true}>
+                        <ProtectedRoute path="/login" exact={true}>
                             <LoginPage />
-                        </Route>
-                        <Route path="/register" exact={true}>
+                        </ProtectedRoute>
+                        <ProtectedRoute path="/register" exact={true}>
                             <RegisterPage />
-                        </Route>
-                        <Route path="/forgot-password" exact={true}>
+                        </ProtectedRoute>
+                        <ProtectedRoute path="/forgot-password" exact={true}>
                             <ForgotPasswordPage />
-                        </Route>
-                        <Route path="/reset-password" exact={true}>
+                        </ProtectedRoute>
+                        <ProtectedRoute path="/reset-password" exact={true}>
                             <ResetPasswordPage />
-                        </Route>
-                        {/*<ProtectedRoute path="/profile">*/}
-                        <Route path="/profile" exact={true}>
+                        </ProtectedRoute>
+                        <ProtectedRoute path="/profile" exact={true}>
                             <ProfilePage />
-                        </Route>
-                        {/*</ProtectedRoute>*/}
+                        </ProtectedRoute>
                         <Route>
                             <NotFoundPage />
                         </Route>
