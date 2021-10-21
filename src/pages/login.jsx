@@ -39,7 +39,7 @@ export function LoginPage () {
     );
 
     useEffect(() => {
-        console.log(user);
+        console.log('user is ', user);
     }, [])
 
     return (

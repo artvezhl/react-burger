@@ -3,21 +3,34 @@ import registerStyles from "./register.module.css";
 import AuthForm from "../components/auth-form/auth-form";
 import formStyles from "../components/auth-form/auth-form.module.css";
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
-import {Link} from "react-router-dom";
+import {Link, Redirect, useHistory} from "react-router-dom";
 import {resetPassword} from "../services/api";
+import {SET_PASSWORD_RESET} from "../services/actions/auth";
+import {useDispatch, useSelector} from "react-redux";
 
 export function ResetPasswordPage() {
     const [password, setPassword] = useState('');
     const [code, setCode] = useState('');
     const [passError, setPassError] = useState(false);
     const [codeError, setCodeError] = useState(false);
+    const dispatch = useDispatch();
+    const history = useHistory();
+    const isPasswordReset = useSelector(state => state.auth.passwordReset)
 
     const onSubmit = (e) => {
         e.preventDefault();
         if (password && code) {
             resetPassword(password, code)
-                .then((result) => console.log(result))
-                .catch(result => console.log(result.success));
+                .then((result) => {
+                    dispatch({
+                        type: SET_PASSWORD_RESET,
+                        passwordIsReset: false
+                    });
+                    history.replace({
+                        pathname: '/login'
+                    });
+                })
+                .catch(err => console.log(err));
         } else {
             passError && codeError
                 ? (setPassError(true) && setCodeError(true))
@@ -27,8 +40,8 @@ export function ResetPasswordPage() {
         }
     }
 
-    return (
-        <div className={registerStyles.main}>
+    return ( isPasswordReset ?
+        (<div className={registerStyles.main}>
             <AuthForm>
                 <form className={formStyles.form}>
                     <h2 className={`text text_type_main-medium mb-6 ${formStyles.title}`}>Восстановление пароля</h2>
@@ -65,6 +78,7 @@ export function ResetPasswordPage() {
                 <p className={`${formStyles.auth__text} text text_type_main-default mt-4`}>Вспомнили пароль? <Link to="/login" className={formStyles.auth__link}>Войти</Link>
                 </p>
             </AuthForm>
-        </div>
+        </div>) :
+            <Redirect to="/forgot-password" />
     );
 }

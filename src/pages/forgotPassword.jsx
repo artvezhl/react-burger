@@ -4,21 +4,34 @@ import registerStyles from "./register.module.css";
 import AuthForm from "../components/auth-form/auth-form";
 import formStyles from "../components/auth-form/auth-form.module.css";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 
 import { forgotPassword } from "../services/api";
+import {SET_PASSWORD_RESET} from "../services/actions/auth";
+import {useDispatch} from "react-redux";
 const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
 
 export function ForgotPasswordPage() {
     const [email, setEmail] = useState('');
     const [error, setError] = useState(false);
+    const dispatch = useDispatch();
+    const history = useHistory();
 
     const onSubmit = (e) => {
         e.preventDefault();
         if (email.match(emailPattern)) {
             forgotPassword(email)
-                .then((result) => console.log(result))
-                .catch(result => console.log(result.success));
+                .then(() => {
+                    dispatch({
+                        type: SET_PASSWORD_RESET,
+                        passwordIsReset: true
+                    })
+                    history.replace({
+                        pathname: '/reset-password'
+                    })
+                })
+                .catch(err => console.log(err));
+
         } else {
             setError(true);
         }

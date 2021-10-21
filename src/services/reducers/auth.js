@@ -9,13 +9,14 @@ import {
     REFRESH_TOKEN_SUCCESS,
     REFRESH_TOKEN_FAILED,
     LOGOUT,
-    LOGOUT_SUCCESS, LOGOUT_FAILED, SET_USER, TOKEN_EXPIRED
+    LOGOUT_SUCCESS, LOGOUT_FAILED, SET_USER, TOKEN_EXPIRED, SET_PASSWORD_RESET
 } from '../actions/auth';
 
 const initialUserState = {
     user: null,
     userDataRequest: false,
     userDataFailed: false,
+    passwordReset: false
 }
 
 export const authReducer = (state = initialUserState, action) => {
@@ -36,7 +37,6 @@ export const authReducer = (state = initialUserState, action) => {
             return {
                 ...state,
                 user: action.user,
-                // accessToken: action.token,
                 userDataRequest: false,
                 userDataFailed: false,
             }
@@ -57,7 +57,6 @@ export const authReducer = (state = initialUserState, action) => {
             return {
                 ...state,
                 user: action.user,
-                // accessToken: action.token,
                 userDataRequest: false,
                 userDataFailed: false,
             }
@@ -77,7 +76,6 @@ export const authReducer = (state = initialUserState, action) => {
         case REFRESH_TOKEN_SUCCESS: {
             return {
                 ...state,
-                // accessToken: action.token,
                 userDataRequest: false,
                 userDataFailed: false,
             }
@@ -98,7 +96,6 @@ export const authReducer = (state = initialUserState, action) => {
             return {
                 ...state,
                 user: action.user,
-                // accessToken: action.token,
                 userDataRequest: false,
                 userDataFailed: false,
             }
@@ -107,6 +104,12 @@ export const authReducer = (state = initialUserState, action) => {
             return {
                 ...state,
                 userDataFailed: true,
+            }
+        }
+        case SET_PASSWORD_RESET: {
+            return {
+                ...state,
+                passwordReset: action.passwordIsReset
             }
         }
         default: {
