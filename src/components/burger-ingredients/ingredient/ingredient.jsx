@@ -4,18 +4,22 @@ import PropTypes from 'prop-types';
 
 import ingredientStyles from './ingredient.module.css';
 import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import {Link, useLocation} from "react-router-dom";
 
-export default function Ingredient({ ingredient, openModal }) {
+export default function Ingredient({ ingredient }) {
     const [, ingredientRef] = useDrag({
         type: 'ingredient',
         item: ingredient
-    })
-
-    useEffect(() => {
-    }, [ingredient.ingredientCount]);
+    });
+    const location = useLocation();
 
     return (
-        <li onClick={ () => openModal(ingredient) } className={ ingredientStyles.ingredient }>
+        <Link
+            to={{
+                pathname: `/ingredients/${ingredient._id}`,
+                state: { background: location }
+            }}
+            className={ ingredientStyles.ingredient }>
             <img ref={ingredientRef} src={ ingredient.image } alt={ ingredient.name }/>
             <div className={`${ ingredientStyles.ingredient__priceWrapper } text text_type_digits-default mt-1 mb-1`}>
                 <p className={ ingredientStyles.ingredient__price }>{ ingredient.price }</p>
@@ -31,7 +35,7 @@ export default function Ingredient({ ingredient, openModal }) {
                     size="default"
                 />
             }
-        </li>
+        </Link>
     );
 }
 

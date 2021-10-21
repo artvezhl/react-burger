@@ -1,10 +1,13 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {useSelector} from "react-redux";
 
 import detailsStyles from "./ingredient-details.module.css";
+import {useParams} from "react-router-dom";
 
 export default function IngredientDetails () {
-    const {image_large, name, calories, proteins, fat, carbohydrates} = useSelector(state => state.details)
+    const { id } = useParams();
+    const {image_large, name, calories, proteins, fat, carbohydrates} =
+        useSelector(state => state.ingredients.ingredients.filter((item) => item._id === id )[0]);
 
     return(
         <>

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useCallback, useState} from "react";
 import {useDispatch} from "react-redux";
 import { InView } from 'react-intersection-observer';
 
@@ -8,25 +8,20 @@ import ingredientStyles from './ingredients.module.css';
 import Ingredient from "../ingredient/ingredient";
 import Modal from "../../modal/modal";
 import IngredientDetails from "../../ingredient-details/ingredient-details";
+import {useHistory} from "react-router-dom";
 
 export default function Ingredients({ data }) {
     const [isModalVisible, setVisibleModal] = useState(false);
     const dispatch = useDispatch();
+    const history = useHistory();
 
-    const openModal = (ingredient) => {
+    const openModal = useCallback((ingredient) => {
         dispatch({
             type: SET_INGREDIENT_DETAILS,
             details: ingredient,
         })
         setVisibleModal(true);
-    }
-
-    const closeModal = () => {
-        setVisibleModal(false);
-        dispatch({
-            type: REMOVE_INGREDIENT_DETAILS,
-        })
-    }
+    }, [dispatch, setVisibleModal, history])
 
     const tabScrollChange = (inView, entry) => {
         if (inView) {
@@ -48,8 +43,6 @@ export default function Ingredients({ data }) {
                             return (<Ingredient
                                 key={ item._id }
                                 ingredient={ item }
-                                openModal={ openModal }
-                                closeModal={ closeModal }
                             />);
                             }
                         )}
@@ -63,8 +56,6 @@ export default function Ingredients({ data }) {
                                 return (<Ingredient
                                     key={ item._id }
                                     ingredient={ item }
-                                    openModal={ openModal }
-                                    closeModal={ closeModal }
                                 />);
                         }
                     )}
@@ -78,8 +69,6 @@ export default function Ingredients({ data }) {
                                         return (<Ingredient
                                             key={ item._id }
                                             ingredient={ item }
-                                            openModal={ openModal }
-                                            closeModal={ closeModal }
                                         />);
                                 }
                             )}
@@ -87,10 +76,6 @@ export default function Ingredients({ data }) {
                 </InView>
             </>
         )}
-            { isModalVisible &&
-            <Modal title='Детали ингредиента' onClose={ closeModal }>
-                <IngredientDetails/>
-            </Modal> }
         </div>
     );
 }
