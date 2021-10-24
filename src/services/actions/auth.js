@@ -1,6 +1,10 @@
-import {LOGIN_URL, REGISTER_URL, LOGOUT_URL, TOKEN_URL} from "../constants";
+import { REQUEST_URL } from "../constants";
 import { setCookie, getCookie } from "../../utils";
+import { fetchWithRefresh, checkResponse } from "../api";
 
+export const GET_USER = 'GET_USER';
+export const GET_USER_SUCCESS = 'GET_USER_SUCCESS';
+export const GET_USER_FAILED = 'GET_USER_FAILED';
 export const SET_USER = 'SET_USER';
 export const REGISTER_USER = 'REGISTER_USER';
 export const REGISTER_USER_SUCCESS = 'REGISTER_USER_SUCCESS';
@@ -8,7 +12,6 @@ export const REGISTER_USER_FAILED = 'REGISTER_USER_FAILED';
 export const AUTHORIZE_USER = 'AUTHORIZE_USER';
 export const AUTHORIZE_USER_SUCCESS = 'AUTHORIZE_USER_SUCCESS';
 export const AUTHORIZE_USER_FAILED = 'AUTHORIZE_USER_FAILED';
-export const TOKEN_EXPIRED = 'TOKEN_EXPIRED';
 export const REFRESH_TOKEN = 'REFRESH_TOKEN';
 export const REFRESH_TOKEN_SUCCESS = 'REFRESH_TOKEN_SUCCESS';
 export const REFRESH_TOKEN_FAILED = 'REFRESH_TOKEN_FAILED';
@@ -17,13 +20,101 @@ export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 export const LOGOUT_FAILED = 'LOGOUT_FAILED';
 export const SET_PASSWORD_RESET = 'SET_PASSWORD_RESET';
 
+export const getUserInfo = token => {
+    return function (dispatch) {
+        fetchWithRefresh(`${REQUEST_URL}/auth/user`, {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json',
+            }
+        }).then(data => {
+            if (data.success) {
+                dispatch({
+                    type: GET_USER_SUCCESS,
+                    user: data.user,
+                })
+            } else {
+                throw Error('Error user request');
+            }
+        }).catch(() => {
+            dispatch({
+                type: GET_USER_FAILED,
+            })
+        })
+    }
+}
+
+export const updateUserInfo = (form, token) => {
+    return function (dispatch) {
+        fetchWithRefresh(`${REQUEST_URL}/auth/user`, {
+            method: 'PATCH',
+            headers: {
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(form)
+        }).then(data => {
+            if (data.success) {
+                dispatch({
+                    type: GET_USER_SUCCESS,
+                    user: data.user,
+                })
+            } else {
+                throw Error('Error user request');
+            }
+        }).catch(() => {
+            dispatch({
+                type: GET_USER_FAILED,
+            })
+        })
+    }
+}
+
+export const forgotPassword = email => {
+    return function (dispatch) {
+        return fetchWithRefresh(`${REQUEST_URL}/password-reset`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({
+                email: email,
+            })
+        }).then((res) => {
+            console.log('HERE and ', res)
+            if (res.success && res.message === 'Reset email sent') {
+                dispatch({
+                    type: SET_PASSWORD_RESET,
+                    passwordIsReset: true
+                })
+            }
+        }).catch(e => console.log(e))
+    }
+}
+
+export const resetPassword = (password, code) => {
+    return function (dispatch) {
+        fetchWithRefresh(`${REQUEST_URL}/password-reset/reset`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({
+                "password": password,
+                "token": code
+            })
+        }).then(checkResponse).catch(err => console.log(err))
+    }
+}
+
 export const registerRequest = form => {
     return function (dispatch) {
         dispatch({
             type: REGISTER_USER,
         })
 
-        fetch(REGISTER_URL, {
+        fetch(`${REQUEST_URL}/auth/register`, {
             method: 'POST',
             mode: 'cors',
             cache: 'no-cache',
@@ -45,7 +136,6 @@ export const registerRequest = form => {
                     dispatch({
                         type: REGISTER_USER_SUCCESS,
                         user: data.user,
-                        // token: token,
                     })
                 })
             } else {
@@ -67,7 +157,7 @@ export const loginRequest = form => {
             type: REFRESH_TOKEN,
         })
 
-        fetch(LOGIN_URL, {
+        fetch(`${REQUEST_URL}/auth/login`, {
             method: 'POST',
             mode: 'cors',
             cache: 'no-cache',
@@ -113,7 +203,7 @@ export const refreshToken = () => {
 
         const refreshToken = getCookie('refreshToken');
 
-        fetch(TOKEN_URL, {
+        fetch(`${REQUEST_URL}/auth/token`, {
             method: 'POST',
             mode: 'cors',
             cache: 'no-cache',
@@ -159,7 +249,7 @@ export const logoutRequest = () => {
 
         const refreshToken = localStorage.getItem('refreshToken');
 
-        fetch(LOGOUT_URL, {
+        fetch(`${REQUEST_URL}/auth/logout`, {
             method: 'POST',
             mode: 'cors',
             cache: 'no-cache',

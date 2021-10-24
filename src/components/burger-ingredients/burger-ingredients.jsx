@@ -1,10 +1,10 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {useDispatch, useSelector} from "react-redux";
 
 import ingredientsStyles from './burger-ingredients.module.css'
 import IngredientsTabs from "./ingredients-tabs/ingredients-tabs";
 import Ingredients from "./ingredients/ingredients";
-import {getIngredients, SET_ACTIVE_TAB} from "../../services/actions/burger-ingredients";
+import { SET_ACTIVE_TAB } from "../../services/actions/burger-ingredients";
 
 export default function BurgerIngredients() {
     const { ingredients, isLoading, hasError, activeTab } = useSelector(state => ({
@@ -14,10 +14,6 @@ export default function BurgerIngredients() {
         activeTab: state.ingredients.activeTab,
     }));
     const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(getIngredients());
-    }, [dispatch])
 
     const onTabClick = meal => {
         let mealType = '';

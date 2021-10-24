@@ -16,7 +16,13 @@ export function ProtectedRoute({ children, ...rest }) {
         );
     }
 
-    if (user && (pathname === ("/login" || "/register" || "/forgot-password" || "/reset-password"))) {
+    if (user
+        && (
+            pathname === "/login"
+            || pathname === "/register"
+            || pathname === "/forgot-password"
+            || pathname === "/reset-password"
+        )) {
         return (
             <Redirect to={{
                 pathname: '/',
@@ -25,19 +31,14 @@ export function ProtectedRoute({ children, ...rest }) {
         );
     }
 
-    if (pathname === "/profile") {
-        return ( !user
-                ? <Redirect to={{
-                    pathname: '/login',
-                }} />
-                : children
-        );
-    }
-
     return (
         <Route
             { ...rest }
-            render={() => (children)}
+            render={() =>
+                (!user && pathname === '/profile')
+                    ? <Redirect to={{ pathname: '/login' }} />
+                    : children
+            }
         />
     );
 }

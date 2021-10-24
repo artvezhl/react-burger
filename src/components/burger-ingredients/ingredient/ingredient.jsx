@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {useDrag} from "react-dnd";
 import PropTypes from 'prop-types';
 

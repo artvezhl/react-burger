@@ -3,10 +3,10 @@ import React, {useCallback, useEffect, useRef, useState} from "react";
 import profileStyles from './profile.module.css';
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import { getCookie } from "../utils";
-import { updateUserInfo } from "../services/api";
+import {SET_USER, updateUserInfo} from "../services/actions/auth";
 import { formHandler as onChange } from "../utils";
 import {Link, useLocation} from "react-router-dom";
-import {logoutRequest, SET_USER} from "../services/actions/auth";
+import {logoutRequest} from "../services/actions/auth";
 import {useDispatch, useSelector} from "react-redux";
 
 const onFocusInput = (inputRef) => inputRef.current.classList.add(`${profileStyles.profile__input_isActive}`);
@@ -51,42 +51,30 @@ export function ProfilePage() {
     }, [user, form]);
 
     const updateInfo = useCallback(
-        () => {
+        (e) => {
+            e.preventDefault();
             const token = getCookie('accessToken');
-            updateUserInfo(form, token)
-                .then((data) => {
-                    const { name, email } = data.user;
-                    setForm({
-                        ...form,
-                        name: name,
-                        login: email,
-                        password: ''
-                    })
-                    dispatch({
-                        type: SET_USER,
-                        user: data.user
-                    })
-                }).catch(err => console.log(err));
+            try {
+                dispatch(updateUserInfo(form, token));
+                dispatch({
+                    type: SET_USER,
+                    user: {
+                        name: form.name,
+                        login: form.login
+                    }
+                })
+            } catch (err) {
+                console.log(err);
+            }
     }, [dispatch, form]);
 
     useEffect(() => {
-        console.log('user in profile', user);
-    //     const token = getCookie('accessToken');
-    //     if (token) {
-            // getUserInfo(token).then((data) => {
-            //     const { name, email } = data.user;
-                setForm({
-                    ...form,
-                    name: user.name,
-                    login: user.email
-                })
-            //     dispatch({
-            //         type: SET_USER,
-            //         user: data.user
-            //     });
-            // }).catch(err => console.log(err))
-    //     }
-    }, [dispatch])
+        setForm({
+            ...form,
+            name: user.name,
+            login: user.email
+        })
+    }, [])
 
     return (
         (user)
@@ -102,7 +90,7 @@ export function ProfilePage() {
                     <Link onClick={logout} to="/" className={`text text_type_main-medium ${profileStyles.profile__link}`}>Выход</Link>
                 </li>
             </ul>
-            <div className={profileStyles.profile__inputs}>
+            <form className={profileStyles.profile__inputs} onSubmit={updateInfo}>
                 <Input
                     type={"text"}
                     placeholder={"Имя"}
@@ -152,12 +140,11 @@ export function ProfilePage() {
                     <Button
                         type="primary"
                         size="medium"
-                        onClick={updateInfo}
                     >
                         Сохранить
                     </Button>
                 </div>
-            </div>
+            </form>
         </div>)
             : null
 

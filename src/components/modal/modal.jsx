@@ -16,7 +16,7 @@ export default function Modal({ title, onClose, children }) {
 
         document.addEventListener("keydown", onEscKeyDown);
         return () => {
-            document.addEventListener("keydown", onEscKeyDown);
+            document.removeEventListener("keydown", onEscKeyDown);
         }
     },[onClose])
 

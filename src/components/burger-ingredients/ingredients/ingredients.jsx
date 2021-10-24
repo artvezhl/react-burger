@@ -1,27 +1,13 @@
-import React, {useCallback, useState} from "react";
+import React from "react";
 import {useDispatch} from "react-redux";
 import { InView } from 'react-intersection-observer';
 
-import {REMOVE_INGREDIENT_DETAILS, SET_INGREDIENT_DETAILS} from "../../../services/actions/ingredient-details";
 import { SET_ACTIVE_TAB } from "../../../services/actions/burger-ingredients";
 import ingredientStyles from './ingredients.module.css';
 import Ingredient from "../ingredient/ingredient";
-import Modal from "../../modal/modal";
-import IngredientDetails from "../../ingredient-details/ingredient-details";
-import {useHistory} from "react-router-dom";
 
 export default function Ingredients({ data }) {
-    const [isModalVisible, setVisibleModal] = useState(false);
     const dispatch = useDispatch();
-    const history = useHistory();
-
-    const openModal = useCallback((ingredient) => {
-        dispatch({
-            type: SET_INGREDIENT_DETAILS,
-            details: ingredient,
-        })
-        setVisibleModal(true);
-    }, [dispatch, setVisibleModal, history])
 
     const tabScrollChange = (inView, entry) => {
         if (inView) {

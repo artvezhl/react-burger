@@ -1,13 +1,13 @@
-import React, {useCallback, useEffect, useRef, useState} from "react";
+import React, {useCallback, useRef, useState} from "react";
 
 import loginStyles from './login.module.css';
 import AuthForm from "../components/auth-form/auth-form";
 import { formHandler as onChange } from "../utils";
 import formStyles from "../components/auth-form/auth-form.module.css";
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
-import {Link, Redirect} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {loginRequest} from "../services/actions/auth";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 
 export function LoginPage () {
     const [passwordInputIcon, setIcon] = useState('ShowIcon');
@@ -15,7 +15,6 @@ export function LoginPage () {
         "email": "",
         "password": "",
     });
-    const user = useSelector(state => state.auth.user);
     const passwordRef = useRef(null);
 
     const dispatch = useDispatch();
@@ -38,14 +37,10 @@ export function LoginPage () {
         [dispatch, form]
     );
 
-    useEffect(() => {
-        console.log('user is ', user);
-    }, [])
-
     return (
         <div className={loginStyles.main}>
                 <AuthForm>
-                    <form className={formStyles.form}>
+                    <form className={formStyles.form} onSubmit={login}>
                         <h2 className={`text text_type_main-medium mb-6 ${formStyles.title}`}>Вход</h2>
                         <Input
                             type={"email"}
@@ -53,8 +48,6 @@ export function LoginPage () {
                             value={form.email}
                             onChange={(e) => onChange(e, setForm, form)}
                             name={'email'}
-                            // error={codeError}
-                            // errorText={'Поле не может быть пустым'}
                             size={'default'}
                         />
                         <Input
@@ -68,7 +61,7 @@ export function LoginPage () {
                             onIconClick={onIconClick}
                             size={'default'}
                         />
-                        <Button type="primary" size="medium" onClick={login}>
+                        <Button type="primary" size="medium">
                             Войти
                         </Button>
                     </form>

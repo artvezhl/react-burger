@@ -4,7 +4,7 @@ import AuthForm from "../components/auth-form/auth-form";
 import formStyles from "../components/auth-form/auth-form.module.css";
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, Redirect, useHistory} from "react-router-dom";
-import {resetPassword} from "../services/api";
+import { resetPassword } from "../services/actions/auth";
 import {SET_PASSWORD_RESET} from "../services/actions/auth";
 import {useDispatch, useSelector} from "react-redux";
 
@@ -20,30 +20,31 @@ export function ResetPasswordPage() {
     const onSubmit = (e) => {
         e.preventDefault();
         if (password && code) {
-            resetPassword(password, code)
-                .then((result) => {
-                    dispatch({
-                        type: SET_PASSWORD_RESET,
-                        passwordIsReset: false
-                    });
-                    history.replace({
-                        pathname: '/login'
-                    });
-                })
-                .catch(err => console.log(err));
+            try {
+                dispatch(resetPassword(password, code));
+                dispatch({
+                    type: SET_PASSWORD_RESET,
+                    passwordIsReset: false
+                });
+                history.replace({
+                    pathname: '/login'
+                });
+            } catch (e) {
+                console.log(e);
+            }
         } else {
             passError && codeError
                 ? (setPassError(true) && setCodeError(true))
                 : passError
                 ? setPassError(true)
-                : setCodeError(true);
+                : setCodeError(true)
         }
     }
 
     return ( isPasswordReset ?
         (<div className={registerStyles.main}>
             <AuthForm>
-                <form className={formStyles.form}>
+                <form className={formStyles.form} onSubmit={onSubmit}>
                     <h2 className={`text text_type_main-medium mb-6 ${formStyles.title}`}>Восстановление пароля</h2>
                     <Input
                         type="password"
@@ -71,7 +72,7 @@ export function ResetPasswordPage() {
                         errorText={'Поле не может быть пустым'}
                         size={'default'}
                     />
-                    <Button type="primary" size="medium" onClick={onSubmit}>
+                    <Button type="primary" size="medium">
                         Сохранить
                     </Button>
                 </form>

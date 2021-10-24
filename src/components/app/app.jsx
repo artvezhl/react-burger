@@ -1,5 +1,5 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {BrowserRouter as Router, Switch, Route, useHistory, useLocation} from 'react-router-dom';
+import React, { useEffect} from 'react';
+import {Switch, Route, useHistory, useLocation} from 'react-router-dom';
 
 import AppHeader from "../app-header/app-header";
 import styles from './app.module.css';
@@ -15,17 +15,11 @@ import {
     Ingredient
 } from "../../pages";
 import Modal from "../modal/modal";
-import {RESET_ORDER_NUMBER} from "../../services/actions/order-details";
-import {useDispatch, useSelector} from "react-redux";
-import {
-    REMOVE_INGREDIENT_DETAILS,
-    SET_INGREDIENT_DETAILS,
-    SET_MODAL_CLOSE
-} from "../../services/actions/ingredient-details";
+import {useDispatch} from "react-redux";
 import IngredientDetails from "../ingredient-details/ingredient-details";
+import { getUserInfo } from "../../services/actions/auth";
 import {getCookie} from "../../utils";
-import {getUserInfo} from "../../services/api";
-import {SET_USER} from "../../services/actions/auth";
+import {getIngredients} from "../../services/actions/burger-ingredients";
 
 function App() {
     const history = useHistory();
@@ -34,19 +28,8 @@ function App() {
 
     useEffect(() => {
         const token = getCookie('accessToken');
-        if (token) {
-            getUserInfo(token)
-                .then(data => {
-                    if (data.success) {
-                        dispatch({
-                            type: SET_USER,
-                            user: data.user
-                        });
-                    }
-                })
-                .catch(err => console.log('err - ', err.message))
-        }
-
+        dispatch(getIngredients());
+        dispatch(getUserInfo(token));
     }, [dispatch]);
 
     let back = e => {

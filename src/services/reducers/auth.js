@@ -9,18 +9,38 @@ import {
     REFRESH_TOKEN_SUCCESS,
     REFRESH_TOKEN_FAILED,
     LOGOUT,
-    LOGOUT_SUCCESS, LOGOUT_FAILED, SET_USER, TOKEN_EXPIRED, SET_PASSWORD_RESET
+    LOGOUT_SUCCESS, LOGOUT_FAILED, SET_USER, SET_PASSWORD_RESET, GET_USER, GET_USER_SUCCESS, GET_USER_FAILED
 } from '../actions/auth';
 
 const initialUserState = {
     user: null,
-    userDataRequest: false,
+    userDataRequest: true,
     userDataFailed: false,
     passwordReset: false
 }
 
 export const authReducer = (state = initialUserState, action) => {
     switch (action.type) {
+        // case GET_USER: {
+        //     return {
+        //         ...state,
+        //         userDataRequest: true
+        //     }
+        // }
+        case GET_USER_SUCCESS: {
+            return {
+                ...state,
+                user: action.user,
+                userDataRequest: false
+            }
+        }
+        case GET_USER_FAILED: {
+            return {
+                ...state,
+                userDataRequest: false,
+                userDataFailed: true
+            }
+        }
         case SET_USER: {
             return {
                 ...state,

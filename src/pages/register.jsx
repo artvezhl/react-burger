@@ -31,7 +31,7 @@ export function RegisterPage () {
         <div className={registerStyles.main}>
             { !user
                 ? <AuthForm>
-                <form className={formStyles.form}>
+                <form className={formStyles.form} onSubmit={register}>
                     <h2 className={`text text_type_main-medium mb-6 ${formStyles.title}`}>Регистрация</h2>
                     <Input
                         type={"text"}
@@ -39,8 +39,6 @@ export function RegisterPage () {
                         value={form.name}
                         onChange={(e) => onChange(e, setForm, form)}
                         name={'name'}
-                        // error={codeError}
-                        // errorText={'Поле не может быть пустым'}
                         size={'default'}
                     />
                     <Input
@@ -49,8 +47,6 @@ export function RegisterPage () {
                         value={form.email}
                         onChange={(e) => onChange(e, setForm, form)}
                         name={'email'}
-                        // error={codeError}
-                        // errorText={'Поле не может быть пустым'}
                         size={'default'}
                     />
                     {/*TODO сделать чтобы пароль можно было скрывать и открывать при нажатии на иконку с глазом*/}
@@ -61,14 +57,11 @@ export function RegisterPage () {
                         onChange={onChange}
                         name={'password'}
                         icon={'ShowIcon'}
-                        // error={codeError}
-                        // errorText={'Поле не может быть пустым'}
                         size={'default'}
                     />
                     <Button
                         type="primary"
                         size="medium"
-                        onClick={register}
                     >
                         Зарегистрироваться
                     </Button>

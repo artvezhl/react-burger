@@ -1,24 +1,16 @@
 import React, { useEffect, useState} from "react";
-import {useHistory, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import ingredientStyles from "./ingredient.module.css";
-import {useDispatch, useSelector} from "react-redux";
-import {getIngredients} from "../services/actions/burger-ingredients";
+import {useSelector} from "react-redux";
 
 export const Ingredient = () => {
     let currentIngredients = useSelector(state => state.ingredients.ingredients);
     const [currentIngredient, setCurrentIngredient] = useState();
     const { id } = useParams();
-    const dispatch = useDispatch();
-    const history = useHistory();
-
-    useEffect(() => {
-        console.log(history);
-        dispatch(getIngredients());
-    }, [dispatch])
 
     useEffect(() => {
         setCurrentIngredient(currentIngredients.filter((item) => item._id === id)[0]);
-    }, [currentIngredients])
+    }, [currentIngredients, id])
 
     return (
         currentIngredients &&
