@@ -11,7 +11,7 @@ const modalRoot = document.getElementById("react-modals");
 export default function Modal({ title, onClose, children }) {
     useEffect(() => {
         function onEscKeyDown(e) {
-            if (e.key === "Escape") onClose();
+            if (e.key === "Escape") onClose(e);
         }
 
         document.addEventListener("keydown", onEscKeyDown);
