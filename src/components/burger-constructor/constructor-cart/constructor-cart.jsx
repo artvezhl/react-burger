@@ -6,11 +6,16 @@ import { CurrencyIcon, Button } from "@ya.praktikum/react-developer-burger-ui-co
 import Modal from "../../modal/modal";
 import OrderDetails from "../../order-details/order-details";
 import {RESET_ORDER_NUMBER} from "../../../services/actions/order-details";
+import {useHistory} from "react-router-dom";
 
 export default function ConstructorCart() {
     const [visibleModal, setVisibleModal] = useState(false);
-    const total = useSelector(state => state.burger.total);
+    const { total, user } = useSelector(state => ({
+        total: state.burger.total,
+        user: state.auth.user
+    }));
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const openModal = () => {
         setVisibleModal(true);
@@ -30,7 +35,11 @@ export default function ConstructorCart() {
     );
 
     const orderHandler = () => {
-        openModal();
+        user
+            ? openModal()
+            : history.replace({
+            pathname: '/login'
+        })
     }
 
     return (
