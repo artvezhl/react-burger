@@ -1,21 +1,80 @@
-import React from 'react';
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import React, { useEffect} from 'react';
+import {Switch, Route, useHistory, useLocation} from 'react-router-dom';
 
-import appStyles from './app.module.css';
 import AppHeader from "../app-header/app-header";
-import BurgerIngredients from "../burger-ingredients/burger-ingredients";
-import BurgerConstructor from "../burger-constructor/burger-constructor";
+import styles from './app.module.css';
+import { ProtectedRoute } from "../protected-route/ProtectedRoute";
+import {
+    HomePage,
+    LoginPage,
+    RegisterPage,
+    NotFoundPage,
+    ForgotPasswordPage,
+    ResetPasswordPage,
+    ProfilePage,
+    Ingredient
+} from "../../pages";
+import Modal from "../modal/modal";
+import {useDispatch} from "react-redux";
+import IngredientDetails from "../ingredient-details/ingredient-details";
+import { getUserInfo } from "../../services/actions/auth";
+import {getCookie} from "../../utils";
+import {getIngredients} from "../../services/actions/burger-ingredients";
 
 function App() {
+    const history = useHistory();
+    const location = useLocation();
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        const token = getCookie('accessToken');
+        dispatch(getIngredients());
+        dispatch(getUserInfo(token));
+    }, [dispatch]);
+
+    let back = e => {
+        e.stopPropagation();
+        history.goBack();
+    };
+
+    const action = history.action ==='PUSH' || history.action ==='REPLACE';
+    const modalIngredientOpen = action && location.state && location.state.background;
+
     return (
         <>
             <AppHeader/>
-            <main className={appStyles.main}>
-                <DndProvider backend={HTML5Backend}>
-                    <BurgerIngredients/>
-                    <BurgerConstructor/>
-                </DndProvider>
+            <main className={styles.main}>
+                <Switch location={modalIngredientOpen  || location}>
+                    <Route path="/" exact={true}>
+                        <HomePage />
+                    </Route>
+                    <ProtectedRoute path="/login" exact={true}>
+                        <LoginPage />
+                    </ProtectedRoute>
+                    <ProtectedRoute path="/register" exact={true}>
+                        <RegisterPage />
+                    </ProtectedRoute>
+                    <ProtectedRoute path="/forgot-password" exact={true}>
+                        <ForgotPasswordPage />
+                    </ProtectedRoute>
+                    <ProtectedRoute path="/reset-password" exact={true}>
+                        <ResetPasswordPage />
+                    </ProtectedRoute>
+                    <ProtectedRoute path="/profile" exact={true}>
+                        <ProfilePage />
+                    </ProtectedRoute>
+                    <Route path="/ingredients/:id" exact={true}>
+                        <Ingredient />
+                    </Route>
+                    <Route>
+                        <NotFoundPage />
+                    </Route>
+                </Switch>
+                {modalIngredientOpen && (<Route path="/ingredients/:id">
+                    <Modal onClose={back}>
+                        <IngredientDetails />
+                    </Modal>
+                </Route>)}
             </main>
         </>
     );

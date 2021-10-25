@@ -1,0 +1,12 @@
+.content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.content__row {
+    width: 25%;
+    text-align: center;
+}

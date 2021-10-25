@@ -28,9 +28,20 @@
     max-height: 24px;
     display: flex;
     gap: 8px;
+    text-decoration: none;
 }
 
 .header__iconWrapper:last-child {
     margin: 0;
+}
+
+.header__link {
+    color: var(--text);
+    text-decoration: none;
+}
+
+.header__link:hover {
+    text-decoration: underline;
+    color: var(--text);
 }
 

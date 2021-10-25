@@ -76,7 +76,7 @@ export const ConstructorIngredient = memo(function ({ ingredient, index, moveCar
 
     useEffect(() => {
         setIngredientsIndex();
-    }, [ingredient.index]);
+    }, [ingredient.index, setIngredientsIndex]);
 
     const opacity = isDragging ? 0 : 1;
     drag(drop(cardRef));

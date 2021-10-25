@@ -1,4 +1,3 @@
-import update from 'immutability-helper';
 import {
     ADD_INGREDIENT,
     REMOVE_INGREDIENT,
