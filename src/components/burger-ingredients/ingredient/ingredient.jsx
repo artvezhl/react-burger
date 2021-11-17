@@ -19,8 +19,9 @@ export default function Ingredient({ ingredient }) {
                 pathname: `/ingredients/${ingredient._id}`,
                 state: { background: location }
             }}
+            ref={ingredientRef}
             className={ ingredientStyles.ingredient }>
-            <img ref={ingredientRef} src={ ingredient.image } alt={ ingredient.name }/>
+            <img src={ ingredient.image } alt={ ingredient.name }/>
             <div className={`${ ingredientStyles.ingredient__priceWrapper } text text_type_digits-default mt-1 mb-1`}>
                 <p className={ ingredientStyles.ingredient__price }>{ ingredient.price }</p>
                 <CurrencyIcon className="ml-2" type="primary dashed" />
