@@ -128,7 +128,11 @@ export const ConstructorList = memo(function ConstructorList() {
             : <>{topBunMarkup} {ingredientsMarkup} {bottomBunMarkup}</>;
 
     return (
-        <div ref={listRef} className={ listStyles.commonList }>
+        <div
+            ref={listRef}
+            onDrop={(e) => e.preventDefault()}
+            className={ listStyles.commonList }
+        >
             {content}
         </div>
     )
