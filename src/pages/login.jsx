@@ -1,7 +1,7 @@
 import React, {useCallback, useRef, useState} from "react";
 
 import loginStyles from './login.module.css';
-import AuthForm from "../components/auth-form/auth-form";
+import AuthForm from "../components/auth-form/auth-form.tsx";
 import { formHandler as onChange } from "../utils";
 import formStyles from "../components/auth-form/auth-form.module.css";
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";

@@ -1,13 +1,12 @@
 import React, {useCallback, useState} from "react";
 
 import registerStyles from "./register.module.css";
-import AuthForm from "../components/auth-form/auth-form";
+import AuthForm from "../components/auth-form/auth-form.tsx";
 import formStyles from "../components/auth-form/auth-form.module.css";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, Redirect} from "react-router-dom";
 
 import { forgotPassword } from "../services/actions/auth";
-import {SET_PASSWORD_RESET} from "../services/actions/auth";
 import {useDispatch, useSelector} from "react-redux";
 const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
 

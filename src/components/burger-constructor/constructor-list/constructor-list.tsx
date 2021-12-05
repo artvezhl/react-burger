@@ -1,4 +1,4 @@
-import React, {memo, useEffect, useCallback} from "react";
+import React, {memo, useEffect, useCallback, FC} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import { useDrop } from "react-dnd";
 
@@ -14,18 +14,21 @@ import {
     SET_INGREDIENT_INDEX,
 } from "../../../services/actions/constructor-list";
 import {INCREASE_INGREDIENT_COUNT} from "../../../services/actions/burger-ingredients";
+import { commonStateType } from "../../../services/reducers/reducers-types";
+import { TIngredient } from "../../burger-ingredients/ingredient/ingredient-types";
+import { TMoveCard } from "./constructor-list-types";
 
 import listStyles from './constructor-list.module.css';
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 
-export const ConstructorList = memo(function ConstructorList() {
-    const { bun, ingredients } = useSelector(state => ({
+export const ConstructorList: FC = memo(() => {
+    const { bun, ingredients } = useSelector((state: commonStateType) => ({
         bun: state.burger.bun,
         ingredients: state.burger.ingredients,
     }));
     const dispatch = useDispatch();
 
-    const moveCard = (index, atIndex) => {
+    const moveCard: TMoveCard = (index, atIndex) => {
         dispatch({
             type: MOVE_CARD,
             index: index,
@@ -34,7 +37,7 @@ export const ConstructorList = memo(function ConstructorList() {
     }
     const [, listRef] = useDrop({
         accept: 'ingredient',
-        drop(item) {
+        drop(item: TIngredient) {
             dispatch({
                 type: ADD_INGREDIENT,
                 ingredient: item,
@@ -98,7 +101,7 @@ export const ConstructorList = memo(function ConstructorList() {
             />
         </article>;
 
-    const renderIngredients = (ingredient, index) => {
+    const renderIngredients = (ingredient: any, index: number) => {
         return (
             <ConstructorIngredient
                 key={index}

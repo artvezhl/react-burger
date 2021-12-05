@@ -1,15 +1,16 @@
-import React from "react";
+import React, {FC} from "react";
 import {useDispatch} from "react-redux";
 import { InView } from 'react-intersection-observer';
 
 import { SET_ACTIVE_TAB } from "../../../services/actions/burger-ingredients";
 import ingredientStyles from './ingredients.module.css';
 import Ingredient from "../ingredient/ingredient";
+import { TIngredientsProps, TTabScrollChange } from "./ingredients-types";
 
-export default function Ingredients({ data }) {
+const Ingredients: FC<TIngredientsProps> = ({ data }) => {
     const dispatch = useDispatch();
 
-    const tabScrollChange = (inView, entry) => {
+    const tabScrollChange: TTabScrollChange = (inView, entry) => {
         if (inView) {
             dispatch({
                 type: SET_ACTIVE_TAB,
@@ -65,3 +66,5 @@ export default function Ingredients({ data }) {
         </div>
     );
 }
+
+export default Ingredients;

@@ -1,11 +1,13 @@
-import React from "react";
+import React, { FC } from "react";
 
 import formStyles from './auth-form.module.css';
 
-export default function AuthForm ({ children }) {
+const AuthForm:FC =  ({ children }) => {
     return (
         <div className={formStyles.auth}>
             {children}
         </div>
     );
 }
+
+export default AuthForm;

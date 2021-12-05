@@ -5,9 +5,10 @@ import ingredientsStyles from './burger-ingredients.module.css'
 import IngredientsTabs from "./ingredients-tabs/ingredients-tabs";
 import Ingredients from "./ingredients/ingredients";
 import { SET_ACTIVE_TAB } from "../../services/actions/burger-ingredients";
+import {commonStateType} from "../../services/reducers/reducers-types";
 
-export default function BurgerIngredients() {
-    const { ingredients, isLoading, hasError, activeTab } = useSelector(state => ({
+const BurgerIngredients = () => {
+    const { ingredients, isLoading, hasError, activeTab } = useSelector((state: commonStateType) => ({
         ingredients: state.ingredients.ingredients,
         isLoading: state.ingredients.ingredientsRequest,
         hasError: state.ingredients.ingredientsFailed,
@@ -15,7 +16,7 @@ export default function BurgerIngredients() {
     }));
     const dispatch = useDispatch();
 
-    const onTabClick = meal => {
+    const onTabClick = (meal: string) => {
         let mealType = '';
         switch (meal) {
             case 'Булки':
@@ -54,3 +55,5 @@ export default function BurgerIngredients() {
         </section>
     );
 }
+
+export default BurgerIngredients;

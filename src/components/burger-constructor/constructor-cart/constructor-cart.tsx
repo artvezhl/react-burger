@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState, FC } from "react";
 import {useDispatch, useSelector} from "react-redux";
 
 import totalStyles from './constructor-cart.module.css';
@@ -7,21 +7,23 @@ import Modal from "../../modal/modal";
 import OrderDetails from "../../order-details/order-details";
 import {RESET_ORDER_NUMBER} from "../../../services/actions/order-details";
 import {useHistory} from "react-router-dom";
+import { commonStateType } from "../../../services/reducers/reducers-types";
+import { THistoryState } from "./constructor-cart-types";
 
-export default function ConstructorCart() {
+const ConstructorCart:FC = () => {
     const [visibleModal, setVisibleModal] = useState(false);
-    const { total, user } = useSelector(state => ({
+    const { total, user } = useSelector((state: commonStateType) => ({
         total: state.burger.total,
         user: state.auth.user
     }));
     const dispatch = useDispatch();
-    const history = useHistory();
+    const history = useHistory<THistoryState>();
 
-    const openModal = () => {
+    const openModal = (): void => {
         setVisibleModal(true);
     }
 
-    const closeModal = () => {
+    const closeModal = (): void => {
         setVisibleModal(false);
         dispatch({
             type: RESET_ORDER_NUMBER,
@@ -34,7 +36,7 @@ export default function ConstructorCart() {
         </Modal>
     );
 
-    const orderHandler = () => {
+    const orderHandler = (): void => {
         user
             ? openModal()
             : history.replace({
@@ -52,6 +54,8 @@ export default function ConstructorCart() {
             </Button>
             { visibleModal && modal }
         </div>
-        : ''
+        : null
     );
 }
+
+export default ConstructorCart;

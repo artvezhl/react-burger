@@ -1,10 +1,10 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, {FC} from "react";
 
 import tabsStyles from './ingredients-tabs.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
+import { TIngredientsTabs } from './ingredients-tabs-types';
 
-export default function IngredientsTabs({ activeMeal, changeMeal }) {
+const IngredientsTabs: FC<TIngredientsTabs> = ({ activeMeal, changeMeal }) => {
     return (
         <div className={ tabsStyles.ingredients__tabs }>
             <Tab value="Булки" active={ activeMeal === 'Булки' } onClick={ changeMeal }>
@@ -20,7 +20,4 @@ export default function IngredientsTabs({ activeMeal, changeMeal }) {
     );
 }
 
-IngredientsTabs.propTypes = {
-    activeMeal: PropTypes.string.isRequired,
-    changeMeal: PropTypes.func.isRequired,
-}
+export default IngredientsTabs;

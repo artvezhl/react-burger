@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import registerStyles from "./register.module.css";
-import AuthForm from "../components/auth-form/auth-form";
+import AuthForm from "../components/auth-form/auth-form.tsx";
 import formStyles from "../components/auth-form/auth-form.module.css";
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, Redirect, useHistory} from "react-router-dom";

@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 
 import registerStyles from "./register.module.css";
-import AuthForm from "../components/auth-form/auth-form";
+import AuthForm from "../components/auth-form/auth-form.tsx";
 import { formHandler as onChange } from "../utils";
 import formStyles from "../components/auth-form/auth-form.module.css";
 import { registerRequest } from "../services/actions/auth";

@@ -1,20 +1,26 @@
-import React, {memo, useEffect, useRef} from "react";
+import React, {memo, useEffect, useRef, FC} from "react";
 import {useDispatch} from "react-redux";
 import {useDrag, useDrop} from "react-dnd";
-import PropTypes from 'prop-types';
 
 import listStyles from "../constructor-list/constructor-list.module.css";
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { REMOVE_INGREDIENT } from "../../../services/actions/constructor-list";
 import { DECREASE_INGREDIENT_COUNT } from "../../../services/actions/burger-ingredients";
+import { TConstructorIngredient } from "./constructor-ingredient-types";
 
-export const ConstructorIngredient = memo(function ({ ingredient, index, moveCard, setIngredientsIndex }) {
-    const cardRef = useRef(null);
+export const ConstructorIngredient: FC<TConstructorIngredient> = memo(
+    ({
+         ingredient,
+         index,
+         moveCard,
+         setIngredientsIndex
+    }) => {
+    const cardRef = useRef<HTMLElement>(null);
     const {_id, name, price, image} = ingredient;
     const dispatch = useDispatch();
     const [, drop] = useDrop({
         accept: 'card',
-        hover: (item, monitor) => {
+        hover: (item: {index: number}, monitor) => {
             const dragIndex = item.index;
             const hoverIndex = index;
 
@@ -23,11 +29,14 @@ export const ConstructorIngredient = memo(function ({ ingredient, index, moveCar
                 return;
             }
             // Determine rectangle on screen
-            const hoverBoundingRect = cardRef.current?.getBoundingClientRect();
+            const hoverBoundingRect: any = cardRef.current?.getBoundingClientRect();
             // Get vertical middle
             const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
             // Determine mouse position
-            const clientOffset = monitor.getClientOffset();
+            const clientOffset: {
+                x: number;
+                y: number;
+            } | any = monitor.getClientOffset();
             // Get pixels to the top
             const hoverClientY = clientOffset.y - hoverBoundingRect.top;
             // Only perform the move when the mouse has crossed half of the items height
@@ -60,7 +69,7 @@ export const ConstructorIngredient = memo(function ({ ingredient, index, moveCar
         })
     })
 
-    const removeIngredient = (e, id, index) => {
+    const removeIngredient = (e: any, id: string, index: number) => {
         if (e.target.closest('.constructor-element__action')) {
             dispatch({
                 type: REMOVE_INGREDIENT,
@@ -97,15 +106,3 @@ export const ConstructorIngredient = memo(function ({ ingredient, index, moveCar
             </article>
     );
 })
-
-ConstructorIngredient.propTypes = {
-    ingredient: PropTypes.shape({
-        _id: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        price: PropTypes.number.isRequired,
-        image: PropTypes.string.isRequired,
-    }),
-    index: PropTypes.number.isRequired,
-    moveCard: PropTypes.func.isRequired,
-    setIngredientsIndex: PropTypes.func.isRequired,
-}
