@@ -1,14 +1,17 @@
-import React from "react";
+import React, { FC } from "react";
 
 import {Redirect, Route, useLocation} from "react-router-dom";
 import {useSelector} from "react-redux";
+import {commonStateType} from "../../services/reducers/reducers-types";
 
-export function ProtectedRoute({ children, ...rest }) {
-    const user = useSelector(state => state.auth.user);
+type TProtectedRouteProps = { path: string; exact: boolean; }
+
+const ProtectedRoute: FC<TProtectedRouteProps> = ({ children, path, ...rest }) => {
+    const user = useSelector((state: commonStateType) => state.auth.user);
     const location = useLocation();
-    const { pathname } = useLocation();
+    // const { pathname } = useLocation();
 
-    if (!user && pathname === '/profile') {
+    if (!user && path === '/profile') {
         return (
             <Redirect to={{
                 pathname: '/login',
@@ -18,10 +21,10 @@ export function ProtectedRoute({ children, ...rest }) {
 
     if (user
         && (
-            pathname === "/login"
-            || pathname === "/register"
-            || pathname === "/forgot-password"
-            || pathname === "/reset-password"
+            path === "/login"
+            || path === "/register"
+            || path === "/forgot-password"
+            || path === "/reset-password"
         )) {
         return (
             <Redirect to={{
@@ -35,10 +38,12 @@ export function ProtectedRoute({ children, ...rest }) {
         <Route
             { ...rest }
             render={() =>
-                (!user && pathname === '/profile')
+                (!user && path === '/profile')
                     ? <Redirect to={{ pathname: '/login' }} />
                     : children
             }
         />
     );
 }
+
+export default ProtectedRoute;

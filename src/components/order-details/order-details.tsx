@@ -4,14 +4,19 @@ import orderStyles from "./order-details.module.css";
 import doneButton from "../../images/done.svg";
 import {useDispatch, useSelector} from "react-redux";
 import { getOrderNumber } from "../../services/actions/order-details";
+import {commonStateType} from "../../services/reducers/reducers-types";
 
 export default function OrderDetails() {
-    const { ingredientIDs, orderNumber, orderNumberRequest, orderNumberFailed } = useSelector(state => ({
-        ingredientIDs: state.burger.ingredientIDs,
-        orderNumber: state.order.number,
-        orderNumberRequest: state.order.orderNumberRequest,
-        orderNumberFailed: state.order.orderNumberFailed,
-    }));
+    const { ingredientIDs, orderNumber, orderNumberRequest, orderNumberFailed } =
+        useSelector((state: commonStateType) => (
+            {
+                ingredientIDs: state.burger.ingredientIDs,
+                orderNumber: state.order.number,
+                orderNumberRequest: state.order.orderNumberRequest,
+                orderNumberFailed: state.order.orderNumberFailed,
+            }
+        )
+    );
     const dispatch = useDispatch();
 
     useEffect(() => {

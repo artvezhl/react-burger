@@ -5,7 +5,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 
 import './index.css';
 import './normalize.css';
-import App from './components/app/app.jsx';
+import App from './components/app/app.tsx';
 import reportWebVitals from './reportWebVitals';
 import {applyMiddleware, compose, createStore} from "redux";
 import thunk from "redux-thunk";

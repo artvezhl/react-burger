@@ -1,9 +1,9 @@
-import React, { useEffect} from 'react';
+import React, {SyntheticEvent, useEffect} from 'react';
 import {Switch, Route, useHistory, useLocation} from 'react-router-dom';
 
 import AppHeader from "../app-header/app-header";
 import styles from './app.module.css';
-import { ProtectedRoute } from "../protected-route/ProtectedRoute";
+import ProtectedRoute from "../protected-route/ProtectedRoute";
 import {
     HomePage,
     LoginPage,
@@ -23,7 +23,7 @@ import {getIngredients} from "../../services/actions/burger-ingredients";
 
 function App() {
     const history = useHistory();
-    const location = useLocation();
+    const location: any = useLocation();
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -32,7 +32,7 @@ function App() {
         dispatch(getUserInfo(token));
     }, [dispatch]);
 
-    let back = e => {
+    let back = (e: SyntheticEvent) => {
         e.stopPropagation();
         history.goBack();
     };
@@ -71,7 +71,7 @@ function App() {
                     </Route>
                 </Switch>
                 {modalIngredientOpen && (<Route path="/ingredients/:id">
-                    <Modal onClose={back}>
+                    <Modal onClose={() => back}>
                         <IngredientDetails />
                     </Modal>
                 </Route>)}
