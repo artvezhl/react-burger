@@ -1,8 +1,5 @@
 export type TIngredientProps = {
-    ingredient: TIngredient
-        & {
-        ingredientCount?: number;
-    };
+    ingredient: TIngredient;
 };
 
 export type TIngredient = {
@@ -18,4 +15,6 @@ export type TIngredient = {
     image_mobile: string;
     image_large: string;
     __v: number;
+    index?: number;
+    ingredientCount?: number;
 }

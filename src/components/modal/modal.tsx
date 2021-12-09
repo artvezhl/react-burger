@@ -6,12 +6,12 @@ import popupStyles from './popup.module.css'
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { TModalProps } from "./modal-types";
 
-const modalRoot: any = document.getElementById("react-modals");
+const modalRoot: Element = document.getElementById("react-modals")!;
 
 const Modal: FC<TModalProps> = ({ title, onClose, children }) => {
     useEffect(() => {
-        function onEscKeyDown(e: any) {
-            if (e.key === "Escape") onClose();
+        function onEscKeyDown(e: KeyboardEvent): void {
+            if (e.key === "Escape") onClose(e);
         }
         document.addEventListener("keydown", onEscKeyDown);
         return () => {

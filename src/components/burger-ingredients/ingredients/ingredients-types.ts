@@ -5,6 +5,6 @@ export type TIngredientsProps = {
 };
 
 export type TTabScrollChange = (
-    inView: any,
-    entry: any
+    inView: boolean,
+    entry: IntersectionObserverEntry
 ) => void;

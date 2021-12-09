@@ -1,4 +1,4 @@
-import React, {memo, useEffect, useRef, FC} from "react";
+import React, {memo, useEffect, useRef, FC, SyntheticEvent} from "react";
 import {useDispatch} from "react-redux";
 import {useDrag, useDrop} from "react-dnd";
 
@@ -30,6 +30,7 @@ export const ConstructorIngredient: FC<TConstructorIngredient> = memo(
             }
             // Determine rectangle on screen
             const hoverBoundingRect: any = cardRef.current?.getBoundingClientRect();
+            console.log(hoverBoundingRect);
             // Get vertical middle
             const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
             // Determine mouse position
@@ -69,8 +70,9 @@ export const ConstructorIngredient: FC<TConstructorIngredient> = memo(
         })
     })
 
-    const removeIngredient = (e: any, id: string, index: number) => {
-        if (e.target.closest('.constructor-element__action')) {
+    const removeIngredient = (e: SyntheticEvent, id: string, index: number) => {
+        const target = (e.target as HTMLElement);
+        if (target.closest('.constructor-element__action')) {
             dispatch({
                 type: REMOVE_INGREDIENT,
                 id: id,

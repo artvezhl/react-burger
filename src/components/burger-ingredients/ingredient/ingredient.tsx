@@ -30,11 +30,11 @@ const Ingredient:FC<TIngredientProps> = ({ ingredient }) => {
                 className={`text text_type_main-default ${ ingredientStyles.ingredient__name }`}
             >{ ingredient.name }</p>
             {
-                (ingredient.ingredientCount && ingredient.ingredientCount > 0) &&
+                (ingredient.ingredientCount && ingredient.ingredientCount > 0) ?
                 <Counter
                     count={ingredient.ingredientCount}
                     size="default"
-                />
+                /> : null
             }
         </Link>
     );

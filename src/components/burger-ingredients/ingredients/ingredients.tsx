@@ -14,7 +14,7 @@ const Ingredients: FC<TIngredientsProps> = ({ data }) => {
         if (inView) {
             dispatch({
                 type: SET_ACTIVE_TAB,
-                tab: entry.target.firstChild.innerHTML,
+                tab: entry.target.firstElementChild?.innerHTML,
             })
         }
     }

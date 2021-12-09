@@ -20,10 +20,11 @@ import IngredientDetails from "../ingredient-details/ingredient-details";
 import { getUserInfo } from "../../services/actions/auth";
 import {getCookie} from "../../utils";
 import {getIngredients} from "../../services/actions/burger-ingredients";
+import { TLocationState } from "./app-types";
 
 function App() {
     const history = useHistory();
-    const location: any = useLocation();
+    const location: TLocationState = useLocation();
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -32,7 +33,7 @@ function App() {
         dispatch(getUserInfo(token));
     }, [dispatch]);
 
-    let back = (e: SyntheticEvent) => {
+    let back = (e: KeyboardEvent | SyntheticEvent) => {
         e.stopPropagation();
         history.goBack();
     };
@@ -71,7 +72,7 @@ function App() {
                     </Route>
                 </Switch>
                 {modalIngredientOpen && (<Route path="/ingredients/:id">
-                    <Modal onClose={() => back}>
+                    <Modal onClose={back}>
                         <IngredientDetails />
                     </Modal>
                 </Route>)}

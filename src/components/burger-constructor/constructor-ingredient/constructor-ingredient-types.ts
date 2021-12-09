@@ -2,7 +2,7 @@ import { TIngredient } from "../../burger-ingredients/ingredient/ingredient-type
 import { TMoveCard, TSetIngredientsIndex } from "../constructor-list/constructor-list-types";
 
 export type TConstructorIngredient = {
-    readonly ingredient: TIngredient & {index: number};
+    readonly ingredient: TIngredient;
     readonly index: number;
     readonly moveCard: TMoveCard;
     readonly setIngredientsIndex: TSetIngredientsIndex;

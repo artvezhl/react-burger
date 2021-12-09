@@ -101,7 +101,7 @@ export const ConstructorList: FC = memo(() => {
             />
         </article>;
 
-    const renderIngredients = (ingredient: any, index: number) => {
+    const renderIngredients = (ingredient: TIngredient, index: number) => {
         return (
             <ConstructorIngredient
                 key={index}

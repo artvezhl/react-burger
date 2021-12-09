@@ -1,5 +1,7 @@
+import {SyntheticEvent} from "react";
+
 export type TModalOverlayProps = {
-    readonly onClose: () => void;
+    readonly onClose: (e: KeyboardEvent | SyntheticEvent) => void;
 };
 
 export type TModalProps = TModalOverlayProps & {
