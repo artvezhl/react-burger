@@ -2,20 +2,20 @@ import { TIngredient } from "../../components/burger-ingredients/ingredient/ingr
 
 export type CommonStateType = {
     ingredients: any;
-    burger: burgerConstructorTypes;
+    burger: BurgerConstructorTypes;
     details: any;
     order: any;
-    auth: userAuthTypes;
+    auth: UserAuthTypes;
 }
 
-export type burgerConstructorTypes = {
+export type BurgerConstructorTypes = {
     bun: TIngredient,
     ingredients: Array<TIngredient>,
     total: number;
     ingredientIDs: Array<string>,
 };
 
-export type userAuthTypes = {
+export type UserAuthTypes = {
     user: null | {
         email: string;
         name: string;
