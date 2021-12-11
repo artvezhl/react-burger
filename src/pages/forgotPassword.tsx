@@ -1,19 +1,20 @@
 import React, {useCallback, useState} from "react";
 
 import registerStyles from "./register.module.css";
-import AuthForm from "../components/auth-form/auth-form.tsx";
+import AuthForm from "../components/auth-form/auth-form";
 import formStyles from "../components/auth-form/auth-form.module.css";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, Redirect} from "react-router-dom";
 
 import { forgotPassword } from "../services/actions/auth";
 import {useDispatch, useSelector} from "react-redux";
+import {commonStateType} from "../services/reducers/reducers-types";
 const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
 
 export function ForgotPasswordPage() {
     const [email, setEmail] = useState('');
     const [error, setError] = useState(false);
-    const isPasswordReset = useSelector(state => state.auth.passwordReset)
+    const isPasswordReset = useSelector((state: commonStateType) => state.auth.passwordReset)
     const dispatch = useDispatch();
 
     const onSubmit = useCallback((e) => {

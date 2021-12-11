@@ -1,23 +1,24 @@
-import React, {useState} from "react";
+import React, {SyntheticEvent, useState} from "react";
 import registerStyles from "./register.module.css";
-import AuthForm from "../components/auth-form/auth-form.tsx";
+import AuthForm from "../components/auth-form/auth-form";
 import formStyles from "../components/auth-form/auth-form.module.css";
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, Redirect, useHistory} from "react-router-dom";
 import { resetPassword } from "../services/actions/auth";
 import {SET_PASSWORD_RESET} from "../services/actions/auth";
 import {useDispatch, useSelector} from "react-redux";
+import {commonStateType} from "../services/reducers/reducers-types";
 
 export function ResetPasswordPage() {
-    const [password, setPassword] = useState('');
-    const [code, setCode] = useState('');
-    const [passError, setPassError] = useState(false);
-    const [codeError, setCodeError] = useState(false);
+    const [password, setPassword] = useState<string>('');
+    const [code, setCode] = useState<string>('');
+    const [passError, setPassError] = useState<boolean>(false);
+    const [codeError, setCodeError] = useState<boolean>(false);
     const dispatch = useDispatch();
     const history = useHistory();
-    const isPasswordReset = useSelector(state => state.auth.passwordReset)
+    const isPasswordReset = useSelector((state: commonStateType) => state.auth.passwordReset)
 
-    const onSubmit = (e) => {
+    const onSubmit = (e: SyntheticEvent) => {
         e.preventDefault();
         if (password && code) {
             try {
@@ -34,7 +35,7 @@ export function ResetPasswordPage() {
             }
         } else {
             passError && codeError
-                ? (setPassError(true) && setCodeError(true))
+                ? setPassError(true)
                 : passError
                 ? setPassError(true)
                 : setCodeError(true)

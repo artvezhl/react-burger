@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 
 import registerStyles from "./register.module.css";
-import AuthForm from "../components/auth-form/auth-form.tsx";
+import AuthForm from "../components/auth-form/auth-form";
 import { formHandler as onChange } from "../utils";
 import formStyles from "../components/auth-form/auth-form.module.css";
 import { registerRequest } from "../services/actions/auth";
@@ -9,10 +9,17 @@ import { registerRequest } from "../services/actions/auth";
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, Redirect} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
+import {commonStateType} from "../services/reducers/reducers-types";
+
+export type TForm = {
+    email: string;
+    name: string;
+    password: string;
+}
 
 export function RegisterPage () {
-    const user = useSelector(state => state.auth.user);
-    const [form, setForm] = useState({
+    const user = useSelector((state: commonStateType) => state.auth.user);
+    const [form, setForm] = useState<TForm>({
         email: "",
         password: "",
         name: ""
@@ -49,12 +56,11 @@ export function RegisterPage () {
                         name={'email'}
                         size={'default'}
                     />
-                    {/*TODO сделать чтобы пароль можно было скрывать и открывать при нажатии на иконку с глазом*/}
                     <Input
                         type={"password"}
                         placeholder={"Пароль"}
                         value={form.password}
-                        onChange={onChange}
+                        onChange={(e) => onChange(e, setForm, form)}
                         name={'password'}
                         icon={'ShowIcon'}
                         size={'default'}

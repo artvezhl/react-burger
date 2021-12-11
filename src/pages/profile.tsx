@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useRef, useState} from "react";
+import React, {RefObject, useCallback, useEffect, useRef, useState} from "react";
 
 import profileStyles from './profile.module.css';
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
@@ -8,23 +8,28 @@ import { formHandler as onChange } from "../utils";
 import {Link, useLocation} from "react-router-dom";
 import {logoutRequest} from "../services/actions/auth";
 import {useDispatch, useSelector} from "react-redux";
+import {commonStateType} from "../services/reducers/reducers-types";
 
-const onFocusInput = (inputRef) => inputRef.current.classList.add(`${profileStyles.profile__input_isActive}`);
+const onFocusInput = (inputRef: RefObject<HTMLInputElement>) => inputRef.current ? inputRef.current.classList.add(`${profileStyles.profile__input_isActive}`) : null;
+const onBlurInput = (inputRef: RefObject<HTMLInputElement>) => inputRef.current ? inputRef.current.classList.remove(`${profileStyles.profile__input_isActive}`) : null;
+const onIconClick = (inputRef: RefObject<HTMLInputElement>) => inputRef.current ? inputRef.current.focus() : null;
 
-const onBlurInput = (inputRef) => inputRef.current.classList.remove(`${profileStyles.profile__input_isActive}`);
-
-const onIconClick = (inputRef) => inputRef.current.focus();
+type TForm = {
+    name: string;
+    login: string;
+    password: string;
+}
 
 export function ProfilePage() {
-    const [form, setForm] = useState({
+    const [form, setForm] = useState<TForm>({
         name: '',
         login: '',
         password: ''
     });
-    const user = useSelector(state => state.auth.user);
-    const nameRef = useRef(null);
-    const loginRef = useRef(null);
-    const passwordRef = useRef(null);
+    const user = useSelector((state: commonStateType) => state.auth.user);
+    const nameRef = useRef<HTMLInputElement>(null);
+    const loginRef = useRef<HTMLInputElement>(null);
+    const passwordRef = useRef<HTMLInputElement>(null);
     const { pathname } = useLocation();
     const dispatch = useDispatch();
 
@@ -42,12 +47,14 @@ export function ProfilePage() {
 
     const resetChanges = useCallback((e) => {
         e.preventDefault();
-        setForm({
-            ...form,
-            name: user.name,
-            login: user.email,
-            password: ''
-        })
+        if (user) {
+            setForm({
+                ...form,
+                name: user.name,
+                login: user.email,
+                password: ''
+            })
+        }
     }, [user, form]);
 
     const updateInfo = useCallback(
@@ -69,11 +76,13 @@ export function ProfilePage() {
     }, [dispatch, form]);
 
     useEffect(() => {
-        setForm({
-            ...form,
-            name: user.name,
-            login: user.email
-        })
+        if (user) {
+            setForm({
+                ...form,
+                name: user.name,
+                login: user.email
+            })
+        }
     }, [])
 
     return (

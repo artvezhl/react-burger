@@ -1,31 +1,39 @@
 import React, {useCallback, useRef, useState} from "react";
 
 import loginStyles from './login.module.css';
-import AuthForm from "../components/auth-form/auth-form.tsx";
+import AuthForm from "../components/auth-form/auth-form";
 import { formHandler as onChange } from "../utils";
 import formStyles from "../components/auth-form/auth-form.module.css";
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link} from "react-router-dom";
 import {loginRequest} from "../services/actions/auth";
 import {useDispatch} from "react-redux";
+import {TICons} from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/icons";
+
+export type TForm = {
+    email: string;
+    password: string;
+}
 
 export function LoginPage () {
-    const [passwordInputIcon, setIcon] = useState('ShowIcon');
-    const [form, setForm] = useState({
+    const [passwordInputIcon, setIcon] = useState<keyof TICons>('ShowIcon');
+    const [form, setForm] = useState<TForm>({
         "email": "",
         "password": "",
     });
-    const passwordRef = useRef(null);
+    const passwordRef = useRef<HTMLInputElement>(null);
 
     const dispatch = useDispatch();
 
     const onIconClick = useCallback(() => {
-        if (passwordRef.current.type === 'password') {
-            passwordRef.current.type = 'text';
-            setIcon('HideIcon');
-        } else {
-            passwordRef.current.type = 'password';
-            setIcon('ShowIcon')
+        if (passwordRef.current) {
+            if (passwordRef.current.type === 'password') {
+                passwordRef.current.type = 'text';
+                setIcon('HideIcon');
+            } else {
+                passwordRef.current.type = 'password';
+                setIcon('ShowIcon')
+            }
         }
     }, [passwordRef]);
 

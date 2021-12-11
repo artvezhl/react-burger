@@ -1,8 +1,8 @@
 import { REQUEST_URL } from "./constants";
 import { setCookie } from "../utils";
 
-export const checkResponse = (res) => {
-    return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
+export const checkResponse = (res: any) => {
+    return res.ok ? res.json() : res.json().then((err: string) => Promise.reject(err));
 };
 
 export const refreshToken = () => {
@@ -18,7 +18,7 @@ export const refreshToken = () => {
         .then(checkResponse);
 };
 
-export const fetchWithRefresh = async (url, options) => {
+export const fetchWithRefresh = async (url: string, options: any) => {
     try {
         const res = await fetch(url, options);
         return await checkResponse(res);

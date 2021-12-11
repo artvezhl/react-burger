@@ -2,14 +2,17 @@ import React, { useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import ingredientStyles from "./ingredient.module.css";
 import {useSelector} from "react-redux";
+import {commonStateType} from "../services/reducers/reducers-types";
+import {TIngredient} from "../components/burger-ingredients/ingredient/ingredient-types";
+import {TIngredientDetailsParams} from "../components/ingredient-details/ingredient-details-types";
 
 export const Ingredient = () => {
-    let currentIngredients = useSelector(state => state.ingredients.ingredients);
-    const [currentIngredient, setCurrentIngredient] = useState();
-    const { id } = useParams();
+    let currentIngredients = useSelector((state: commonStateType) => state.ingredients.ingredients);
+    const [currentIngredient, setCurrentIngredient] = useState<TIngredient>();
+    const { id } = useParams<TIngredientDetailsParams>();
 
     useEffect(() => {
-        setCurrentIngredient(currentIngredients.filter((item) => item._id === id)[0]);
+        setCurrentIngredient(currentIngredients.filter((item: TIngredient) => item._id === id)[0]);
     }, [currentIngredients, id])
 
     return (

@@ -1,8 +1,23 @@
-export const formHandler = (e, setForm, form) => {
+import {ChangeEvent, Dispatch, SetStateAction} from "react";
+
+type TForm = {
+    email?: string;
+    password?: string;
+    name?: string;
+    code?: string;
+}
+
+type TFormHandler = (
+    e: ChangeEvent<HTMLInputElement>,
+    setForm: Dispatch<SetStateAction<any>>,
+    form: TForm
+) => void;
+
+export const formHandler: TFormHandler = (e, setForm, form) => {
     setForm({ ...form, [e.target.name]: e.target.value });
 };
 
-export function setCookie(name, value, props = {}) {
+export function setCookie(name: string, value: string, props: { path?: string; expires?: Date | string } = {}) {
     props = {
         path: '/',  //задаем корневой адрес для cookies
         ...props
@@ -13,13 +28,16 @@ export function setCookie(name, value, props = {}) {
         d.setTime(d.getTime() + exp * 1000);
         exp = props.expires = d;
     }
-    if (exp && exp.toUTCString) {
-        props.expires = exp.toUTCString();
+    if (typeof exp  != "string") {
+        if (exp && exp.toUTCString) {
+            props.expires = exp.toUTCString();
+        }
     }
     value = encodeURIComponent(value);
     let updatedCookie = name + '=' + value;
     for (const propName in props) {
         updatedCookie += '; ' + propName;
+        // @ts-ignore
         const propValue = props[propName];
         if (propValue !== true) {
             updatedCookie += '=' + propValue;
@@ -28,7 +46,7 @@ export function setCookie(name, value, props = {}) {
     document.cookie = updatedCookie;
 }
 
-export function getCookie(name) {
+export function getCookie(name: string) {
     const matches = document.cookie.match(
         // eslint-disable-next-line
         new RegExp('(?:^|; )' + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)')
