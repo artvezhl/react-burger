@@ -1,4 +1,4 @@
-import {ORDER_URL} from "../../constants";
+import { REQUEST_URL } from "../constants";
 
 export const GET_ORDER_NUMBER = 'GET_ORDER_NUMBER';
 export const GET_ORDER_NUMBER_SUCCESS = 'GET_ORDER_NUMBER_SUCCESS';
@@ -11,7 +11,7 @@ export function getOrderNumber(orderIDs) {
             type: GET_ORDER_NUMBER,
         })
 
-        fetch(ORDER_URL, {
+        fetch(REQUEST_URL + "/orders", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

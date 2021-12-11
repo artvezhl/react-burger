@@ -4,13 +4,13 @@ import {useSelector} from "react-redux";
 import detailsStyles from "./ingredient-details.module.css";
 import {useParams} from "react-router-dom";
 import { TIngredientDetailsParams } from "./ingredient-details-types";
-import {commonStateType} from "../../services/reducers/reducers-types";
+import {CommonStateType} from "../../services/reducers/reducers-types";
 import {TIngredient} from "../burger-ingredients/ingredient/ingredient-types";
 
 export default function IngredientDetails () {
     const { id } = useParams<TIngredientDetailsParams>();
     const {image_large, name, calories, proteins, fat, carbohydrates} =
-        useSelector((state: commonStateType) =>
+        useSelector((state: CommonStateType) =>
             state.ingredients.ingredients.filter((item: TIngredient) => item._id === id )[0]
         );
 

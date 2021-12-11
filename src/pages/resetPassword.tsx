@@ -7,7 +7,7 @@ import {Link, Redirect, useHistory} from "react-router-dom";
 import { resetPassword } from "../services/actions/auth";
 import {SET_PASSWORD_RESET} from "../services/actions/auth";
 import {useDispatch, useSelector} from "react-redux";
-import {commonStateType} from "../services/reducers/reducers-types";
+import {CommonStateType} from "../services/reducers/reducers-types";
 
 export function ResetPasswordPage() {
     const [password, setPassword] = useState<string>('');
@@ -16,7 +16,7 @@ export function ResetPasswordPage() {
     const [codeError, setCodeError] = useState<boolean>(false);
     const dispatch = useDispatch();
     const history = useHistory();
-    const isPasswordReset = useSelector((state: commonStateType) => state.auth.passwordReset)
+    const isPasswordReset = useSelector((state: CommonStateType) => state.auth.passwordReset)
 
     const onSubmit = (e: SyntheticEvent) => {
         e.preventDefault();

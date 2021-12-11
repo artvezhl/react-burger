@@ -7,12 +7,12 @@ import Modal from "../../modal/modal";
 import OrderDetails from "../../order-details/order-details";
 import {RESET_ORDER_NUMBER} from "../../../services/actions/order-details";
 import {useHistory} from "react-router-dom";
-import { commonStateType } from "../../../services/reducers/reducers-types";
+import { CommonStateType } from "../../../services/reducers/reducers-types";
 import { THistoryState } from "./constructor-cart-types";
 
 const ConstructorCart:FC = () => {
     const [visibleModal, setVisibleModal] = useState(false);
-    const { total, user } = useSelector((state: commonStateType) => ({
+    const { total, user } = useSelector((state: CommonStateType) => ({
         total: state.burger.total,
         user: state.auth.user
     }));

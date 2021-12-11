@@ -14,7 +14,7 @@ import {
     SET_INGREDIENT_INDEX,
 } from "../../../services/actions/constructor-list";
 import {INCREASE_INGREDIENT_COUNT} from "../../../services/actions/burger-ingredients";
-import { commonStateType } from "../../../services/reducers/reducers-types";
+import { CommonStateType } from "../../../services/reducers/reducers-types";
 import { TIngredient } from "../../burger-ingredients/ingredient/ingredient-types";
 import { TMoveCard } from "./constructor-list-types";
 
@@ -22,7 +22,7 @@ import listStyles from './constructor-list.module.css';
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 
 export const ConstructorList: FC = memo(() => {
-    const { bun, ingredients } = useSelector((state: commonStateType) => ({
+    const { bun, ingredients } = useSelector((state: CommonStateType) => ({
         bun: state.burger.bun,
         ingredients: state.burger.ingredients,
     }));

@@ -8,7 +8,7 @@ import { formHandler as onChange } from "../utils";
 import {Link, useLocation} from "react-router-dom";
 import {logoutRequest} from "../services/actions/auth";
 import {useDispatch, useSelector} from "react-redux";
-import {commonStateType} from "../services/reducers/reducers-types";
+import {CommonStateType} from "../services/reducers/reducers-types";
 
 const onFocusInput = (inputRef: RefObject<HTMLInputElement>) => inputRef.current ? inputRef.current.classList.add(`${profileStyles.profile__input_isActive}`) : null;
 const onBlurInput = (inputRef: RefObject<HTMLInputElement>) => inputRef.current ? inputRef.current.classList.remove(`${profileStyles.profile__input_isActive}`) : null;
@@ -26,7 +26,7 @@ export function ProfilePage() {
         login: '',
         password: ''
     });
-    const user = useSelector((state: commonStateType) => state.auth.user);
+    const user = useSelector((state: CommonStateType) => state.auth.user);
     const nameRef = useRef<HTMLInputElement>(null);
     const loginRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);

@@ -1,7 +1,7 @@
 import { REQUEST_URL } from "./constants";
 import { setCookie } from "../utils";
 
-export const checkResponse = (res: any) => {
+export const checkResponse = (res: Response) => {
     return res.ok ? res.json() : res.json().then((err: string) => Promise.reject(err));
 };
 

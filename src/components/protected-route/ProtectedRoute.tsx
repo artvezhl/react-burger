@@ -2,12 +2,12 @@ import React, { FC } from "react";
 
 import {Redirect, Route, useLocation} from "react-router-dom";
 import {useSelector} from "react-redux";
-import {commonStateType} from "../../services/reducers/reducers-types";
+import {CommonStateType} from "../../services/reducers/reducers-types";
 
 type TProtectedRouteProps = { path: string; exact: boolean; }
 
 const ProtectedRoute: FC<TProtectedRouteProps> = ({ children, path, ...rest }) => {
-    const user = useSelector((state: commonStateType) => state.auth.user);
+    const user = useSelector((state: CommonStateType) => state.auth.user);
     const location = useLocation();
     // const { pathname } = useLocation();
 

@@ -9,7 +9,7 @@ import { registerRequest } from "../services/actions/auth";
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, Redirect} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {commonStateType} from "../services/reducers/reducers-types";
+import {CommonStateType} from "../services/reducers/reducers-types";
 
 export type TForm = {
     email: string;
@@ -18,7 +18,7 @@ export type TForm = {
 }
 
 export function RegisterPage () {
-    const user = useSelector((state: commonStateType) => state.auth.user);
+    const user = useSelector((state: CommonStateType) => state.auth.user);
     const [form, setForm] = useState<TForm>({
         email: "",
         password: "",

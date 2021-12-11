@@ -5,10 +5,10 @@ import ingredientsStyles from './burger-ingredients.module.css'
 import IngredientsTabs from "./ingredients-tabs/ingredients-tabs";
 import Ingredients from "./ingredients/ingredients";
 import { SET_ACTIVE_TAB } from "../../services/actions/burger-ingredients";
-import {commonStateType} from "../../services/reducers/reducers-types";
+import {CommonStateType} from "../../services/reducers/reducers-types";
 
 const BurgerIngredients = () => {
-    const { ingredients, isLoading, hasError, activeTab } = useSelector((state: commonStateType) => ({
+    const { ingredients, isLoading, hasError, activeTab } = useSelector((state: CommonStateType) => ({
         ingredients: state.ingredients.ingredients,
         isLoading: state.ingredients.ingredientsRequest,
         hasError: state.ingredients.ingredientsFailed,

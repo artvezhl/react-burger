@@ -1,6 +1,6 @@
 import { TIngredient } from "../../components/burger-ingredients/ingredient/ingredient-types";
 
-export type commonStateType = {
+export type CommonStateType = {
     ingredients: any;
     burger: burgerConstructorTypes;
     details: any;
