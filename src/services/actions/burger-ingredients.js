@@ -1,4 +1,4 @@
-import {URL} from "../../constants";
+import { REQUEST_URL } from "../constants";
 
 export const GET_INGREDIENTS = 'GET_INGREDIENTS';
 export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
@@ -13,7 +13,7 @@ export function getIngredients() {
             type: GET_INGREDIENTS,
         })
 
-        fetch(URL)
+        fetch(REQUEST_URL + "/ingredients")
             .then((res) => {
                 if (res && res.ok) {
                     res.json().then(res => {
