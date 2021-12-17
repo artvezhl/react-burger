@@ -26,7 +26,7 @@ export const ingredientsReducer = (state = initialState, action) => {
         case GET_INGREDIENTS_SUCCESS: {
             return {
                 ...state,
-                ingredients: action.ingredients.map(ingredient => ({
+                ingredients: action.ingredients.map((ingredient) => ({
                     ...ingredient,
                     ingredientCount: 0,
                 })),
@@ -44,38 +44,38 @@ export const ingredientsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 activeTab: action.tab,
-            }
+            };
         }
         case INCREASE_INGREDIENT_COUNT: {
             return {
                 ...state,
-                ingredients: state.ingredients.map(ingredient => {
+                ingredients: state.ingredients.map((ingredient) => {
                     if (ingredient._id === action.ingredientId) {
                         return {
                             ...ingredient,
-                            ingredientCount: ingredient.ingredientCount += 1,
-                        }
+                            ingredientCount: (ingredient.ingredientCount += 1),
+                        };
                     }
                     return ingredient;
-                })
-            }
+                }),
+            };
         }
         case DECREASE_INGREDIENT_COUNT: {
             return {
                 ...state,
-                ingredients: state.ingredients.map(ingredient => {
+                ingredients: state.ingredients.map((ingredient) => {
                     if (ingredient._id === action.ingredientId) {
                         return {
                             ...ingredient,
-                            ingredientCount: ingredient.ingredientCount -= 1,
-                        }
+                            ingredientCount: (ingredient.ingredientCount -= 1),
+                        };
                     }
                     return ingredient;
-                })
-            }
+                }),
+            };
         }
         default: {
             return state;
         }
     }
-}
+};

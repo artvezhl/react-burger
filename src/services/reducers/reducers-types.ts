@@ -1,4 +1,4 @@
-import { TIngredient } from "../../components/burger-ingredients/ingredient/ingredient-types";
+import { TIngredient } from '../../components/burger-ingredients/ingredient/ingredient-types';
 
 export type CommonStateType = {
     ingredients: any;
@@ -6,13 +6,13 @@ export type CommonStateType = {
     details: any;
     order: any;
     auth: UserAuthTypes;
-}
+};
 
 export type BurgerConstructorTypes = {
-    bun: TIngredient,
-    ingredients: Array<TIngredient>,
+    bun: TIngredient;
+    ingredients: Array<TIngredient>;
     total: number;
-    ingredientIDs: Array<string>,
+    ingredientIDs: Array<string>;
 };
 
 export type UserAuthTypes = {

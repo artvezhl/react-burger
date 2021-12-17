@@ -1,7 +1,4 @@
-import {
-    SET_INGREDIENT_DETAILS,
-    REMOVE_INGREDIENT_DETAILS
-} from '../actions/ingredient-details';
+import { SET_INGREDIENT_DETAILS, REMOVE_INGREDIENT_DETAILS } from '../actions/ingredient-details';
 
 const initialState = {
     image_large: '',
@@ -26,4 +23,4 @@ export const ingredientDetailsReducer = (state = initialState, action) => {
             return state;
         }
     }
-}
+};
