@@ -17,4 +17,4 @@ export type TIngredient = {
     __v: number;
     index?: number;
     ingredientCount?: number;
-}
+};

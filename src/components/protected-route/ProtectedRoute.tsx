@@ -1,10 +1,10 @@
-import React, { FC } from "react";
+import React, { FC } from 'react';
 
-import {Redirect, Route, useLocation} from "react-router-dom";
-import {useSelector} from "react-redux";
-import {CommonStateType} from "../../services/reducers/reducers-types";
+import { Redirect, Route, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { CommonStateType } from '../../services/reducers/reducers-types';
 
-type TProtectedRouteProps = { path: string; exact: boolean; }
+type TProtectedRouteProps = { path: string; exact: boolean };
 
 const ProtectedRoute: FC<TProtectedRouteProps> = ({ children, path, ...rest }) => {
     const user = useSelector((state: CommonStateType) => state.auth.user);
@@ -13,37 +13,34 @@ const ProtectedRoute: FC<TProtectedRouteProps> = ({ children, path, ...rest }) =
 
     if (!user && path === '/profile') {
         return (
-            <Redirect to={{
-                pathname: '/login',
-            }} />
+            <Redirect
+                to={{
+                    pathname: '/login',
+                }}
+            />
         );
     }
 
-    if (user
-        && (
-            path === "/login"
-            || path === "/register"
-            || path === "/forgot-password"
-            || path === "/reset-password"
-        )) {
+    if (
+        user &&
+        (path === '/login' || path === '/register' || path === '/forgot-password' || path === '/reset-password')
+    ) {
         return (
-            <Redirect to={{
-                pathname: '/',
-                state: location
-            }} />
+            <Redirect
+                to={{
+                    pathname: '/',
+                    state: location,
+                }}
+            />
         );
     }
 
     return (
         <Route
-            { ...rest }
-            render={() =>
-                (!user && path === '/profile')
-                    ? <Redirect to={{ pathname: '/login' }} />
-                    : children
-            }
+            {...rest}
+            render={() => (!user && path === '/profile' ? <Redirect to={{ pathname: '/login' }} /> : children)}
         />
     );
-}
+};
 
 export default ProtectedRoute;

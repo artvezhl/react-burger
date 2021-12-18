@@ -1,26 +1,27 @@
-import React, {memo, useEffect, useCallback, FC} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import { useDrop } from "react-dnd";
+import React, { memo, useEffect, useCallback, FC } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useDrop } from 'react-dnd';
 
 // TODO
 // - изменить логику счетчиков у ингредиентов (сделать чтобы они просто сравнивали массивы свои и массив бургера и по итогу выдавали результат счетчиков)
 
-import { ConstructorIngredient } from "../constructor-ingredient/constructor-ingredient";
+import { ConstructorIngredient } from '../constructor-ingredient/constructor-ingredient';
 import {
     SET_TOTAL,
     SET_INGREDIENTS_IDS,
     ADD_INGREDIENT,
     MOVE_CARD,
     SET_INGREDIENT_INDEX,
-} from "../../../services/actions/constructor-list";
-import {INCREASE_INGREDIENT_COUNT} from "../../../services/actions/burger-ingredients";
-import { CommonStateType } from "../../../services/reducers/reducers-types";
-import { TIngredient } from "../../burger-ingredients/ingredient/ingredient-types";
-import { TMoveCard } from "./constructor-list-types";
+} from '../../../services/constants';
+import { INCREASE_INGREDIENT_COUNT } from '../../../services/constants';
+import { CommonStateType } from '../../../services/reducers/reducers-types';
+import { TIngredient } from '../../burger-ingredients/ingredient/ingredient-types';
+import { TMoveCard } from './constructor-list-types';
 
 import listStyles from './constructor-list.module.css';
-import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
+import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 
+// eslint-disable-next-line react/display-name
 export const ConstructorList: FC = memo(() => {
     const { bun, ingredients } = useSelector((state: CommonStateType) => ({
         bun: state.burger.bun,
@@ -33,8 +34,8 @@ export const ConstructorList: FC = memo(() => {
             type: MOVE_CARD,
             index: index,
             atIndex: atIndex,
-        })
-    }
+        });
+    };
     const [, listRef] = useDrop({
         accept: 'ingredient',
         drop(item: TIngredient) {
@@ -46,26 +47,26 @@ export const ConstructorList: FC = memo(() => {
                 type: INCREASE_INGREDIENT_COUNT,
                 ingredientId: item._id,
             });
-        }
-    })
+        },
+    });
 
     const cartTotal = useCallback(() => {
         let total = bun.price * 2;
-        ingredients.forEach(ingredient => {
+        ingredients.forEach((ingredient) => {
             if (ingredient.type !== 'bun') total += ingredient.price;
         });
         dispatch({
             type: SET_TOTAL,
-            total: total
+            total: total,
         });
     }, [ingredients, bun.price, dispatch]);
 
     const setIngredientsIDs = useCallback(() => {
-        const ingredientsIDs = ingredients.map(ingredient => ingredient._id).concat(bun._id);
+        const ingredientsIDs = ingredients.map((ingredient) => ingredient._id).concat(bun._id);
         dispatch({
             type: SET_INGREDIENTS_IDS,
             IDs: ingredientsIDs,
-        })
+        });
     }, [ingredients, bun._id, dispatch]);
 
     useEffect(() => {
@@ -75,11 +76,11 @@ export const ConstructorList: FC = memo(() => {
 
     const setIngredientsIndex = useCallback(() => {
         dispatch({
-            type: SET_INGREDIENT_INDEX
-        })
+            type: SET_INGREDIENT_INDEX,
+        });
     }, [dispatch]);
 
-    const topBunMarkup =
+    const topBunMarkup = (
         <article className={listStyles.bothSides}>
             <ConstructorElement
                 type="top"
@@ -88,9 +89,10 @@ export const ConstructorList: FC = memo(() => {
                 price={bun.price}
                 thumbnail={bun.image}
             />
-        </article>;
+        </article>
+    );
 
-    const bottomBunMarkup =
+    const bottomBunMarkup = (
         <article className={listStyles.bothSides}>
             <ConstructorElement
                 type="bottom"
@@ -99,7 +101,8 @@ export const ConstructorList: FC = memo(() => {
                 price={bun.price}
                 thumbnail={bun.image}
             />
-        </article>;
+        </article>
+    );
 
     const renderIngredients = (ingredient: TIngredient, index: number) => {
         return (
@@ -111,32 +114,33 @@ export const ConstructorList: FC = memo(() => {
                 setIngredientsIndex={setIngredientsIndex}
             />
         );
-    }
+    };
 
-    const ingredientsMarkup =
-        <div className={ listStyles.constructorList }>
-            {
-                !ingredients.length
-                    ? <h3 className="text text_type_main-medium text_color_inactive pl-10 pt-1 pl-7">
-                        А теперь выберите ингредиенты для бургера</h3>
-                    : ingredients.map((ingredient, index) => renderIngredients(ingredient, index))
-            }
-        </div>;
+    const ingredientsMarkup = (
+        <div className={listStyles.constructorList}>
+            {!ingredients.length ? (
+                <h3 className="text text_type_main-medium text_color_inactive pl-10 pt-1 pl-7">
+                    А теперь выберите ингредиенты для бургера
+                </h3>
+            ) : (
+                ingredients.map((ingredient, index) => renderIngredients(ingredient, index))
+            )}
+        </div>
+    );
 
-    const content =
-        !Object.keys(bun).length
-            ? <h3 className="text text_type_main-medium pt-10 text_color_inactive">
-                Для начала выберите булку для бургера - перетащите ее прямо сюда
-            </h3>
-            : <>{topBunMarkup} {ingredientsMarkup} {bottomBunMarkup}</>;
+    const content = !Object.keys(bun).length ? (
+        <h3 className="text text_type_main-medium pt-10 text_color_inactive">
+            Для начала выберите булку для бургера - перетащите ее прямо сюда
+        </h3>
+    ) : (
+        <>
+            {topBunMarkup} {ingredientsMarkup} {bottomBunMarkup}
+        </>
+    );
 
     return (
-        <div
-            ref={listRef}
-            onDrop={(e) => e.preventDefault()}
-            className={ listStyles.commonList }
-        >
+        <div ref={listRef} onDrop={(e) => e.preventDefault()} className={listStyles.commonList}>
             {content}
         </div>
-    )
-})
+    );
+});

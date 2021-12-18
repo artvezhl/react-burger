@@ -1,7 +1,7 @@
-import React, {FC} from "react";
+import React, { FC } from 'react';
 
-import popupStyles from "./popup.module.css";
-import { TModalOverlayProps } from "./modal-types";
+import popupStyles from './popup.module.css';
+import { TModalOverlayProps } from './modal-types';
 
 const ModalOverlay: FC<TModalOverlayProps> = ({ onClose, children }) => {
     return (
@@ -9,6 +9,6 @@ const ModalOverlay: FC<TModalOverlayProps> = ({ onClose, children }) => {
             {children}
         </div>
     );
-}
+};
 
 export default ModalOverlay;

@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react';
 
-import constructorStyles from './burger-constructor.module.css'
+import constructorStyles from './burger-constructor.module.css';
 
-import { ConstructorList } from "./constructor-list/constructor-list";
-import ConstructorCart from "./constructor-cart/constructor-cart";
+import { ConstructorList } from './constructor-list/constructor-list';
+import ConstructorCart from './constructor-cart/constructor-cart';
 
 export default function BurgerConstructor() {
     return (

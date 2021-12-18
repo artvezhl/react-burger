@@ -1,9 +1,10 @@
-import React, {SyntheticEvent, useEffect} from 'react';
-import {Switch, Route, useHistory, useLocation} from 'react-router-dom';
+import React, { SyntheticEvent, useEffect } from 'react';
 
-import AppHeader from "../app-header/app-header";
+import { Switch, Route, useHistory, useLocation } from 'react-router-dom';
+
+import AppHeader from '../app-header/app-header';
 import styles from './app.module.css';
-import ProtectedRoute from "../protected-route/ProtectedRoute";
+import ProtectedRoute from '../protected-route/ProtectedRoute';
 import {
     HomePage,
     LoginPage,
@@ -12,15 +13,15 @@ import {
     ForgotPasswordPage,
     ResetPasswordPage,
     ProfilePage,
-    Ingredient
-} from "../../pages";
-import Modal from "../modal/modal";
-import {useDispatch} from "react-redux";
-import IngredientDetails from "../ingredient-details/ingredient-details";
-import { getUserInfo } from "../../services/actions/auth";
-import {getCookie} from "../../utils";
-import {getIngredients} from "../../services/actions/burger-ingredients";
-import { TLocationState } from "./app-types";
+    Ingredient,
+} from '../../pages';
+import Modal from '../modal/modal';
+import { useDispatch } from 'react-redux';
+import IngredientDetails from '../ingredient-details/ingredient-details';
+import { getUserInfo } from '../../services/actions/auth';
+import { getCookie } from '../../utils';
+import { getIngredients } from '../../services/actions/burger-ingredients';
+import { TLocationState } from './app-types';
 
 function App() {
     const history = useHistory();
@@ -33,19 +34,19 @@ function App() {
         dispatch(getUserInfo(token));
     }, [dispatch]);
 
-    let back = (e: KeyboardEvent | SyntheticEvent) => {
+    const back = (e: KeyboardEvent | SyntheticEvent) => {
         e.stopPropagation();
         history.goBack();
     };
 
-    const action = history.action ==='PUSH' || history.action ==='REPLACE';
+    const action = history.action === 'PUSH' || history.action === 'REPLACE';
     const modalIngredientOpen = action && location.state && location.state.background;
 
     return (
         <>
-            <AppHeader/>
+            <AppHeader />
             <main className={styles.main}>
-                <Switch location={modalIngredientOpen  || location}>
+                <Switch location={modalIngredientOpen || location}>
                     <Route path="/" exact={true}>
                         <HomePage />
                     </Route>
@@ -71,11 +72,13 @@ function App() {
                         <NotFoundPage />
                     </Route>
                 </Switch>
-                {modalIngredientOpen && (<Route path="/ingredients/:id">
-                    <Modal onClose={back}>
-                        <IngredientDetails />
-                    </Modal>
-                </Route>)}
+                {modalIngredientOpen && (
+                    <Route path="/ingredients/:id">
+                        <Modal onClose={back}>
+                            <IngredientDetails />
+                        </Modal>
+                    </Route>
+                )}
             </main>
         </>
     );

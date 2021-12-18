@@ -5,7 +5,7 @@ import {
     SET_ACTIVE_TAB,
     INCREASE_INGREDIENT_COUNT,
     DECREASE_INGREDIENT_COUNT,
-} from '../actions/burger-ingredients';
+} from '../constants';
 
 const initialState = {
     ingredients: [],
