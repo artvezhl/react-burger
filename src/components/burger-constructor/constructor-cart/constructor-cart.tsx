@@ -6,7 +6,7 @@ import totalStyles from './constructor-cart.module.css';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../../modal/modal';
 import OrderDetails from '../../order-details/order-details';
-import { RESET_ORDER_NUMBER } from '../../../services/actions/order-details';
+import { RESET_ORDER_NUMBER } from '../../../services/constants';
 import { useHistory } from 'react-router-dom';
 import { CommonStateType } from '../../../services/reducers/reducers-types';
 import { THistoryState } from './constructor-cart-types';

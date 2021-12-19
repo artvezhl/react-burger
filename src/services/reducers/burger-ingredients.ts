@@ -6,6 +6,15 @@ import {
     INCREASE_INGREDIENT_COUNT,
     DECREASE_INGREDIENT_COUNT,
 } from '../constants';
+import { TIngredient } from '../../components/burger-ingredients/ingredient/ingredient-types';
+import { TBurgerIngredientsActions } from '../actions/burger-ingredients';
+
+type TIngredientsInitialState = {
+    ingredients: Array<TIngredient>;
+    ingredientsRequest: boolean;
+    ingredientsFailed: boolean;
+    activeTab: string;
+};
 
 const initialState = {
     ingredients: [],
@@ -14,7 +23,10 @@ const initialState = {
     activeTab: 'Булки',
 };
 
-export const ingredientsReducer = (state = initialState, action) => {
+export const ingredientsReducer = (
+    state = initialState,
+    action: TBurgerIngredientsActions,
+): TIngredientsInitialState => {
     switch (action.type) {
         case GET_INGREDIENTS: {
             return {
@@ -49,7 +61,7 @@ export const ingredientsReducer = (state = initialState, action) => {
         case INCREASE_INGREDIENT_COUNT: {
             return {
                 ...state,
-                ingredients: state.ingredients.map((ingredient) => {
+                ingredients: state.ingredients.map((ingredient: TIngredient) => {
                     if (ingredient._id === action.ingredientId) {
                         return {
                             ...ingredient,
@@ -63,7 +75,7 @@ export const ingredientsReducer = (state = initialState, action) => {
         case DECREASE_INGREDIENT_COUNT: {
             return {
                 ...state,
-                ingredients: state.ingredients.map((ingredient) => {
+                ingredients: state.ingredients.map((ingredient: TIngredient) => {
                     if (ingredient._id === action.ingredientId) {
                         return {
                             ...ingredient,

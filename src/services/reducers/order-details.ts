@@ -1,9 +1,11 @@
-import {
-    GET_ORDER_NUMBER,
-    GET_ORDER_NUMBER_SUCCESS,
-    GET_ORDER_NUMBER_FAILED,
-    RESET_ORDER_NUMBER,
-} from '../actions/order-details';
+import { GET_ORDER_NUMBER, GET_ORDER_NUMBER_SUCCESS, GET_ORDER_NUMBER_FAILED, RESET_ORDER_NUMBER } from '../constants';
+import { TOrderDetailsActions } from '../actions/order-details';
+
+type TOrderDetailsInitialState = {
+    number: number | undefined;
+    orderNumberRequest: boolean;
+    orderNumberFailed: boolean;
+};
 
 const initialState = {
     number: undefined,
@@ -11,7 +13,7 @@ const initialState = {
     orderNumberFailed: false,
 };
 
-export const orderDetailsReducer = (state = initialState, action) => {
+export const orderDetailsReducer = (state = initialState, action: TOrderDetailsActions): TOrderDetailsInitialState => {
     switch (action.type) {
         case GET_ORDER_NUMBER: {
             return {
@@ -23,7 +25,7 @@ export const orderDetailsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 orderNumberRequest: false,
-                ingredientsFailed: false,
+                orderNumberFailed: false,
                 number: action.number,
             };
         }

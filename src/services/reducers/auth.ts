@@ -16,6 +16,17 @@ import {
     GET_USER_SUCCESS,
     GET_USER_FAILED,
 } from '../constants';
+import { TAuthUserActions } from '../actions/auth';
+
+type TAuthInitialState = {
+    user: {
+        name: string;
+        email: string;
+    } | null;
+    userDataRequest: boolean;
+    userDataFailed: boolean;
+    passwordReset: boolean;
+};
 
 const initialUserState = {
     user: null,
@@ -24,7 +35,7 @@ const initialUserState = {
     passwordReset: false,
 };
 
-export const authReducer = (state = initialUserState, action) => {
+export const authReducer = (state = initialUserState, action: TAuthUserActions): TAuthInitialState => {
     switch (action.type) {
         // case GET_USER: {
         //     return {
