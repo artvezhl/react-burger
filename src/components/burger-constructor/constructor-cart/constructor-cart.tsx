@@ -1,6 +1,6 @@
 import React, { useState, FC } from 'react';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../../services/hooks';
 
 import totalStyles from './constructor-cart.module.css';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';

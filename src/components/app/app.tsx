@@ -16,7 +16,7 @@ import {
     Ingredient,
 } from '../../pages';
 import Modal from '../modal/modal';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../services/hooks';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import { getUserInfo } from '../../services/actions/auth';
 import { getCookie } from '../../utils';

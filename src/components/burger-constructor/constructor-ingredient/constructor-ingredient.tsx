@@ -1,6 +1,6 @@
 import React, { memo, useEffect, useRef, FC, SyntheticEvent } from 'react';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../../services/hooks';
 import { useDrag, useDrop } from 'react-dnd';
 
 import listStyles from '../constructor-list/constructor-list.module.css';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/hooks';
 
 import ingredientsStyles from './burger-ingredients.module.css';
 import IngredientsTabs from './ingredients-tabs/ingredients-tabs';

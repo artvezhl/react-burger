@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 
 import { Redirect, Route, useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks';
 import { CommonStateType } from '../../services/reducers/reducers-types';
 
 type TProtectedRouteProps = { path: string; exact: boolean };

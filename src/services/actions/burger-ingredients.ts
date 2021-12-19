@@ -66,7 +66,7 @@ export const getIngredients: AppThunk = () => (dispatch: AppDispatch) => {
                 });
             }
         })
-        .catch((e) => {
+        .catch(() => {
             dispatch({
                 type: GET_INGREDIENTS_FAILED,
             });

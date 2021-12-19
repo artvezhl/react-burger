@@ -1,5 +1,5 @@
 import React, { memo, useEffect, useCallback, FC } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../../services/hooks';
 import { useDrop } from 'react-dnd';
 
 // TODO

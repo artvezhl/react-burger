@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../../services/hooks';
 import { InView } from 'react-intersection-observer';
 
 import { SET_ACTIVE_TAB } from '../../../services/constants';

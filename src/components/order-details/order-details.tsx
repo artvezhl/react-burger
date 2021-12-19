@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 import orderStyles from './order-details.module.css';
 import doneButton from '../../images/done.svg';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/hooks';
 import { getOrderNumber } from '../../services/actions/order-details';
 import { CommonStateType } from '../../services/reducers/reducers-types';
 

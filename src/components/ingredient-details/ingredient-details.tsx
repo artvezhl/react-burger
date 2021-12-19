@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks';
 
 import detailsStyles from './ingredient-details.module.css';
 import { useParams } from 'react-router-dom';
