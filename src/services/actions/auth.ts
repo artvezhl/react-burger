@@ -194,7 +194,7 @@ export const forgotPassword: AppThunk = (email) => (dispatch: AppDispatch) => {
         .catch((e) => console.log(e));
 };
 
-export const resetPassword: AppThunk = (password, code) => (dispatch: AppDispatch) => {
+export const resetPassword: AppThunk = (password, code) => () => {
     fetchWithRefresh(`${REQUEST_URL}/password-reset/reset`, {
         method: 'POST',
         headers: {

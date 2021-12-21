@@ -6,6 +6,7 @@ import { ForgotPasswordPage } from './forgotPassword';
 import { ResetPasswordPage } from './resetPassword';
 import { ProfilePage } from './profile';
 import { Ingredient } from './ingredient';
+import { OrderFeedPage } from './orderFeed';
 
 export {
     HomePage,
@@ -16,4 +17,5 @@ export {
     ResetPasswordPage,
     ProfilePage,
     Ingredient,
+    OrderFeedPage,
 };

@@ -20,8 +20,8 @@ const AppHeader: FC = () => {
                     <AppHeaderItem text="Конструктор" path="/" setHover={setMainActive}>
                         <BurgerIcon type={pathname === '/' || main ? 'primary' : 'secondary'} />
                     </AppHeaderItem>
-                    <AppHeaderItem text="Лента заказов" path="/orders" setHover={setOrdersActive}>
-                        <ListIcon type={pathname === '/orders' || orders ? 'primary' : 'secondary'} />
+                    <AppHeaderItem text="Лента заказов" path="/feed" setHover={setOrdersActive}>
+                        <ListIcon type={pathname === '/feed' || orders ? 'primary' : 'secondary'} />
                     </AppHeaderItem>
                     <li className={`mt-4 mb-4 ${headerStyles.header__logo}`}>
                         <Link className={headerStyles.header__link} to="/">

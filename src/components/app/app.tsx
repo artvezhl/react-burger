@@ -14,6 +14,7 @@ import {
     ResetPasswordPage,
     ProfilePage,
     Ingredient,
+    OrderFeedPage,
 } from '../../pages';
 import Modal from '../modal/modal';
 import { useDispatch } from '../../services/hooks';
@@ -67,6 +68,9 @@ function App() {
                     </ProtectedRoute>
                     <Route path="/ingredients/:id" exact={true}>
                         <Ingredient />
+                    </Route>
+                    <Route path="/feed" exact={true}>
+                        <OrderFeedPage />
                     </Route>
                     <Route>
                         <NotFoundPage />

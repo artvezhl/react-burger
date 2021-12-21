@@ -6,6 +6,7 @@
     --accent: #4C4CFF;
     --background: #1C1C21;
     --rootPadding: 40px;
+    --success: #00CCCC;
 }
 
 ::-webkit-scrollbar { width: 8px; height: 3px;}
