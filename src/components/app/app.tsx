@@ -15,6 +15,7 @@ import {
     ProfilePage,
     Ingredient,
     OrderFeedPage,
+    OrderPage,
 } from '../../pages';
 import Modal from '../modal/modal';
 import { useDispatch } from '../../services/hooks';
@@ -72,6 +73,9 @@ function App() {
                     <Route path="/feed" exact={true}>
                         <OrderFeedPage />
                     </Route>
+                    {/*<Route path="/feed/order" exact={true}>*/}
+                    {/*    <OrderPage />*/}
+                    {/*</Route>*/}
                     <Route>
                         <NotFoundPage />
                     </Route>
