@@ -15,22 +15,10 @@ type TOrderIngredientProps = {
 
 const OrderIngredient: FC<TOrderIngredientProps> = ({ name, image, index, price, count }) => {
     return (
-        <div
-            style={{
-                display: 'flex',
-                alignItems: 'center',
-            }}
-        >
+        <div className={styles.main}>
             <CircleIngredient name={name} url={image} index={index} />
             <p className="text text_type_main-default ml-4">{name}</p>
-            <p
-                className="text text_type_digits-default"
-                style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    marginLeft: 'auto',
-                }}
-            >
+            <p className={`text text_type_digits-default ${styles.price}`}>
                 <span>{count}</span>x {price}
                 <span className="ml-2">
                     <CurrencyIcon type="primary" />

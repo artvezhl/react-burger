@@ -6,7 +6,7 @@
     height: 64px;
     border-radius: 100px;
     border: 2px solid #801AB2;
-    background-color: #000000;
+    background-color: var(--background);
 }
 
 .image {
