@@ -2,6 +2,7 @@ import React from 'react';
 
 import styles from './feed-order.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import CircleIngredient from '../../circle-ingredient/circle-ingredient';
 
 const orderNumber = 657438;
 const orderDate = 'Сегодня, 16:20 i-GMT+3';
@@ -33,54 +34,21 @@ export default function FeedOrder() {
                 }}
             >
                 <div className={styles.images}>
-                    <div
-                        className={styles.imageContainer}
-                        style={{
-                            zIndex: '10',
-                        }}
-                    >
-                        <img className={styles.image} src={bunPic} alt={picName} />
-                    </div>
-                    <div
-                        className={styles.imageContainer}
-                        style={{
-                            zIndex: '9',
-                        }}
-                    >
-                        <img className={styles.image} src={saucePic} alt={picName} />
-                    </div>
-                    <div
-                        className={styles.imageContainer}
-                        style={{
-                            zIndex: '8',
-                        }}
-                    >
-                        <img className={styles.image} src={firstMealPic} alt={picName} />
-                    </div>
-                    <div
-                        className={styles.imageContainer}
-                        style={{
-                            zIndex: '7',
-                        }}
-                    >
-                        <img className={styles.image} src={secondMealPic} alt={picName} />
-                    </div>
-                    <div
-                        className={styles.imageContainer}
-                        style={{
-                            zIndex: '6',
-                        }}
-                    >
-                        <img className={styles.image} src={thirdMealPic} alt={picName} />
-                    </div>
-                    <div
-                        className={styles.imageContainer}
-                        style={{
-                            zIndex: '5',
-                        }}
-                    >
-                        <img className={styles.image} src={fourthMealPic} alt={picName} />
-                    </div>
+                    <CircleIngredient name={picName} url={bunPic} index={6} />
+                    <CircleIngredient name={picName} url={saucePic} index={5} />
+                    <CircleIngredient name={picName} url={firstMealPic} index={4} />
+                    <CircleIngredient name={picName} url={secondMealPic} index={3} />
+                    <CircleIngredient name={picName} url={thirdMealPic} index={2} />
+                    <CircleIngredient name={picName} url={fourthMealPic} index={1} />
+
+                    {/*<div*/}
+                    {/*    className={styles.imageContainer}*/}
+                    {/*    style={{*/}
+                    {/*        zIndex: '5',*/}
+                    {/*    }}*/}
+                    {/*>*/}
+                    {/*    <img className={styles.image} src={fourthMealPic} alt={picName} />*/}
+                    {/*</div>*/}
                 </div>
                 <p
                     className="text text_type_digits-default pl-6"

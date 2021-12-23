@@ -17,26 +17,15 @@
     display: flex;
 }
 
-.imageContainer {
-    display: flex;
-    position: relative;
-    justify-content: space-around;
-    width: 64px;
-    height: 64px;
-    border-radius: 100px;
-    border: 2px solid #801AB2;
-    background-color: #000000;
-}
-
 .image {
     position: absolute;
     height: 64px;
 }
 
-.images > .imageContainer {
+.images > div {
     margin-left: -16px;
 }
 
-.imageContainer:first-of-type {
+.images > div:first-of-type {
     margin-left: 0;
 }
