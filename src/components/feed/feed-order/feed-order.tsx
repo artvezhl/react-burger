@@ -40,15 +40,6 @@ export default function FeedOrder() {
                     <CircleIngredient name={picName} url={secondMealPic} index={3} />
                     <CircleIngredient name={picName} url={thirdMealPic} index={2} />
                     <CircleIngredient name={picName} url={fourthMealPic} index={1} />
-
-                    {/*<div*/}
-                    {/*    className={styles.imageContainer}*/}
-                    {/*    style={{*/}
-                    {/*        zIndex: '5',*/}
-                    {/*    }}*/}
-                    {/*>*/}
-                    {/*    <img className={styles.image} src={fourthMealPic} alt={picName} />*/}
-                    {/*</div>*/}
                 </div>
                 <p
                     className="text text_type_digits-default pl-6"

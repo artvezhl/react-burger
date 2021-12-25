@@ -9,17 +9,18 @@ type TProtectedRouteProps = { path: string; exact: boolean };
 const ProtectedRoute: FC<TProtectedRouteProps> = ({ children, path, ...rest }) => {
     const user = useSelector((state: CommonStateType) => state.auth.user);
     const location = useLocation();
-    // const { pathname } = useLocation();
 
-    if (!user && path === '/profile') {
-        return (
-            <Redirect
-                to={{
-                    pathname: '/login',
-                }}
-            />
-        );
-    }
+    // if (!user && path === '/profile/orders') {
+    //     return (
+    //         <Redirect
+    //             to={{
+    //                 pathname: '/login',
+    //             }}
+    //         />
+    //     );
+    // }
+
+    const profilePages: string = '/profile' || '/profile/orders';
 
     if (
         user &&
@@ -38,7 +39,7 @@ const ProtectedRoute: FC<TProtectedRouteProps> = ({ children, path, ...rest }) =
     return (
         <Route
             {...rest}
-            render={() => (!user && path === '/profile' ? <Redirect to={{ pathname: '/login' }} /> : children)}
+            render={() => (!user && path === profilePages ? <Redirect to={{ pathname: '/login' }} /> : children)}
         />
     );
 };
