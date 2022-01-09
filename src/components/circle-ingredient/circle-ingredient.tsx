@@ -1,10 +1,11 @@
 import React, { FC } from 'react';
 import styles from './circle-ingredient.module.css';
 
-type TCircleIngredientProps = {
+export type TCircleIngredientProps = {
     name: string;
     url: string;
     index: number;
+    totalIngrds?: number;
 };
 
 const indexCreator = (index: number): { zIndex: number } => {
@@ -13,10 +14,13 @@ const indexCreator = (index: number): { zIndex: number } => {
     };
 };
 
-const CircleIngredient: FC<TCircleIngredientProps> = ({ name, url, index }) => {
+const CircleIngredient: FC<TCircleIngredientProps> = ({ name, url, index, totalIngrds }) => {
     return (
         <div className={styles.main} style={indexCreator(index)}>
-            <img className={styles.image} src={url} alt={name} />
+            {totalIngrds && (
+                <p className={`text text_type_digits-default ${styles.total_ingredients}`}>+{totalIngrds}</p>
+            )}
+            <img className={totalIngrds ? styles.image_background : styles.image} src={url} alt={name} />
         </div>
     );
 };

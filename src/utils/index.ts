@@ -1,4 +1,9 @@
 import { ChangeEvent, Dispatch, SetStateAction } from 'react';
+import { format } from 'date-fns';
+import formatDistanceToNow from 'date-fns/formatDistanceToNow';
+import isToday from 'date-fns/isToday';
+import isYesterday from 'date-fns/isYesterday';
+import { ru } from 'date-fns/locale';
 
 type TForm = {
     email?: string;
@@ -43,10 +48,24 @@ export function setCookie(name: string, value: string, props: { path?: string; e
     document.cookie = updatedCookie;
 }
 
-export function getCookie(name: string) {
+export function getCookie(name: string): string | undefined {
     const matches = document.cookie.match(
         // eslint-disable-next-line
         new RegExp('(?:^|; )' + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)')
     );
     return matches ? decodeURIComponent(matches[1]) : undefined;
 }
+
+export const dataFunc = (date: string): string => {
+    let result = '';
+    const currentDate = new Date(date);
+    isToday(currentDate)
+        ? (result += 'Сегодня, ')
+        : isYesterday(currentDate)
+        ? (result += 'Вчера, ')
+        : (result += `${formatDistanceToNow(currentDate, { locale: ru })} назад, `);
+    return (result += `
+    ${format(new Date(currentDate), 'H:mm', { locale: ru })}
+    i-${format(new Date(currentDate), 'z', { locale: ru })} 
+  `);
+};

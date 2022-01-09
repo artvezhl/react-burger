@@ -13,3 +13,14 @@
     position: absolute;
     height: 64px;
 }
+
+.image_background {
+    background: var(--background);
+    opacity: 0.6;
+}
+
+.total_ingredients {
+    position: absolute;
+    padding-top: 27%;
+    z-index: 10;
+}

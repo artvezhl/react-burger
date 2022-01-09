@@ -12,6 +12,12 @@
     text-align: right;
 }
 
+.content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .images {
     display: flex;
 }
@@ -27,4 +33,13 @@
 
 .images > div:first-of-type {
     margin-left: 0;
+}
+
+.price {
+    display: flex;
+    justify-content: center;
+}
+
+.price_icon {
+    padding-left: 9px;
 }

@@ -6,13 +6,13 @@ import FeedOrder from '../../feed/feed-order/feed-order';
 const ProfileHistory = () => {
     return (
         <div className={styles.main}>
-            <FeedOrder />
-            <FeedOrder />
-            <FeedOrder />
-            <FeedOrder />
-            <FeedOrder />
-            <FeedOrder />
-            <FeedOrder />
+            {/*<FeedOrder />*/}
+            {/*<FeedOrder />*/}
+            {/*<FeedOrder />*/}
+            {/*<FeedOrder />*/}
+            {/*<FeedOrder />*/}
+            {/*<FeedOrder />*/}
+            {/*<FeedOrder />*/}
         </div>
     );
 };
