@@ -11,11 +11,7 @@ type TOrdersProps = {
 
 const Orders: FC<TOrdersProps> = ({ total, totalToday, orders }) => {
     const readyOrders = orders.filter((order) => order.status === 'done').slice(0, 5);
-    const cookingOrders = orders.filter((order) => order.status !== 'done');
-
-    // useEffect(() => {
-    //     console.log(readyOrders);
-    // }, [readyOrders]);
+    const cookingOrders = orders.filter((order) => order.status !== 'done').slice(0, 5);
 
     return (
         <section className={styles.main}>

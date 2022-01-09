@@ -1,11 +1,11 @@
-import React, { ReactNode, useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 
 import feedStyles from './feed.module.css';
 import FeedOrder from './feed-order/feed-order';
 import Orders from './orders/orders';
 import { useSelector } from '../../services/hooks';
 import { useDispatch } from 'react-redux';
-import { getFeedOrders, WS_CONNECTION_START } from '../../services/action-types/wsActionTypes';
+import { WS_CONNECTION_START } from '../../services/action-types/wsActionTypes';
 
 export type TFeedOrder = {
     _id: string;
@@ -26,9 +26,8 @@ export default function Feed() {
     }));
 
     useEffect(() => {
-        dispatch({ type: WS_CONNECTION_START });
-        dispatch(getFeedOrders());
-    }, []);
+        dispatch({ type: WS_CONNECTION_START, payload: { url: 'wss://norma.nomoreparties.space/api/orders/all' } });
+    }, [orders]);
 
     const content = !orders
         ? null

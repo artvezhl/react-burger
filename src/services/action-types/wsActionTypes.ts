@@ -1,6 +1,7 @@
 import { TFeedOrder } from '../../components/feed/feed';
 import { AppDispatch, AppThunk } from '../thunk-types';
 import { REQUEST_URL } from '../constants';
+import { getCookie } from '../../utils';
 
 export const WS_CONNECTION_START = 'WS_CONNECTION_START' as const;
 export const WS_CONNECTION_SUCCESS = 'WS_CONNECTION_SUCCESS' as const;
@@ -9,10 +10,13 @@ export const WS_CONNECTION_CLOSED = 'WS_CONNECTION_CLOSED' as const;
 export const WS_GET_MESSAGE = 'WS_GET_MESSAGE' as const;
 export const WS_SEND_MESSAGE = 'WS_SEND_MESSAGE' as const;
 export const GET_FEED = 'GET_FEED' as const;
+export const GET_OWNER_FEED = 'GET_OWNER_FEED' as const;
 
 export interface IWsConnectionStart {
     readonly type: typeof WS_CONNECTION_START;
-    readonly payload: string;
+    readonly payload: {
+        url: string;
+    };
 }
 
 export interface IWsConnectionSuccess {
@@ -32,7 +36,11 @@ export interface IWsConnectionClosed {
 
 export interface IWsGetMessage {
     readonly type: typeof WS_GET_MESSAGE;
-    readonly payload: MessageEvent;
+    readonly payload: {
+        orders: Array<TFeedOrder>;
+        total: number;
+        totalToday: number;
+    };
 }
 
 export interface IWsSendMessage {
@@ -49,6 +57,11 @@ export interface IGetFeed {
     };
 }
 
+export interface IGetOwnerFeed {
+    readonly type: typeof GET_OWNER_FEED;
+    readonly payload: any;
+}
+
 export type TWsActions =
     | IWsConnectionStart
     | IWsConnectionSuccess
@@ -56,23 +69,45 @@ export type TWsActions =
     | IWsConnectionClosed
     | IWsGetMessage
     | IWsSendMessage
-    | IGetFeed;
+    | IGetFeed
+    | IGetOwnerFeed;
 
-export const getFeedOrders: AppThunk = () => (dispatch: AppDispatch) => {
-    fetch(REQUEST_URL + '/orders/all')
-        .then((res) => {
-            if (res && res.ok) {
-                res.json().then((res) => {
-                    dispatch({
-                        type: GET_FEED,
-                        payload: res,
-                    });
-                });
-            } else {
-                console.log('Request error');
-            }
-        })
-        .catch(() => {
-            console.log('Request error');
-        });
-};
+// export const getFeedOrders: AppThunk = () => (dispatch: AppDispatch) => {
+//     fetch(REQUEST_URL + '/orders/all')
+//         .then((res) => {
+//             if (res && res.ok) {
+//                 res.json().then((res) => {
+//                     dispatch({
+//                         type: GET_FEED,
+//                         payload: res,
+//                     });
+//                 });
+//             } else {
+//                 console.log('Request error');
+//             }
+//         })
+//         .catch(() => {
+//             console.log('Request error');
+//         });
+// };
+
+// export const getOwnerFeedOrders: AppThunk = () => (dispatch: AppDispatch) => {
+//     const accessToken = getCookie('accessToken');
+//     fetch(`${REQUEST_URL}/orders?token=${accessToken}`)
+//         .then((res) => {
+//             if (res && res.ok) {
+//                 res.json().then((res) => {
+//                     dispatch({
+//                         type: GET_OWNER_FEED,
+//                         payload: res,
+//                     });
+//                     console.log(res);
+//                 });
+//             } else {
+//                 console.log('Request error');
+//             }
+//         })
+//         .catch(() => {
+//             console.log('Request error');
+//         });
+// };

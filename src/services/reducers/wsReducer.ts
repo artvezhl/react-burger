@@ -27,14 +27,13 @@ const initialState: TWSState = {
 
 export const wsReducer = (state = initialState, action: TWsActions) => {
     switch (action.type) {
-        case GET_FEED:
-            console.log('action payload', action.payload);
-            return {
-                ...state,
-                orders: [...action.payload.orders],
-                total: action.payload.total,
-                totalToday: action.payload.totalToday,
-            };
+        // case GET_FEED:
+        //     return {
+        //         ...state,
+        //         orders: [...action.payload.orders],
+        //         total: action.payload.total,
+        //         totalToday: action.payload.totalToday,
+        //     };
         case WS_CONNECTION_SUCCESS:
             return {
                 ...state,
@@ -54,10 +53,13 @@ export const wsReducer = (state = initialState, action: TWsActions) => {
                 wsConnected: false,
             };
         case WS_GET_MESSAGE:
+            const { orders, total, totalToday } = action.payload;
             return {
                 ...state,
                 error: undefined,
-                orders: [...state.orders, action.payload],
+                orders: [...orders],
+                total,
+                totalToday,
             };
         default:
             return state;
