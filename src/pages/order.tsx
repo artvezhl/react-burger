@@ -52,22 +52,6 @@ export const OrderPage = (): ReactElement | null => {
         currentOrder &&
         (currentOrder.status === 'done' ? 'Выполнен' : currentOrder.status === 'created' ? 'Создан' : 'Готовится');
 
-    // const order =
-    //     currentOrder &&
-    //     currentOrder.ingredients.reduce((arr: Array<TIngredient>, ingredientID): Array<TIngredient> => {
-    //         for (const item of arr) {
-    //             if (item._id === ingredientID) {
-    //                 item.ingredientCount += 1;
-    //                 return arr;
-    //             }
-    //         }
-    //         const currentIngredient = ingredients.find((ingredient: TIngredient) => ingredient._id === ingredientID);
-    //         currentIngredient.ingredientCount += 1;
-    //         arr.push(currentIngredient);
-    //
-    //         return arr;
-    //     }, []);
-
     useEffect(() => {
         setCurrentOrder(currentOrders.filter((item: TFeedOrder) => item._id === id)[0]);
     }, [currentOrders, id]);
@@ -80,26 +64,6 @@ export const OrderPage = (): ReactElement | null => {
     }, [dispatch]);
 
     const order = useMemo(() => orderIngredients(currentOrder, ingredients), [currentOrder, ingredients]);
-
-    // useEffect(() => {
-    //     order =
-    //         currentOrder &&
-    //         currentOrder.ingredients.reduce((arr: Array<TIngredient>, ingredientID) => {
-    //             for (const item of arr) {
-    //                 if (item._id === ingredientID) {
-    //                     item.ingredientCount += 1;
-    //                     return arr;
-    //                 }
-    //             }
-    //             const currentIngredient = ingredients.find(
-    //                 (ingredient: TIngredient) => ingredient._id === ingredientID,
-    //             );
-    //             currentIngredient.ingredientCount += 1;
-    //             arr.push(currentIngredient);
-    //
-    //             return arr;
-    //         }, []);
-    // }, [currentOrder]);
 
     return currentOrder ? (
         <div className={styles.main}>
