@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from '../../../services/hooks';
 import { getCookie } from '../../../utils';
 import FeedOrder from '../../feed/feed-order/feed-order';
 import { TFeedOrder } from '../../feed/feed';
+import { WS_URL } from '../../../services/constants';
 
 const ProfileHistory = (): ReactElement => {
     const orders = useSelector((store) => store.userFeed.orders);
@@ -15,7 +16,7 @@ const ProfileHistory = (): ReactElement => {
     useEffect(() => {
         dispatch({
             type: WS_CONNECTION_START,
-            payload: { url: `wss://norma.nomoreparties.space/orders?token=${accessToken}` },
+            payload: { url: `${WS_URL}?token=${accessToken}` },
         });
         return () => {
             dispatch({ type: WS_CONNECTION_CLOSED });

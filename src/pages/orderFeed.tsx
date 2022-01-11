@@ -5,8 +5,11 @@ import { Route, useHistory, useLocation } from 'react-router-dom';
 import Modal from '../components/modal/modal';
 import { TLocationState } from '../components/app/app-types';
 import { OrderPage } from './order';
+import { WS_CONNECTION_CLOSED, WS_CONNECTION_START } from '../services/action-types/wsActionTypes';
+import { useDispatch } from 'react-redux';
 
 export const OrderFeedPage = (): ReactElement => {
+    const dispatch = useDispatch();
     const history = useHistory();
     const location: TLocationState = useLocation();
     const action = history.action === 'PUSH' || history.action === 'REPLACE';
@@ -17,6 +20,13 @@ export const OrderFeedPage = (): ReactElement => {
         // console.log('modalOrderOpen action is ', action);
         console.log('orderlocation is ', location);
     }, [location]);
+
+    useEffect(() => {
+        dispatch({ type: WS_CONNECTION_START, payload: { url: 'wss://norma.nomoreparties.space/orders/all' } });
+        return () => {
+            dispatch({ type: WS_CONNECTION_CLOSED });
+        };
+    }, []);
 
     const back = (e: KeyboardEvent | SyntheticEvent) => {
         e.stopPropagation();
@@ -29,16 +39,7 @@ export const OrderFeedPage = (): ReactElement => {
             {modalOrderOpen && (
                 <Route path="/feed/:id">
                     <Modal onClose={back}>
-                        <OrderPage
-                            number={4}
-                            name={'Флюоресцентная булка R2-D3'}
-                            date={'2022-01-09T19:53:17.161Z'}
-                            ingredientsIDs={[
-                                '60d3b41abdacab0026a733c6',
-                                '60d3b41abdacab0026a733c6',
-                                '60d3b41abdacab0026a733c6',
-                            ]}
-                        />
+                        <OrderPage />
                     </Modal>
                 </Route>
             )}

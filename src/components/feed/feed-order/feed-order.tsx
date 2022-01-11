@@ -1,10 +1,10 @@
-import React, { FC, useCallback, useMemo } from 'react';
+import React, { FC, useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 import styles from './feed-order.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import CircleIngredient from '../../circle-ingredient/circle-ingredient';
-import { dataFunc } from '../../../utils';
+import { dataFunc, orderSumFunc } from '../../../utils';
 import { TIngredient } from '../../burger-ingredients/ingredient/ingredient-types';
 import { TCircleIngredientProps } from '../../circle-ingredient/circle-ingredient';
 import { useSelector } from '../../../services/hooks';
@@ -20,14 +20,6 @@ type TFeedOrderProps = {
 const FeedOrder: FC<TFeedOrderProps> = ({ id, number, name, date, ingredientsIDs }) => {
     const ingredients = useSelector((store) => store.ingredients.ingredients);
     const location = useLocation();
-    const total = useMemo(() => {
-        let result = 0;
-        ingredientsIDs.forEach((id) => {
-            const currentIgd = ingredients.find((ingredient: TIngredient) => ingredient._id === id);
-            if (currentIgd) result += currentIgd.price;
-        });
-        return result;
-    }, [ingredientsIDs]);
 
     const renderIngredientsImages = useCallback(
         (
@@ -38,7 +30,6 @@ const FeedOrder: FC<TFeedOrderProps> = ({ id, number, name, date, ingredientsIDs
             ingredientsLength: number,
         ) => {
             const currentIngredient = ingredientsArray.find((ingredient) => ingredient._id === ingredientID);
-            // if (currentIngredient) total += currentIngredient.price;
             return currentIngredient && ingredientsLength > 6 && index === 0 ? (
                 <ImageElement
                     name={currentIngredient.name}
@@ -73,6 +64,7 @@ const FeedOrder: FC<TFeedOrderProps> = ({ id, number, name, date, ingredientsIDs
                 state: { background: location },
             }}
             className={`pt-6 pb-6 pl-6 pr-6 mt-5 mr-4 ${styles.main}`}
+            onClick={() => console.log(location)}
         >
             <p className={`text text_type_main-default pb-6 ${styles.order}`}>
                 #{number} <span className={`text_color_inactive ${styles.date}`}>{dataFunc(date)}</span>
@@ -93,7 +85,7 @@ const FeedOrder: FC<TFeedOrderProps> = ({ id, number, name, date, ingredientsIDs
                         .reverse()}
                 </div>
                 <p className={`text text_type_digits-default pl-6 ${styles.price}`}>
-                    {total}
+                    {orderSumFunc(ingredientsIDs, ingredients)}
                     <span className={styles.price_icon}>
                         <CurrencyIcon type="primary" />
                     </span>

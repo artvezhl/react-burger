@@ -3,9 +3,9 @@ import React, { ReactElement, useEffect } from 'react';
 import feedStyles from './feed.module.css';
 import FeedOrder from './feed-order/feed-order';
 import Orders from './orders/orders';
-import { useSelector } from '../../services/hooks';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/hooks';
 import { WS_CONNECTION_CLOSED, WS_CONNECTION_START } from '../../services/action-types/wsActionTypes';
+import { WS_URL } from '../../services/constants';
 
 export type TFeedOrder = {
     _id: string;
@@ -18,19 +18,19 @@ export type TFeedOrder = {
 };
 
 const Feed = (): ReactElement => {
-    const dispatch = useDispatch();
     const orders = useSelector((store) => store.feed.orders);
+    const dispatch = useDispatch();
     const { total, totalToday } = useSelector((store) => ({
         total: store.feed.total,
         totalToday: store.feed.totalToday,
     }));
 
     useEffect(() => {
-        dispatch({ type: WS_CONNECTION_START, payload: { url: 'wss://norma.nomoreparties.space/orders/all' } });
+        dispatch({ type: WS_CONNECTION_START, payload: { url: `${WS_URL}/all` } });
         return () => {
             dispatch({ type: WS_CONNECTION_CLOSED });
         };
-    }, []);
+    }, [dispatch]);
 
     const content = !orders
         ? null

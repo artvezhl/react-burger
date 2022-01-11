@@ -4,6 +4,7 @@ import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import isToday from 'date-fns/isToday';
 import isYesterday from 'date-fns/isYesterday';
 import { ru } from 'date-fns/locale';
+import { TIngredient } from '../components/burger-ingredients/ingredient/ingredient-types';
 
 type TForm = {
     email?: string;
@@ -72,4 +73,13 @@ export const dataFunc = (date: string): string => {
     ${format(new Date(currentDate), 'H:mm', { locale: ru })}
     i-${format(new Date(currentDate), 'z', { locale: ru })} 
   `);
+};
+
+export const orderSumFunc = (IDs: Array<string>, ingredients: Array<TIngredient>): number => {
+    let result = 0;
+    IDs.forEach((id: string) => {
+        const currentIgd = ingredients.find((ingredient: TIngredient) => ingredient._id === id);
+        if (currentIgd) result += currentIgd.price;
+    });
+    return result;
 };
