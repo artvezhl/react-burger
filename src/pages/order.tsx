@@ -47,6 +47,7 @@ export const OrderPage = (): ReactElement | null => {
     const dispatch = useDispatch();
     const [currentOrder, setCurrentOrder] = useState<TFeedOrder>();
     const { id } = useParams<TIngredientDetailsParams>();
+    const [order, setOrder] = useState<TIngredient[]>();
 
     const orderStatus =
         currentOrder &&
@@ -63,7 +64,10 @@ export const OrderPage = (): ReactElement | null => {
         };
     }, [dispatch]);
 
-    const order = useMemo(() => orderIngredients(currentOrder, ingredients), [currentOrder, ingredients]);
+    useEffect(() => {
+        const ingredientsOfOrder = orderIngredients(currentOrder, ingredients);
+        if (ingredientsOfOrder && ingredientsOfOrder.length) setOrder(ingredientsOfOrder);
+    }, [currentOrder]);
 
     return currentOrder ? (
         <div className={styles.main}>

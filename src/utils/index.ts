@@ -79,6 +79,7 @@ export const orderSumFunc = (IDs: Array<string>, ingredients: Array<TIngredient>
     let result = 0;
     IDs.forEach((id: string) => {
         const currentIgd = ingredients.find((ingredient: TIngredient) => ingredient._id === id);
+        if (currentIgd && currentIgd.type === 'bun') result += currentIgd.price * 2;
         if (currentIgd) result += currentIgd.price;
     });
     return result;
