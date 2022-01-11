@@ -26,7 +26,9 @@ const orderIngredients = (
             }
             const currentIngredient = ingredients.find((ingredient: TIngredient) => ingredient._id === ingredientID);
             if (currentIngredient) {
-                currentIngredient.ingredientCount += 1;
+                if (currentIngredient.type === 'bun') {
+                    currentIngredient.ingredientCount += 2;
+                } else currentIngredient.ingredientCount += 1;
                 arr.push(currentIngredient);
             }
 
