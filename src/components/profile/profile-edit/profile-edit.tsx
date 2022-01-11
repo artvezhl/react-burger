@@ -1,4 +1,4 @@
-import React, { RefObject, useCallback, useEffect, useRef, useState } from 'react';
+import React, { ReactElement, RefObject, useCallback, useEffect, useRef, useState } from 'react';
 import styles from './profile-edit.module.css';
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { formHandler as onChange, getCookie } from '../../../utils';
@@ -19,7 +19,7 @@ type TForm = {
     password: string;
 };
 
-const ProfileEdit = () => {
+const ProfileEdit = (): ReactElement => {
     const [form, setForm] = useState<TForm>({
         name: '',
         login: '',

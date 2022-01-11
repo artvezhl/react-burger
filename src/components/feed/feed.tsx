@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 
 import feedStyles from './feed.module.css';
 import FeedOrder from './feed-order/feed-order';
 import Orders from './orders/orders';
 import { useSelector } from '../../services/hooks';
 import { useDispatch } from 'react-redux';
-import { WS_CONNECTION_START } from '../../services/action-types/wsActionTypes';
+import { WS_CONNECTION_CLOSED, WS_CONNECTION_START } from '../../services/action-types/wsActionTypes';
 
 export type TFeedOrder = {
     _id: string;
@@ -17,7 +17,7 @@ export type TFeedOrder = {
     number: number;
 };
 
-export default function Feed() {
+const Feed = (): ReactElement => {
     const dispatch = useDispatch();
     const orders = useSelector((store) => store.feed.orders);
     const { total, totalToday } = useSelector((store) => ({
@@ -26,13 +26,16 @@ export default function Feed() {
     }));
 
     useEffect(() => {
-        dispatch({ type: WS_CONNECTION_START, payload: { url: 'wss://norma.nomoreparties.space/api/orders/all' } });
-    }, [orders]);
+        dispatch({ type: WS_CONNECTION_START, payload: { url: 'wss://norma.nomoreparties.space/orders/all' } });
+        return () => {
+            dispatch({ type: WS_CONNECTION_CLOSED });
+        };
+    }, []);
 
     const content = !orders
         ? null
         : orders.map(({ _id, number, name, createdAt, ingredients }: TFeedOrder) => (
-              <FeedOrder key={_id} number={number} name={name} date={createdAt} ingredientsIDs={ingredients} />
+              <FeedOrder key={_id} id={_id} number={number} name={name} date={createdAt} ingredientsIDs={ingredients} />
           ));
 
     return (
@@ -44,4 +47,6 @@ export default function Feed() {
             </div>
         </div>
     );
-}
+};
+
+export default Feed;

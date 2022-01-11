@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { useSelector } from '../../services/hooks';
 
 import detailsStyles from './ingredient-details.module.css';
@@ -7,7 +7,7 @@ import { TIngredientDetailsParams } from './ingredient-details-types';
 import { CommonStateType } from '../../services/reducers/reducers-types';
 import { TIngredient } from '../burger-ingredients/ingredient/ingredient-types';
 
-export default function IngredientDetails() {
+const IngredientDetails = (): ReactElement => {
     const { id } = useParams<TIngredientDetailsParams>();
     const { image_large, name, calories, proteins, fat, carbohydrates } = useSelector(
         (state: CommonStateType) => state.ingredients.ingredients.filter((item: TIngredient) => item._id === id)[0],
@@ -37,4 +37,6 @@ export default function IngredientDetails() {
             </table>
         </>
     );
-}
+};
+
+export default IngredientDetails;

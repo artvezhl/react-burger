@@ -1,7 +1,4 @@
 import { TFeedOrder } from '../../components/feed/feed';
-import { AppDispatch, AppThunk } from '../thunk-types';
-import { REQUEST_URL } from '../constants';
-import { getCookie } from '../../utils';
 
 export const WS_CONNECTION_START = 'WS_CONNECTION_START' as const;
 export const WS_CONNECTION_SUCCESS = 'WS_CONNECTION_SUCCESS' as const;
@@ -59,7 +56,11 @@ export interface IGetFeed {
 
 export interface IGetOwnerFeed {
     readonly type: typeof GET_OWNER_FEED;
-    readonly payload: any;
+    readonly payload: {
+        orders: Array<TFeedOrder>;
+        total: number;
+        totalToday: number;
+    };
 }
 
 export type TWsActions =
@@ -71,43 +72,3 @@ export type TWsActions =
     | IWsSendMessage
     | IGetFeed
     | IGetOwnerFeed;
-
-// export const getFeedOrders: AppThunk = () => (dispatch: AppDispatch) => {
-//     fetch(REQUEST_URL + '/orders/all')
-//         .then((res) => {
-//             if (res && res.ok) {
-//                 res.json().then((res) => {
-//                     dispatch({
-//                         type: GET_FEED,
-//                         payload: res,
-//                     });
-//                 });
-//             } else {
-//                 console.log('Request error');
-//             }
-//         })
-//         .catch(() => {
-//             console.log('Request error');
-//         });
-// };
-
-// export const getOwnerFeedOrders: AppThunk = () => (dispatch: AppDispatch) => {
-//     const accessToken = getCookie('accessToken');
-//     fetch(`${REQUEST_URL}/orders?token=${accessToken}`)
-//         .then((res) => {
-//             if (res && res.ok) {
-//                 res.json().then((res) => {
-//                     dispatch({
-//                         type: GET_OWNER_FEED,
-//                         payload: res,
-//                     });
-//                     console.log(res);
-//                 });
-//             } else {
-//                 console.log('Request error');
-//             }
-//         })
-//         .catch(() => {
-//             console.log('Request error');
-//         });
-// };

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 
 import orderStyles from './order-details.module.css';
 import doneButton from '../../images/done.svg';
@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from '../../services/hooks';
 import { getOrderNumber } from '../../services/actions/order-details';
 import { CommonStateType } from '../../services/reducers/reducers-types';
 
-export default function OrderDetails() {
+const OrderDetails = (): ReactElement => {
     const { ingredientIDs, orderNumber, orderNumberRequest, orderNumberFailed } = useSelector(
         (state: CommonStateType) => ({
             ingredientIDs: state.burger.ingredientIDs,
@@ -44,4 +44,6 @@ export default function OrderDetails() {
             </p>
         </>
     );
-}
+};
+
+export default OrderDetails;

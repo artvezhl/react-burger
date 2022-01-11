@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { ReactElement, useCallback } from 'react';
 
 import profileStyles from './profile.module.css';
 import Profile from '../components/profile/profile';
@@ -7,7 +7,7 @@ import { logoutRequest } from '../services/actions/auth';
 import { useDispatch, useSelector } from 'react-redux';
 import { CommonStateType } from '../services/reducers/reducers-types';
 
-export function ProfilePage() {
+export const ProfilePage = (): ReactElement | null => {
     const user = useSelector((state: CommonStateType) => state.auth.user);
     const { pathname } = useLocation();
     const dispatch = useDispatch();
@@ -58,4 +58,4 @@ export function ProfilePage() {
             <Profile />
         </div>
     ) : null;
-}
+};

@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, ReactElement } from 'react';
 
 import registerStyles from './register.module.css';
 import AuthForm from '../components/auth-form/auth-form';
@@ -17,7 +17,7 @@ export type TForm = {
     password: string;
 };
 
-export function RegisterPage() {
+export const RegisterPage = (): ReactElement => {
     const user = useSelector((state: CommonStateType) => state.auth.user);
     const [form, setForm] = useState<TForm>({
         email: '',
@@ -81,4 +81,4 @@ export function RegisterPage() {
             )}
         </div>
     );
-}
+};

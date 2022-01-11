@@ -8,7 +8,6 @@ import {
     WS_CONNECTION_ERROR,
     WS_GET_MESSAGE,
     WS_CONNECTION_CLOSED,
-    WS_SEND_MESSAGE,
 } from '../action-types/wsActionTypes';
 
 export const socketMiddleware = (): Middleware => {
@@ -30,7 +29,6 @@ export const socketMiddleware = (): Middleware => {
 
             if (socket) {
                 socket.onopen = () => {
-                    console.log('onOpennn');
                     dispatch({ type: WS_CONNECTION_SUCCESS });
                 };
 
@@ -39,11 +37,10 @@ export const socketMiddleware = (): Middleware => {
                 };
 
                 socket.onmessage = (event) => {
-                    console.log('ws MESSAGe');
                     const { data } = event;
                     const parsedData = JSON.parse(data);
                     const { success, ...restData } = parsedData;
-                    dispatch({ type: WS_GET_MESSAGE, payload: restData });
+                    success && dispatch({ type: WS_GET_MESSAGE, payload: restData });
                 };
 
                 socket.onclose = (event) => {

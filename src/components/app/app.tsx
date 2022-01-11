@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useEffect } from 'react';
+import React, { ReactElement, SyntheticEvent, useEffect } from 'react';
 
 import { Switch, Route, useHistory, useLocation } from 'react-router-dom';
 
@@ -25,7 +25,7 @@ import { getCookie } from '../../utils';
 import { getIngredients } from '../../services/actions/burger-ingredients';
 import { TLocationState } from './app-types';
 
-function App() {
+const App = (): ReactElement => {
     const history = useHistory();
     const location: TLocationState = useLocation();
     const dispatch = useDispatch();
@@ -43,6 +43,12 @@ function App() {
 
     const action = history.action === 'PUSH' || history.action === 'REPLACE';
     const modalIngredientOpen = action && location.state && location.state.background;
+
+    // useEffect(() => {
+    // console.log('modalIngredientOpen is ', modalIngredientOpen);
+    // console.log('action is ', action);
+    // console.log('location is ', location);
+    // }, [location]);
 
     return (
         <>
@@ -70,7 +76,7 @@ function App() {
                     </ProtectedRoute>
                     <Route path="/ingredients/:id" exact={true} component={Ingredient} />
                     <Route path="/feed" exact={true} component={OrderFeedPage} />
-                    <Route path="/feed/order" exact={true} component={OrderPage} />
+                    <Route path="/feed/:id" exact={true} component={OrderPage} />
                     <Route component={NotFoundPage} />
                 </Switch>
                 {modalIngredientOpen && (
@@ -83,6 +89,6 @@ function App() {
             </main>
         </>
     );
-}
+};
 
 export default App;

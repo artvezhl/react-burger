@@ -6,6 +6,7 @@ import {
     RESET_ORDER_NUMBER,
 } from '../constants';
 import { AppThunk, AppDispatch } from '../thunk-types';
+import { getCookie } from '../../utils';
 
 export interface IGetOrderNumber {
     readonly type: typeof GET_ORDER_NUMBER;
@@ -30,11 +31,13 @@ export const getOrderNumber: AppThunk = (orderIDs: Array<string>) => (dispatch: 
     dispatch({
         type: GET_ORDER_NUMBER,
     });
+    const token = getCookie('accessToken');
 
     fetch(REQUEST_URL + '/orders', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
+            authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
             ingredients: orderIDs,

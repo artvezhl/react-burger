@@ -18,7 +18,11 @@ export const formHandler: TFormHandler = (e, setForm, form) => {
     setForm({ ...form, [e.target.name]: e.target.value });
 };
 
-export function setCookie(name: string, value: string, props: { path?: string; expires?: Date | string } = {}) {
+export const setCookie = (
+    name: string,
+    value: string,
+    props: { path?: string; expires?: Date | string } = {},
+): void => {
     props = {
         path: '/', //задаем корневой адрес для cookies
         ...props,
@@ -46,7 +50,7 @@ export function setCookie(name: string, value: string, props: { path?: string; e
         }
     }
     document.cookie = updatedCookie;
-}
+};
 
 export function getCookie(name: string): string | undefined {
     const matches = document.cookie.match(

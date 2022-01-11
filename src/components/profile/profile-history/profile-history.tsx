@@ -1,35 +1,34 @@
-import React, { useEffect } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 
 import styles from './profile-history.module.css';
-import FeedOrder from '../../feed/feed-order/feed-order';
+import { WS_CONNECTION_CLOSED, WS_CONNECTION_START } from '../../../services/action-types/wsActionTypes';
 import { useDispatch, useSelector } from '../../../services/hooks';
-// import { getOwnerFeedOrders, WS_CONNECTION_START } from '../../../services/action-types/wsActionTypes';
+import { getCookie } from '../../../utils';
+import FeedOrder from '../../feed/feed-order/feed-order';
+import { TFeedOrder } from '../../feed/feed';
 
-const ProfileHistory = () => {
-    const wsStatus = useSelector((store) => store.feed.wsConnected);
+const ProfileHistory = (): ReactElement => {
+    const orders = useSelector((store) => store.userFeed.orders);
+    const accessToken = getCookie('accessToken');
     const dispatch = useDispatch();
 
-    // useEffect(() => {
-    //     dispatch({ type: WS_CONNECTION_START });
-    // }, []);
-    //
-    // useEffect(() => {
-    //     console.log(wsStatus);
-    //     wsStatus && dispatch(getOwnerFeedOrders());
-    // }, [wsStatus]);
+    useEffect(() => {
+        dispatch({
+            type: WS_CONNECTION_START,
+            payload: { url: `wss://norma.nomoreparties.space/orders?token=${accessToken}` },
+        });
+        return () => {
+            dispatch({ type: WS_CONNECTION_CLOSED });
+        };
+    }, []);
 
-    return (
-        <div className={styles.main}>
-            jgknrkejngrek
-            {/*<FeedOrder />*/}
-            {/*<FeedOrder />*/}
-            {/*<FeedOrder />*/}
-            {/*<FeedOrder />*/}
-            {/*<FeedOrder />*/}
-            {/*<FeedOrder />*/}
-            {/*<FeedOrder />*/}
-        </div>
-    );
+    const content = !orders
+        ? null
+        : orders.map(({ _id, number, name, createdAt, ingredients }: TFeedOrder) => (
+              <FeedOrder key={_id} id={_id} number={number} name={name} date={createdAt} ingredientsIDs={ingredients} />
+          ));
+
+    return <div className={styles.main}>{content}</div>;
 };
 
 export default ProfileHistory;

@@ -1,4 +1,5 @@
 import React, { FC, useCallback, useMemo } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
 import styles from './feed-order.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -9,19 +10,20 @@ import { TCircleIngredientProps } from '../../circle-ingredient/circle-ingredien
 import { useSelector } from '../../../services/hooks';
 
 type TFeedOrderProps = {
+    readonly id: string;
     readonly number: number;
     readonly name: string;
     readonly date: string;
     readonly ingredientsIDs: Array<string>;
 };
 
-const FeedOrder: FC<TFeedOrderProps> = ({ number, name, date, ingredientsIDs }) => {
+const FeedOrder: FC<TFeedOrderProps> = ({ id, number, name, date, ingredientsIDs }) => {
     const ingredients = useSelector((store) => store.ingredients.ingredients);
+    const location = useLocation();
     const total = useMemo(() => {
         let result = 0;
         ingredientsIDs.forEach((id) => {
             const currentIgd = ingredients.find((ingredient: TIngredient) => ingredient._id === id);
-            // console.log(currentIgd.price);
             if (currentIgd) result += currentIgd.price;
         });
         return result;
@@ -65,7 +67,13 @@ const FeedOrder: FC<TFeedOrderProps> = ({ number, name, date, ingredientsIDs }) 
     }, [ingredientsIDs]);
 
     return (
-        <div className={`pt-6 pb-6 pl-6 pr-6 mt-5 mr-4 ${styles.main}`}>
+        <Link
+            to={{
+                pathname: `/feed/${id}`,
+                state: { background: location },
+            }}
+            className={`pt-6 pb-6 pl-6 pr-6 mt-5 mr-4 ${styles.main}`}
+        >
             <p className={`text text_type_main-default pb-6 ${styles.order}`}>
                 #{number} <span className={`text_color_inactive ${styles.date}`}>{dataFunc(date)}</span>
             </p>
@@ -91,7 +99,7 @@ const FeedOrder: FC<TFeedOrderProps> = ({ number, name, date, ingredientsIDs }) 
                     </span>
                 </p>
             </div>
-        </div>
+        </Link>
     );
 };
 

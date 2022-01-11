@@ -1,8 +1,6 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 
-import styles from '../feed/feed-order/feed-order.module.css';
 import OrderIngredient from './order-ingredient/order-ingredient';
-import CircleIngredient from '../circle-ingredient/circle-ingredient';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 const orderNumber = 657438;
@@ -15,13 +13,12 @@ const firstMealPic = 'https://code.s3.yandex.net/react/code/meat-01.png';
 const secondMealPic = 'https://code.s3.yandex.net/react/code/meat-02.png';
 const thirdMealPic = 'https://code.s3.yandex.net/react/code/sp_1.png';
 const fourthMealPic = 'https://code.s3.yandex.net/react/code/core.png';
-const picName = 'name of pic';
 const orderStatus = 'Выполнен';
 const name = 'Флюоресцентная булка R2-D3';
 
 const price = 13425;
 
-export default function Order() {
+const Order = (): ReactElement => {
     return (
         <div
             style={{
@@ -100,4 +97,6 @@ export default function Order() {
             </div>
         </div>
     );
-}
+};
+
+export default Order;

@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useState } from 'react';
+import React, { ReactElement, SyntheticEvent, useState } from 'react';
 import registerStyles from './register.module.css';
 import AuthForm from '../components/auth-form/auth-form';
 import formStyles from '../components/auth-form/auth-form.module.css';
@@ -9,7 +9,7 @@ import { SET_PASSWORD_RESET } from '../services/constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { CommonStateType } from '../services/reducers/reducers-types';
 
-export function ResetPasswordPage() {
+export const ResetPasswordPage = (): ReactElement => {
     const [password, setPassword] = useState<string>('');
     const [code, setCode] = useState<string>('');
     const [passError, setPassError] = useState<boolean>(false);
@@ -84,4 +84,4 @@ export function ResetPasswordPage() {
     ) : (
         <Redirect to="/forgot-password" />
     );
-}
+};

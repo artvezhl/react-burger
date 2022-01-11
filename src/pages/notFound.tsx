@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 
 import notFoundStyles from './notFound.module.css';
 
-export function NotFoundPage() {
+export const NotFoundPage = (): ReactElement => {
     return (
         <div className={`${notFoundStyles.notFound} text text_type_main-medium`}>
             <h2 className="text text_type_digits-large text_color_inactive">404</h2>
@@ -10,4 +10,4 @@ export function NotFoundPage() {
             Please return back or follow to the main page.
         </div>
     );
-}
+};

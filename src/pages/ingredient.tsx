@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 
 import { useParams } from 'react-router-dom';
 import ingredientStyles from './ingredient.module.css';
@@ -7,7 +7,7 @@ import { CommonStateType } from '../services/reducers/reducers-types';
 import { TIngredient } from '../components/burger-ingredients/ingredient/ingredient-types';
 import { TIngredientDetailsParams } from '../components/ingredient-details/ingredient-details-types';
 
-export const Ingredient = () => {
+export const Ingredient = (): ReactElement => {
     const currentIngredients = useSelector((state: CommonStateType) => state.ingredients.ingredients);
     const [currentIngredient, setCurrentIngredient] = useState<TIngredient>();
     const { id } = useParams<TIngredientDetailsParams>();

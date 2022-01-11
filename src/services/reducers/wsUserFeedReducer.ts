@@ -3,9 +3,6 @@ import {
     WS_CONNECTION_ERROR,
     WS_CONNECTION_CLOSED,
     WS_GET_MESSAGE,
-    GET_FEED,
-    WS_CONNECTION_START,
-    WS_SEND_MESSAGE,
 } from '../action-types/wsActionTypes';
 import { TWsActions } from '../action-types/wsActionTypes';
 import { TFeedOrder } from '../../components/feed/feed';
@@ -25,15 +22,8 @@ const initialState: TWSState = {
     totalToday: 0,
 };
 
-export const wsReducer = (state = initialState, action: TWsActions) => {
+export const wsUserFeedReducer = (state = initialState, action: TWsActions): TWSState => {
     switch (action.type) {
-        // case GET_FEED:
-        //     return {
-        //         ...state,
-        //         orders: [...action.payload.orders],
-        //         total: action.payload.total,
-        //         totalToday: action.payload.totalToday,
-        //     };
         case WS_CONNECTION_SUCCESS:
             return {
                 ...state,
@@ -53,13 +43,11 @@ export const wsReducer = (state = initialState, action: TWsActions) => {
                 wsConnected: false,
             };
         case WS_GET_MESSAGE:
-            const { orders, total, totalToday } = action.payload;
+            const { orders } = action.payload;
             return {
                 ...state,
                 error: undefined,
-                orders: [...orders],
-                total,
-                totalToday,
+                orders: [...orders.reverse()],
             };
         default:
             return state;

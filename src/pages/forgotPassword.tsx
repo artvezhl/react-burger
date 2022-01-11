@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { ReactElement, useCallback, useState } from 'react';
 
 import registerStyles from './register.module.css';
 import AuthForm from '../components/auth-form/auth-form';
@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CommonStateType } from '../services/reducers/reducers-types';
 const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
 
-export function ForgotPasswordPage() {
+export const ForgotPasswordPage = (): ReactElement => {
     const [email, setEmail] = useState('');
     const [error, setError] = useState(false);
     const isPasswordReset = useSelector((state: CommonStateType) => state.auth.passwordReset);
@@ -66,4 +66,4 @@ export function ForgotPasswordPage() {
     ) : (
         <Redirect to={'/reset-password'} />
     );
-}
+};

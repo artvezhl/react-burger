@@ -1,6 +1,9 @@
 .main {
+    display: block;
     background: #1C1C21;
     border-radius: 40px;
+    text-decoration: none;
+    color: var(--text);
 }
 
 .order {

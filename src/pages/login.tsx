@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { ReactElement, useCallback, useRef, useState } from 'react';
 
 import loginStyles from './login.module.css';
 import AuthForm from '../components/auth-form/auth-form';
@@ -15,7 +15,7 @@ export type TForm = {
     password: string;
 };
 
-export function LoginPage() {
+export const LoginPage = (): ReactElement => {
     const [passwordInputIcon, setIcon] = useState<keyof TICons>('ShowIcon');
     const [form, setForm] = useState<TForm>({
         email: '',
@@ -88,4 +88,4 @@ export function LoginPage() {
             </AuthForm>
         </div>
     );
-}
+};

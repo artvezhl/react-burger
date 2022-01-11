@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { useDispatch, useSelector } from '../../services/hooks';
 
 import ingredientsStyles from './burger-ingredients.module.css';
@@ -7,7 +7,7 @@ import Ingredients from './ingredients/ingredients';
 import { SET_ACTIVE_TAB } from '../../services/constants';
 import { CommonStateType } from '../../services/reducers/reducers-types';
 
-const BurgerIngredients = () => {
+const BurgerIngredients = (): ReactElement => {
     const { ingredients, isLoading, hasError, activeTab } = useSelector((state: CommonStateType) => ({
         ingredients: state.ingredients.ingredients,
         isLoading: state.ingredients.ingredientsRequest,
