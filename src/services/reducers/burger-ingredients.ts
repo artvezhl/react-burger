@@ -41,6 +41,7 @@ export const ingredientsReducer = (
                 ingredients: action.ingredients.map((ingredient) => ({
                     ...ingredient,
                     ingredientCount: 0,
+                    ingredientOrderCount: 0,
                 })),
                 ingredientsRequest: false,
                 ingredientsFailed: false,

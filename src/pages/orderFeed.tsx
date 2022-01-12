@@ -7,6 +7,7 @@ import { TLocationState } from '../components/app/app-types';
 import { OrderPage } from './order';
 import { WS_CONNECTION_CLOSED, WS_CONNECTION_START } from '../services/action-types/wsActionTypes';
 import { useDispatch } from 'react-redux';
+import Order from '../components/order/order';
 
 export const OrderFeedPage = (): ReactElement => {
     const dispatch = useDispatch();
@@ -39,7 +40,7 @@ export const OrderFeedPage = (): ReactElement => {
             {modalOrderOpen && (
                 <Route path="/feed/:id">
                     <Modal onClose={back}>
-                        <OrderPage />
+                        <Order />
                     </Modal>
                 </Route>
             )}

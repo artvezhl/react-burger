@@ -5,6 +5,7 @@ import isToday from 'date-fns/isToday';
 import isYesterday from 'date-fns/isYesterday';
 import { ru } from 'date-fns/locale';
 import { TIngredient } from '../components/burger-ingredients/ingredient/ingredient-types';
+import { TFeedOrder } from '../components/feed/feed';
 
 type TForm = {
     email?: string;
@@ -83,4 +84,35 @@ export const orderSumFunc = (IDs: Array<string>, ingredients: Array<TIngredient>
         if (currentIgd && currentIgd.type !== 'bun') result += currentIgd.price;
     });
     return result;
+};
+
+export const orderIngredients = (
+    order: TFeedOrder | undefined,
+    ingredients: Array<TIngredient>,
+): Array<TIngredient> | null => {
+    if (order) {
+        const result = order.ingredients.reduce((arr: Array<TIngredient>, ingredientID) => {
+            for (const item of arr) {
+                if (item._id === ingredientID) {
+                    item.ingredientOrderCount += 1;
+                    return arr;
+                }
+            }
+            const currentIngredient = ingredients.find((ingredient: TIngredient) => ingredient._id === ingredientID);
+            if (currentIngredient) {
+                if (currentIngredient.type === 'bun') {
+                    currentIngredient.ingredientOrderCount += 2;
+                } else currentIngredient.ingredientOrderCount += 1;
+                arr.push(currentIngredient);
+            }
+
+            return arr;
+        }, []);
+
+        console.log(result);
+
+        return result;
+    }
+
+    return null;
 };

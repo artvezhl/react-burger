@@ -1,47 +1,16 @@
-import React, { ReactElement, useEffect, useMemo, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 
 import styles from './order.module.css';
 import OrderIngredient from '../components/order/order-ingredient/order-ingredient';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useParams } from 'react-router-dom';
-import { dataFunc, orderSumFunc } from '../utils';
+import { dataFunc, orderSumFunc, orderIngredients } from '../utils';
 import { TIngredientDetailsParams } from '../components/ingredient-details/ingredient-details-types';
 import { TFeedOrder } from '../components/feed/feed';
 import { useDispatch, useSelector } from '../services/hooks';
 import { WS_CONNECTION_CLOSED, WS_CONNECTION_START } from '../services/action-types/wsActionTypes';
 import { WS_URL } from '../services/constants';
 import { TIngredient } from '../components/burger-ingredients/ingredient/ingredient-types';
-
-const orderIngredients = (
-    order: TFeedOrder | undefined,
-    ingredients: Array<TIngredient>,
-): Array<TIngredient> | null => {
-    if (order) {
-        const result = order.ingredients.reduce((arr: Array<TIngredient>, ingredientID) => {
-            for (const item of arr) {
-                if (item._id === ingredientID) {
-                    item.ingredientCount += 1;
-                    return arr;
-                }
-            }
-            const currentIngredient = ingredients.find((ingredient: TIngredient) => ingredient._id === ingredientID);
-            if (currentIngredient) {
-                if (currentIngredient.type === 'bun') {
-                    currentIngredient.ingredientCount += 2;
-                } else currentIngredient.ingredientCount += 1;
-                arr.push(currentIngredient);
-            }
-
-            return arr;
-        }, []);
-
-        console.log(result);
-
-        return result;
-    }
-
-    return null;
-};
 
 export const OrderPage = (): ReactElement | null => {
     const ingredients = useSelector((store) => store.ingredients.ingredients);
@@ -87,7 +56,7 @@ export const OrderPage = (): ReactElement | null => {
                                 key={i}
                                 name={ingredient.name}
                                 price={ingredient.price}
-                                count={ingredient.ingredientCount}
+                                count={ingredient.ingredientOrderCount}
                                 index={i}
                                 image={ingredient.image}
                             />

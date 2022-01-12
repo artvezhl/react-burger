@@ -47,7 +47,7 @@ const App = (): ReactElement => {
     // useEffect(() => {
     // console.log('modalIngredientOpen is ', modalIngredientOpen);
     // console.log('action is ', action);
-    // console.log('location is ', location);
+    //     console.log('location is ', location);
     // }, [location]);
 
     return (
