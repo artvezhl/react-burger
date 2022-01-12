@@ -1,26 +1,19 @@
-import React, { ReactElement, SyntheticEvent, useEffect } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 
 import Feed from '../components/feed/feed';
-import { Route, useHistory, useLocation } from 'react-router-dom';
-import Modal from '../components/modal/modal';
-import { TLocationState } from '../components/app/app-types';
-import { OrderPage } from './order';
 import { WS_CONNECTION_CLOSED, WS_CONNECTION_START } from '../services/action-types/wsActionTypes';
 import { useDispatch } from 'react-redux';
-import Order from '../components/order/order';
+import feedStyles from '../components/feed/feed.module.css';
+import Orders from '../components/feed/orders/orders';
+import { useSelector } from '../services/hooks';
 
 export const OrderFeedPage = (): ReactElement => {
     const dispatch = useDispatch();
-    const history = useHistory();
-    const location: TLocationState = useLocation();
-    const action = history.action === 'PUSH' || history.action === 'REPLACE';
-    const modalOrderOpen = action && location.state && location.state.background;
-
-    useEffect(() => {
-        // console.log('modalOrderOpen is ', modalOrderOpen);
-        // console.log('modalOrderOpen action is ', action);
-        console.log('orderlocation is ', location);
-    }, [location]);
+    const orders = useSelector((store) => store.feed.orders);
+    const { total, totalToday } = useSelector((store) => ({
+        total: store.feed.total,
+        totalToday: store.feed.totalToday,
+    }));
 
     useEffect(() => {
         dispatch({ type: WS_CONNECTION_START, payload: { url: 'wss://norma.nomoreparties.space/orders/all' } });
@@ -29,21 +22,13 @@ export const OrderFeedPage = (): ReactElement => {
         };
     }, []);
 
-    const back = (e: KeyboardEvent | SyntheticEvent) => {
-        e.stopPropagation();
-        history.goBack();
-    };
-
     return (
-        <>
-            <Feed />
-            {modalOrderOpen && (
-                <Route path="/feed/:id">
-                    <Modal onClose={back}>
-                        <Order />
-                    </Modal>
-                </Route>
-            )}
-        </>
+        <div className={feedStyles.main}>
+            <h2 className="text text_type_main-large pt-10">Лента заказов</h2>
+            <div className={feedStyles.orders}>
+                <Feed />
+                <Orders total={total} totalToday={totalToday} orders={orders} />
+            </div>
+        </div>
     );
 };

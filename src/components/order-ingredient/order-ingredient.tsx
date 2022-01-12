@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 
 import styles from './order-ingredient.module.css';
-import CircleIngredient from '../../circle-ingredient/circle-ingredient';
+import CircleIngredient from '../circle-ingredient/circle-ingredient';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 type TOrderIngredientProps = {

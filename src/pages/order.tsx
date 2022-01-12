@@ -1,7 +1,7 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 
 import styles from './order.module.css';
-import OrderIngredient from '../components/order/order-ingredient/order-ingredient';
+import OrderIngredient from '../components/order-ingredient/order-ingredient';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useParams } from 'react-router-dom';
 import { dataFunc, orderSumFunc, orderIngredients } from '../utils';

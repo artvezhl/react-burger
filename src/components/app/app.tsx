@@ -24,7 +24,7 @@ import { getUserInfo } from '../../services/actions/auth';
 import { getCookie } from '../../utils';
 import { getIngredients } from '../../services/actions/burger-ingredients';
 import { TLocationState } from './app-types';
-import Order from '../order/order';
+import Feed from '../feed/feed';
 
 const App = (): ReactElement => {
     const history = useHistory();
@@ -90,14 +90,14 @@ const App = (): ReactElement => {
                 {modalOpen && (
                     <Route path="/feed/:id">
                         <Modal onClose={back}>
-                            <Order />
+                            <OrderPage />
                         </Modal>
                     </Route>
                 )}
                 {modalOpen && (
                     <Route path="/profile/:id">
                         <Modal onClose={back}>
-                            <Order />
+                            <OrderPage />
                         </Modal>
                     </Route>
                 )}
