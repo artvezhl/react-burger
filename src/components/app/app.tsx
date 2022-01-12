@@ -24,6 +24,7 @@ import { getUserInfo } from '../../services/actions/auth';
 import { getCookie } from '../../utils';
 import { getIngredients } from '../../services/actions/burger-ingredients';
 import { TLocationState } from './app-types';
+import Order from '../order/order';
 
 const App = (): ReactElement => {
     const history = useHistory();
@@ -42,7 +43,7 @@ const App = (): ReactElement => {
     };
 
     const action = history.action === 'PUSH' || history.action === 'REPLACE';
-    const modalIngredientOpen = action && location.state && location.state.background;
+    const modalOpen = action && location.state && location.state.background;
 
     // useEffect(() => {
     // console.log('modalIngredientOpen is ', modalIngredientOpen);
@@ -54,7 +55,7 @@ const App = (): ReactElement => {
         <>
             <AppHeader />
             <main className={styles.main}>
-                <Switch location={modalIngredientOpen || location}>
+                <Switch location={modalOpen || location}>
                     <Route path="/" exact={true} component={HomePage} />
                     <ProtectedRoute path="/login" exact={true}>
                         <LoginPage />
@@ -79,10 +80,24 @@ const App = (): ReactElement => {
                     <Route path="/feed/:id" exact={true} component={OrderPage} />
                     <Route component={NotFoundPage} />
                 </Switch>
-                {modalIngredientOpen && (
+                {modalOpen && (
                     <Route path="/ingredients/:id">
                         <Modal onClose={back}>
                             <IngredientDetails />
+                        </Modal>
+                    </Route>
+                )}
+                {modalOpen && (
+                    <Route path="/feed/:id">
+                        <Modal onClose={back}>
+                            <Order />
+                        </Modal>
+                    </Route>
+                )}
+                {modalOpen && (
+                    <Route path="/profile/:id">
+                        <Modal onClose={back}>
+                            <Order />
                         </Modal>
                     </Route>
                 )}
