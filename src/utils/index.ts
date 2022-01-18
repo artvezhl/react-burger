@@ -1,26 +1,33 @@
-import {ChangeEvent, Dispatch, SetStateAction} from "react";
+import { ChangeEvent, Dispatch, SetStateAction } from 'react';
+import { format } from 'date-fns';
+import formatDistanceToNow from 'date-fns/formatDistanceToNow';
+import isToday from 'date-fns/isToday';
+import isYesterday from 'date-fns/isYesterday';
+import { ru } from 'date-fns/locale';
+import { TIngredient } from '../components/burger-ingredients/ingredient/ingredient-types';
+import { TFeedOrder } from '../components/feed/feed';
 
 type TForm = {
     email?: string;
     password?: string;
     name?: string;
     code?: string;
-}
+};
 
-type TFormHandler = (
-    e: ChangeEvent<HTMLInputElement>,
-    setForm: Dispatch<SetStateAction<any>>,
-    form: TForm
-) => void;
+type TFormHandler = (e: ChangeEvent<HTMLInputElement>, setForm: Dispatch<SetStateAction<any>>, form: TForm) => void;
 
 export const formHandler: TFormHandler = (e, setForm, form) => {
     setForm({ ...form, [e.target.name]: e.target.value });
 };
 
-export function setCookie(name: string, value: string, props: { path?: string; expires?: Date | string } = {}) {
+export const setCookie = (
+    name: string,
+    value: string,
+    props: { path?: string; expires?: Date | string } = {},
+): void => {
     props = {
-        path: '/',  //задаем корневой адрес для cookies
-        ...props
+        path: '/', //задаем корневой адрес для cookies
+        ...props,
     };
     let exp = props.expires;
     if (typeof exp == 'number' && exp) {
@@ -28,7 +35,7 @@ export function setCookie(name: string, value: string, props: { path?: string; e
         d.setTime(d.getTime() + exp * 1000);
         exp = props.expires = d;
     }
-    if (typeof exp  != "string") {
+    if (typeof exp != 'string') {
         if (exp && exp.toUTCString) {
             props.expires = exp.toUTCString();
         }
@@ -37,6 +44,7 @@ export function setCookie(name: string, value: string, props: { path?: string; e
     let updatedCookie = name + '=' + value;
     for (const propName in props) {
         updatedCookie += '; ' + propName;
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         const propValue = props[propName];
         if (propValue !== true) {
@@ -44,12 +52,67 @@ export function setCookie(name: string, value: string, props: { path?: string; e
         }
     }
     document.cookie = updatedCookie;
-}
+};
 
-export function getCookie(name: string) {
+export function getCookie(name: string): string | undefined {
     const matches = document.cookie.match(
         // eslint-disable-next-line
         new RegExp('(?:^|; )' + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)')
     );
     return matches ? decodeURIComponent(matches[1]) : undefined;
 }
+
+export const dataFunc = (date: string): string => {
+    let result = '';
+    const currentDate = new Date(date);
+    isToday(currentDate)
+        ? (result += 'Сегодня, ')
+        : isYesterday(currentDate)
+        ? (result += 'Вчера, ')
+        : (result += `${formatDistanceToNow(currentDate, { locale: ru })} назад, `);
+    return (result += `
+    ${format(new Date(currentDate), 'H:mm', { locale: ru })}
+    i-${format(new Date(currentDate), 'z', { locale: ru })} 
+  `);
+};
+
+export const orderSumFunc = (IDs: Array<string>, ingredients: Array<TIngredient>): number => {
+    let result = 0;
+    IDs.forEach((id: string) => {
+        const currentIgd = ingredients.find((ingredient: TIngredient) => ingredient._id === id);
+        if (currentIgd && currentIgd.type === 'bun') result += currentIgd.price * 2;
+        if (currentIgd && currentIgd.type !== 'bun') result += currentIgd.price;
+    });
+    return result;
+};
+
+export const orderIngredients = (
+    order: TFeedOrder | undefined,
+    ingredients: Array<TIngredient>,
+): Array<TIngredient> | null => {
+    if (order) {
+        const result = order.ingredients.reduce((arr: Array<TIngredient>, ingredientID) => {
+            for (const item of arr) {
+                if (item._id === ingredientID) {
+                    item.ingredientOrderCount += 1;
+                    return arr;
+                }
+            }
+            const currentIngredient = ingredients.find((ingredient: TIngredient) => ingredient._id === ingredientID);
+            if (currentIngredient) {
+                if (currentIngredient.type === 'bun') {
+                    currentIngredient.ingredientOrderCount += 2;
+                } else currentIngredient.ingredientOrderCount += 1;
+                arr.push(currentIngredient);
+            }
+
+            return arr;
+        }, []);
+
+        console.log(result);
+
+        return result;
+    }
+
+    return null;
+};

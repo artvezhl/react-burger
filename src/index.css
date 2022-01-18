@@ -6,10 +6,11 @@
     --accent: #4C4CFF;
     --background: #1C1C21;
     --rootPadding: 40px;
+    --success: #00CCCC;
 }
 
 ::-webkit-scrollbar { width: 8px; height: 3px;}
-::-webkit-scrollbar-button {  background-color: var(--grey); }
+/*::-webkit-scrollbar-button {  background-color: var(--grey); }*/
 ::-webkit-scrollbar-track {  background-color: var(--grey); }
 ::-webkit-scrollbar-track-piece { background-color: var(--grey);}
 ::-webkit-scrollbar-thumb { height: 50px; background-color: var(--text-dark); }

@@ -1,0 +1,40 @@
+.main {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 640px;
+    margin: 0 auto;
+}
+
+.number {
+    text-align: center;
+}
+
+.status {
+    color: var(--success);
+}
+
+.order {
+    height: 100%;
+}
+
+.ingredients {
+    height: calc(100vh - 220px);
+    max-height: 312px;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.data {
+    display: flex;
+    justify-content: space-between;
+}
+
+.price {
+    padding-left: 9px;
+    display: flex;
+    justify-content: center;
+}

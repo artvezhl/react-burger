@@ -1,0 +1,48 @@
+.main {
+    display: block;
+    background: #1C1C21;
+    border-radius: 40px;
+    text-decoration: none;
+    color: var(--text);
+}
+
+.order {
+    display: flex;
+}
+
+.date {
+    margin-left: auto;
+    text-align: right;
+}
+
+.content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.images {
+    display: flex;
+}
+
+.image {
+    position: absolute;
+    height: 64px;
+}
+
+.images > div {
+    margin-left: -16px;
+}
+
+.images > div:first-of-type {
+    margin-left: 0;
+}
+
+.price {
+    display: flex;
+    justify-content: center;
+}
+
+.price_icon {
+    padding-left: 9px;
+}

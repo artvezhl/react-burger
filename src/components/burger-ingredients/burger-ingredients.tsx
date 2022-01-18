@@ -1,13 +1,13 @@
-import React from "react";
-import {useDispatch, useSelector} from "react-redux";
+import React, { ReactElement } from 'react';
+import { useDispatch, useSelector } from '../../services/hooks';
 
-import ingredientsStyles from './burger-ingredients.module.css'
-import IngredientsTabs from "./ingredients-tabs/ingredients-tabs";
-import Ingredients from "./ingredients/ingredients";
-import { SET_ACTIVE_TAB } from "../../services/actions/burger-ingredients";
-import {CommonStateType} from "../../services/reducers/reducers-types";
+import ingredientsStyles from './burger-ingredients.module.css';
+import IngredientsTabs from './ingredients-tabs/ingredients-tabs';
+import Ingredients from './ingredients/ingredients';
+import { SET_ACTIVE_TAB } from '../../services/constants';
+import { CommonStateType } from '../../services/reducers/reducers-types';
 
-const BurgerIngredients = () => {
+const BurgerIngredients = (): ReactElement => {
     const { ingredients, isLoading, hasError, activeTab } = useSelector((state: CommonStateType) => ({
         ingredients: state.ingredients.ingredients,
         isLoading: state.ingredients.ingredientsRequest,
@@ -35,25 +35,28 @@ const BurgerIngredients = () => {
         dispatch({
             type: SET_ACTIVE_TAB,
             tab: mealType,
-        })
-    }
+        });
+    };
 
-    const ingredientsContent = hasError
-        ? <div className={`text text_type_main-medium ${ingredientsStyles.ingredients__loading}`}>Что-то пошло не так, перезагрузите страницу</div>
-        : !isLoading && !hasError && ingredients.length
-        ? <Ingredients data={ingredients} />
-        : <div className={`text text_type_main-large ${ingredientsStyles.ingredients__loading}`}>Здесь Вы увидите ингредиенты для бургера ...</div>;
+    const ingredientsContent = hasError ? (
+        <div className={`text text_type_main-medium ${ingredientsStyles.ingredients__loading}`}>
+            Что-то пошло не так, перезагрузите страницу
+        </div>
+    ) : !isLoading && !hasError && ingredients.length ? (
+        <Ingredients data={ingredients} />
+    ) : (
+        <div className={`text text_type_main-large ${ingredientsStyles.ingredients__loading}`}>
+            Здесь Вы увидите ингредиенты для бургера ...
+        </div>
+    );
 
     return (
         <section className={`${ingredientsStyles.ingredients} ml-5 mr-10 pt-10`}>
             <h2 className="text text_type_main-large pb-2">Соберите бургер</h2>
-            <IngredientsTabs
-                activeMeal={ activeTab }
-                changeMeal={ onTabClick }
-            />
-            { ingredientsContent }
+            <IngredientsTabs activeMeal={activeTab} changeMeal={onTabClick} />
+            {ingredientsContent}
         </section>
     );
-}
+};
 
 export default BurgerIngredients;

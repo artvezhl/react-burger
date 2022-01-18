@@ -1,0 +1,37 @@
+.inputs {
+    width: 480px;
+    margin: 120px 0 0 60px;
+}
+
+.inputs > div {
+    width: 100%;
+    padding-bottom: 24px;
+}
+
+.inputs > div > div {
+    width: 100%;
+}
+
+.input_isActive {
+    color: var(--text) !important;
+}
+
+.inputs input {
+    color: var(--text-dark);
+}
+
+.info_change {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.info_cancel {
+    color: var(--accent);
+    padding-right: 28px;
+    cursor: pointer;
+}
+
+.info_cancel:hover {
+    color: var(--text);
+}

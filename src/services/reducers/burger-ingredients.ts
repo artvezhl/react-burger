@@ -5,7 +5,16 @@ import {
     SET_ACTIVE_TAB,
     INCREASE_INGREDIENT_COUNT,
     DECREASE_INGREDIENT_COUNT,
-} from '../actions/burger-ingredients';
+} from '../constants';
+import { TIngredient } from '../../components/burger-ingredients/ingredient/ingredient-types';
+import { TBurgerIngredientsActions } from '../actions/burger-ingredients';
+
+type TIngredientsInitialState = {
+    ingredients: Array<TIngredient>;
+    ingredientsRequest: boolean;
+    ingredientsFailed: boolean;
+    activeTab: string;
+};
 
 const initialState = {
     ingredients: [],
@@ -14,7 +23,10 @@ const initialState = {
     activeTab: 'Булки',
 };
 
-export const ingredientsReducer = (state = initialState, action) => {
+export const ingredientsReducer = (
+    state = initialState,
+    action: TBurgerIngredientsActions,
+): TIngredientsInitialState => {
     switch (action.type) {
         case GET_INGREDIENTS: {
             return {
@@ -26,9 +38,10 @@ export const ingredientsReducer = (state = initialState, action) => {
         case GET_INGREDIENTS_SUCCESS: {
             return {
                 ...state,
-                ingredients: action.ingredients.map(ingredient => ({
+                ingredients: action.ingredients.map((ingredient) => ({
                     ...ingredient,
                     ingredientCount: 0,
+                    ingredientOrderCount: 0,
                 })),
                 ingredientsRequest: false,
                 ingredientsFailed: false,
@@ -44,38 +57,38 @@ export const ingredientsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 activeTab: action.tab,
-            }
+            };
         }
         case INCREASE_INGREDIENT_COUNT: {
             return {
                 ...state,
-                ingredients: state.ingredients.map(ingredient => {
+                ingredients: state.ingredients.map((ingredient: TIngredient) => {
                     if (ingredient._id === action.ingredientId) {
                         return {
                             ...ingredient,
-                            ingredientCount: ingredient.ingredientCount += 1,
-                        }
+                            ingredientCount: (ingredient.ingredientCount += 1),
+                        };
                     }
                     return ingredient;
-                })
-            }
+                }),
+            };
         }
         case DECREASE_INGREDIENT_COUNT: {
             return {
                 ...state,
-                ingredients: state.ingredients.map(ingredient => {
+                ingredients: state.ingredients.map((ingredient: TIngredient) => {
                     if (ingredient._id === action.ingredientId) {
                         return {
                             ...ingredient,
-                            ingredientCount: ingredient.ingredientCount -= 1,
-                        }
+                            ingredientCount: (ingredient.ingredientCount -= 1),
+                        };
                     }
                     return ingredient;
-                })
-            }
+                }),
+            };
         }
         default: {
             return state;
         }
     }
-}
+};

@@ -1,0 +1,26 @@
+.main {
+    display: flex;
+    position: relative;
+    justify-content: space-around;
+    width: 64px;
+    height: 64px;
+    border-radius: 100px;
+    border: 2px solid #801AB2;
+    background-color: var(--background);
+}
+
+.image {
+    position: absolute;
+    height: 64px;
+}
+
+.image_background {
+    background: var(--background);
+    opacity: 0.6;
+}
+
+.total_ingredients {
+    position: absolute;
+    padding-top: 27%;
+    z-index: 10;
+}

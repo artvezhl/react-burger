@@ -1,0 +1,18 @@
+.main {
+    max-height: calc(100vh - 88px);
+}
+
+.orders {
+    display: grid;
+    grid-template-columns: 1.03fr 1fr;
+    grid-gap: 60px;
+}
+
+.list {
+    max-height: calc(100vh - 220px);
+    overflow-y: scroll;
+}
+
+.list > div {
+    max-width: 584px;
+}

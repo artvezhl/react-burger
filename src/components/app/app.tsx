@@ -1,9 +1,10 @@
-import React, {SyntheticEvent, useEffect} from 'react';
-import {Switch, Route, useHistory, useLocation} from 'react-router-dom';
+import React, { ReactElement, SyntheticEvent, useEffect } from 'react';
 
-import AppHeader from "../app-header/app-header";
+import { Switch, Route, useHistory, useLocation } from 'react-router-dom';
+
+import AppHeader from '../app-header/app-header';
 import styles from './app.module.css';
-import ProtectedRoute from "../protected-route/ProtectedRoute";
+import ProtectedRoute from '../protected-route/ProtectedRoute';
 import {
     HomePage,
     LoginPage,
@@ -12,17 +13,20 @@ import {
     ForgotPasswordPage,
     ResetPasswordPage,
     ProfilePage,
-    Ingredient
-} from "../../pages";
-import Modal from "../modal/modal";
-import {useDispatch} from "react-redux";
-import IngredientDetails from "../ingredient-details/ingredient-details";
-import { getUserInfo } from "../../services/actions/auth";
-import {getCookie} from "../../utils";
-import {getIngredients} from "../../services/actions/burger-ingredients";
-import { TLocationState } from "./app-types";
+    Ingredient,
+    OrderFeedPage,
+    OrderPage,
+} from '../../pages';
+import Modal from '../modal/modal';
+import { useDispatch } from '../../services/hooks';
+import IngredientDetails from '../ingredient-details/ingredient-details';
+import { getUserInfo } from '../../services/actions/auth';
+import { getCookie } from '../../utils';
+import { getIngredients } from '../../services/actions/burger-ingredients';
+import { TLocationState } from './app-types';
+import Feed from '../feed/feed';
 
-function App() {
+const App = (): ReactElement => {
     const history = useHistory();
     const location: TLocationState = useLocation();
     const dispatch = useDispatch();
@@ -33,22 +37,26 @@ function App() {
         dispatch(getUserInfo(token));
     }, [dispatch]);
 
-    let back = (e: KeyboardEvent | SyntheticEvent) => {
+    const back = (e: KeyboardEvent | SyntheticEvent) => {
         e.stopPropagation();
         history.goBack();
     };
 
-    const action = history.action ==='PUSH' || history.action ==='REPLACE';
-    const modalIngredientOpen = action && location.state && location.state.background;
+    const action = history.action === 'PUSH' || history.action === 'REPLACE';
+    const modalOpen = action && location.state && location.state.background;
+
+    // useEffect(() => {
+    // console.log('modalIngredientOpen is ', modalIngredientOpen);
+    // console.log('action is ', action);
+    //     console.log('location is ', location);
+    // }, [location]);
 
     return (
         <>
-            <AppHeader/>
+            <AppHeader />
             <main className={styles.main}>
-                <Switch location={modalIngredientOpen  || location}>
-                    <Route path="/" exact={true}>
-                        <HomePage />
-                    </Route>
+                <Switch location={modalOpen || location}>
+                    <Route path="/" exact={true} component={HomePage} />
                     <ProtectedRoute path="/login" exact={true}>
                         <LoginPage />
                     </ProtectedRoute>
@@ -64,21 +72,38 @@ function App() {
                     <ProtectedRoute path="/profile" exact={true}>
                         <ProfilePage />
                     </ProtectedRoute>
-                    <Route path="/ingredients/:id" exact={true}>
-                        <Ingredient />
-                    </Route>
-                    <Route>
-                        <NotFoundPage />
-                    </Route>
+                    <ProtectedRoute path="/profile/orders" exact={true}>
+                        <ProfilePage />
+                    </ProtectedRoute>
+                    <Route path="/ingredients/:id" exact={true} component={Ingredient} />
+                    <Route path="/feed" exact={true} component={OrderFeedPage} />
+                    <Route path="/feed/:id" exact={true} component={OrderPage} />
+                    <Route component={NotFoundPage} />
                 </Switch>
-                {modalIngredientOpen && (<Route path="/ingredients/:id">
-                    <Modal onClose={back}>
-                        <IngredientDetails />
-                    </Modal>
-                </Route>)}
+                {modalOpen && (
+                    <Route path="/ingredients/:id">
+                        <Modal onClose={back}>
+                            <IngredientDetails />
+                        </Modal>
+                    </Route>
+                )}
+                {modalOpen && (
+                    <Route path="/feed/:id">
+                        <Modal onClose={back}>
+                            <OrderPage />
+                        </Modal>
+                    </Route>
+                )}
+                {modalOpen && (
+                    <Route path="/profile/:id">
+                        <Modal onClose={back}>
+                            <OrderPage />
+                        </Modal>
+                    </Route>
+                )}
             </main>
         </>
     );
-}
+};
 
 export default App;
