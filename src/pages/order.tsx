@@ -16,7 +16,8 @@ export const OrderPage = (): ReactElement | null => {
     const ingredients = useSelector((store) => store.ingredients.ingredients);
     const currentOrders = useSelector((store) => store.feed.orders);
     const dispatch = useDispatch();
-    const [currentOrder, setCurrentOrder] = useState<TFeedOrder>();
+    const [currentOrder, setCurrentOrder] = useState<TFeedOrder | null>();
+    const [isIngredientsCount, setIsIngredientsCount] = useState<boolean>(false);
     const { id } = useParams<TIngredientDetailsParams>();
     const [order, setOrder] = useState<TIngredient[]>();
 
@@ -26,6 +27,7 @@ export const OrderPage = (): ReactElement | null => {
 
     useEffect(() => {
         setCurrentOrder(currentOrders.filter((item: TFeedOrder) => item._id === id)[0]);
+        return () => setCurrentOrder(null);
     }, [currentOrders, id]);
 
     useEffect(() => {
@@ -36,8 +38,11 @@ export const OrderPage = (): ReactElement | null => {
     }, [dispatch]);
 
     useEffect(() => {
-        const ingredientsOfOrder = orderIngredients(currentOrder, ingredients);
-        if (ingredientsOfOrder && ingredientsOfOrder.length) setOrder(ingredientsOfOrder);
+        if (currentOrder && !isIngredientsCount) {
+            const ingredientsOfOrder = orderIngredients(currentOrder, ingredients);
+            if (ingredientsOfOrder && ingredientsOfOrder.length) setOrder(ingredientsOfOrder);
+            setIsIngredientsCount(true);
+        }
     }, [currentOrder]);
 
     return currentOrder ? (

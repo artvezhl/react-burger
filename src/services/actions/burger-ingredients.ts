@@ -10,6 +10,13 @@ import {
 import { AppThunk, AppDispatch } from '../thunk-types';
 import { TIngredient } from '../../components/burger-ingredients/ingredient/ingredient-types';
 
+const setIngredients = (ingredients: Array<TIngredient>) => {
+    return {
+        type: GET_INGREDIENTS_SUCCESS,
+        ingredients,
+    };
+};
+
 export interface IGetIngredients {
     readonly type: typeof GET_INGREDIENTS;
 }
@@ -55,10 +62,7 @@ export const getIngredients: AppThunk = () => (dispatch: AppDispatch) => {
         .then((res) => {
             if (res && res.ok) {
                 res.json().then((res) => {
-                    dispatch({
-                        type: GET_INGREDIENTS_SUCCESS,
-                        ingredients: res.data,
-                    });
+                    dispatch(setIngredients(res.data));
                 });
             } else {
                 dispatch({

@@ -24,7 +24,6 @@ import { getUserInfo } from '../../services/actions/auth';
 import { getCookie } from '../../utils';
 import { getIngredients } from '../../services/actions/burger-ingredients';
 import { TLocationState } from './app-types';
-import Feed from '../feed/feed';
 
 const App = (): ReactElement => {
     const history = useHistory();
@@ -44,12 +43,6 @@ const App = (): ReactElement => {
 
     const action = history.action === 'PUSH' || history.action === 'REPLACE';
     const modalOpen = action && location.state && location.state.background;
-
-    // useEffect(() => {
-    // console.log('modalIngredientOpen is ', modalIngredientOpen);
-    // console.log('action is ', action);
-    //     console.log('location is ', location);
-    // }, [location]);
 
     return (
         <>

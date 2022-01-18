@@ -18,6 +18,43 @@ import {
     SET_PASSWORD_RESET,
 } from '../constants';
 
+type TUserData = { email: string; name: string };
+
+const getUser = (user: TUserData) => {
+    return {
+        type: GET_USER_SUCCESS,
+        user,
+    };
+};
+
+const setPasswordReset = () => {
+    return {
+        type: SET_PASSWORD_RESET,
+        passwordIsReset: true,
+    };
+};
+
+const setNewUser = (user: TUserData) => {
+    return {
+        type: REGISTER_USER_SUCCESS,
+        user,
+    };
+};
+
+const authorizeUser = (user: TUserData) => {
+    return {
+        type: AUTHORIZE_USER_SUCCESS,
+        user,
+    };
+};
+
+const setUserLogout = () => {
+    return {
+        type: LOGOUT_SUCCESS,
+        user: null,
+    };
+};
+
 export interface IGetUserSuccess {
     readonly type: typeof GET_USER_SUCCESS;
     readonly user: {
@@ -131,10 +168,7 @@ export const getUserInfo: AppThunk = (token: string) => (dispatch: AppDispatch) 
     })
         .then((data) => {
             if (data.success) {
-                dispatch({
-                    type: GET_USER_SUCCESS,
-                    user: data.user,
-                });
+                dispatch(getUser(data.user));
             } else {
                 throw Error('Error user request');
             }
@@ -157,10 +191,7 @@ export const updateUserInfo: AppThunk = (form, token) => (dispatch: AppDispatch)
     })
         .then((data) => {
             if (data.success) {
-                dispatch({
-                    type: GET_USER_SUCCESS,
-                    user: data.user,
-                });
+                dispatch(getUser(data.user));
             } else {
                 throw Error('Error user request');
             }
@@ -183,12 +214,8 @@ export const forgotPassword: AppThunk = (email) => (dispatch: AppDispatch) => {
         }),
     })
         .then((res) => {
-            console.log('HERE and ', res);
             if (res.success && res.message === 'Reset email sent') {
-                dispatch({
-                    type: SET_PASSWORD_RESET,
-                    passwordIsReset: true,
-                });
+                dispatch(setPasswordReset());
             }
         })
         .catch((e) => console.log(e));
@@ -234,10 +261,7 @@ export const registerRequest: AppThunk = (form) => (dispatch: AppDispatch) => {
                         setCookie('accessToken', token);
                         localStorage.setItem('refreshToken', data.refreshToken);
                     }
-                    dispatch({
-                        type: REGISTER_USER_SUCCESS,
-                        user: data.user,
-                    });
+                    dispatch(setNewUser(data.user));
                 });
             } else {
                 dispatch({
@@ -277,11 +301,11 @@ export const loginRequest: AppThunk = (form) => (dispatch: AppDispatch) => {
                         setCookie('accessToken', token);
                         localStorage.setItem('refreshToken', data.refreshToken);
                     }
-                    dispatch({
-                        type: AUTHORIZE_USER_SUCCESS,
-                        user: data.user,
-                        // token: token,
-                    });
+                    dispatch(authorizeUser(data.user));
+                    // dispatch({
+                    //     type: AUTHORIZE_USER_SUCCESS,
+                    //     user: data.user,
+                    // });
                 });
             } else {
                 dispatch({
@@ -369,11 +393,7 @@ export const logoutRequest: AppThunk = () => (dispatch: AppDispatch) => {
                     if (data.success) {
                         setCookie('accessToken', '');
                         localStorage.removeItem('refreshToken');
-                        dispatch({
-                            type: LOGOUT_SUCCESS,
-                            user: null,
-                            // token: '',
-                        });
+                        dispatch(setUserLogout());
                     } else {
                         dispatch({
                             type: LOGOUT_FAILED,
