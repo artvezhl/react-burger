@@ -20,39 +20,18 @@ import {
 
 type TUserData = { email: string; name: string };
 
-const getUser = (user: TUserData) => {
-    return {
-        type: GET_USER_SUCCESS,
-        user,
-    };
-};
-
-const setPasswordReset = () => {
-    return {
-        type: SET_PASSWORD_RESET,
-        passwordIsReset: true,
-    };
-};
-
-const setNewUser = (user: TUserData) => {
-    return {
-        type: REGISTER_USER_SUCCESS,
-        user,
-    };
-};
-
-const authorizeUser = (user: TUserData) => {
-    return {
-        type: AUTHORIZE_USER_SUCCESS,
-        user,
-    };
-};
-
-const setUserLogout = () => {
-    return {
-        type: LOGOUT_SUCCESS,
-        user: null,
-    };
+export const actionCreators = {
+    getUser: (user: TUserData) => ({ type: GET_USER_SUCCESS, user }),
+    getUserFailed: () => ({ type: GET_USER_FAILED }),
+    refreshToken: () => ({ type: REFRESH_TOKEN }),
+    refreshTokenFailed: () => ({ type: REFRESH_TOKEN_FAILED }),
+    setPasswordReset: () => ({ type: SET_PASSWORD_RESET, passwordIsReset: true }),
+    setNewUser: (user: TUserData) => ({ type: REGISTER_USER_SUCCESS, user }),
+    setNewUserFailed: () => ({ type: REGISTER_USER_FAILED }),
+    authorizeUser: (user: TUserData) => ({ type: AUTHORIZE_USER_SUCCESS, user }),
+    authorizeUserFailed: () => ({ type: AUTHORIZE_USER_FAILED }),
+    setUserLogout: () => ({ type: LOGOUT_SUCCESS, user: null }),
+    logoutFailed: () => ({ type: LOGOUT_FAILED }),
 };
 
 export interface IGetUserSuccess {
@@ -168,15 +147,13 @@ export const getUserInfo: AppThunk = (token: string) => (dispatch: AppDispatch) 
     })
         .then((data) => {
             if (data.success) {
-                dispatch(getUser(data.user));
+                dispatch(actionCreators.getUser(data.user));
             } else {
                 throw Error('Error user request');
             }
         })
         .catch(() => {
-            dispatch({
-                type: GET_USER_FAILED,
-            });
+            dispatch(actionCreators.getUserFailed());
         });
 };
 
@@ -191,15 +168,13 @@ export const updateUserInfo: AppThunk = (form, token) => (dispatch: AppDispatch)
     })
         .then((data) => {
             if (data.success) {
-                dispatch(getUser(data.user));
+                dispatch(actionCreators.getUser(data.user));
             } else {
                 throw Error('Error user request');
             }
         })
         .catch(() => {
-            dispatch({
-                type: GET_USER_FAILED,
-            });
+            dispatch(actionCreators.getUserFailed());
         });
 };
 
@@ -215,7 +190,7 @@ export const forgotPassword: AppThunk = (email) => (dispatch: AppDispatch) => {
     })
         .then((res) => {
             if (res.success && res.message === 'Reset email sent') {
-                dispatch(setPasswordReset());
+                dispatch(actionCreators.setPasswordReset());
             }
         })
         .catch((e) => console.log(e));
@@ -261,25 +236,19 @@ export const registerRequest: AppThunk = (form) => (dispatch: AppDispatch) => {
                         setCookie('accessToken', token);
                         localStorage.setItem('refreshToken', data.refreshToken);
                     }
-                    dispatch(setNewUser(data.user));
+                    dispatch(actionCreators.setNewUser(data.user));
                 });
             } else {
-                dispatch({
-                    type: REGISTER_USER_FAILED,
-                });
+                dispatch(actionCreators.setNewUserFailed());
             }
         })
         .catch(() => {
-            dispatch({
-                type: REGISTER_USER_FAILED,
-            });
+            dispatch(actionCreators.setNewUserFailed());
         });
 };
 
 export const loginRequest: AppThunk = (form) => (dispatch: AppDispatch) => {
-    dispatch({
-        type: REFRESH_TOKEN,
-    });
+    dispatch(actionCreators.refreshToken());
 
     fetch(`${REQUEST_URL}/auth/login`, {
         method: 'POST',
@@ -301,29 +270,19 @@ export const loginRequest: AppThunk = (form) => (dispatch: AppDispatch) => {
                         setCookie('accessToken', token);
                         localStorage.setItem('refreshToken', data.refreshToken);
                     }
-                    dispatch(authorizeUser(data.user));
-                    // dispatch({
-                    //     type: AUTHORIZE_USER_SUCCESS,
-                    //     user: data.user,
-                    // });
+                    dispatch(actionCreators.authorizeUser(data.user));
                 });
             } else {
-                dispatch({
-                    type: AUTHORIZE_USER_FAILED,
-                });
+                dispatch(actionCreators.authorizeUserFailed());
             }
         })
         .catch(() => {
-            dispatch({
-                type: AUTHORIZE_USER_FAILED,
-            });
+            dispatch(actionCreators.authorizeUserFailed());
         });
 };
 
 export const refreshToken: AppThunk = () => (dispatch: AppDispatch) => {
-    dispatch({
-        type: REFRESH_TOKEN,
-    });
+    dispatch(actionCreators.refreshToken());
 
     const refreshToken = getCookie('refreshToken');
 
@@ -354,15 +313,11 @@ export const refreshToken: AppThunk = () => (dispatch: AppDispatch) => {
                     });
                 });
             } else {
-                dispatch({
-                    type: REFRESH_TOKEN_FAILED,
-                });
+                dispatch(actionCreators.refreshTokenFailed());
             }
         })
         .catch(() => {
-            dispatch({
-                type: REFRESH_TOKEN_FAILED,
-            });
+            dispatch(actionCreators.refreshTokenFailed());
         });
 };
 
@@ -393,18 +348,14 @@ export const logoutRequest: AppThunk = () => (dispatch: AppDispatch) => {
                     if (data.success) {
                         setCookie('accessToken', '');
                         localStorage.removeItem('refreshToken');
-                        dispatch(setUserLogout());
+                        dispatch(actionCreators.setUserLogout());
                     } else {
-                        dispatch({
-                            type: LOGOUT_FAILED,
-                        });
+                        dispatch(actionCreators.logoutFailed());
                     }
                 });
             }
         })
         .catch(() => {
-            dispatch({
-                type: LOGOUT_FAILED,
-            });
+            dispatch(actionCreators.logoutFailed());
         });
 };

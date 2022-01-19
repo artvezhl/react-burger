@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useEffect } from 'react';
+import React, { ReactElement, SyntheticEvent, useEffect } from 'react';
 
 import { Switch, Route, useHistory, useLocation } from 'react-router-dom';
 
@@ -25,7 +25,7 @@ import { getCookie } from '../../utils';
 import { getIngredients } from '../../services/actions/burger-ingredients';
 import { TLocationState } from './app-types';
 
-function App() {
+const App = (): ReactElement => {
     const history = useHistory();
     const location: TLocationState = useLocation();
     const dispatch = useDispatch();
@@ -42,16 +42,14 @@ function App() {
     };
 
     const action = history.action === 'PUSH' || history.action === 'REPLACE';
-    const modalIngredientOpen = action && location.state && location.state.background;
+    const modalOpen = action && location.state && location.state.background;
 
     return (
         <>
             <AppHeader />
             <main className={styles.main}>
-                <Switch location={modalIngredientOpen || location}>
-                    <Route path="/" exact={true}>
-                        <HomePage />
-                    </Route>
+                <Switch location={modalOpen || location}>
+                    <Route path="/" exact={true} component={HomePage} />
                     <ProtectedRoute path="/login" exact={true}>
                         <LoginPage />
                     </ProtectedRoute>
@@ -67,29 +65,38 @@ function App() {
                     <ProtectedRoute path="/profile" exact={true}>
                         <ProfilePage />
                     </ProtectedRoute>
-                    <Route path="/ingredients/:id" exact={true}>
-                        <Ingredient />
-                    </Route>
-                    <Route path="/feed" exact={true}>
-                        <OrderFeedPage />
-                    </Route>
-                    {/*<Route path="/feed/order" exact={true}>*/}
-                    {/*    <OrderPage />*/}
-                    {/*</Route>*/}
-                    <Route>
-                        <NotFoundPage />
-                    </Route>
+                    <ProtectedRoute path="/profile/orders" exact={true}>
+                        <ProfilePage />
+                    </ProtectedRoute>
+                    <Route path="/ingredients/:id" exact={true} component={Ingredient} />
+                    <Route path="/feed" exact={true} component={OrderFeedPage} />
+                    <Route path="/feed/:id" exact={true} component={OrderPage} />
+                    <Route component={NotFoundPage} />
                 </Switch>
-                {modalIngredientOpen && (
+                {modalOpen && (
                     <Route path="/ingredients/:id">
                         <Modal onClose={back}>
                             <IngredientDetails />
                         </Modal>
                     </Route>
                 )}
+                {modalOpen && (
+                    <Route path="/feed/:id">
+                        <Modal onClose={back}>
+                            <OrderPage />
+                        </Modal>
+                    </Route>
+                )}
+                {modalOpen && (
+                    <Route path="/profile/:id">
+                        <Modal onClose={back}>
+                            <OrderPage />
+                        </Modal>
+                    </Route>
+                )}
             </main>
         </>
     );
-}
+};
 
 export default App;

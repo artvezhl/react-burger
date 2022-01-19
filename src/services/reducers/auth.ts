@@ -37,12 +37,6 @@ const initialUserState = {
 
 export const authReducer = (state = initialUserState, action: TAuthUserActions): TAuthInitialState => {
     switch (action.type) {
-        // case GET_USER: {
-        //     return {
-        //         ...state,
-        //         userDataRequest: true
-        //     }
-        // }
         case GET_USER_SUCCESS: {
             return {
                 ...state,
