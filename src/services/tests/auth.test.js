@@ -19,7 +19,7 @@ const user = {
     email: 'artem@yandex.ru',
 };
 
-describe.skip('Auth actions', () => {
+describe.skip('Auth actions and reducer test', () => {
     describe('Auth action creators', () => {
         it('creates user request action correctly', () => {
             expect(actionCreators.getUser(user)).toEqual({ type: GET_USER_SUCCESS, user });

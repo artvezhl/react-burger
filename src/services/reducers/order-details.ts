@@ -37,7 +37,7 @@ export const orderDetailsReducer = (state = initialState, action: TOrderDetailsA
             };
         }
         case RESET_ORDER_NUMBER: {
-            return state;
+            return initialState;
         }
         default: {
             return state;
