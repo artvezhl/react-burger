@@ -20,7 +20,7 @@ const ingredientDetailsMock = {
     },
 };
 
-describe.skip('Ingredient details reducer test', () => {
+describe('Ingredient details reducer test', () => {
     test('Ingredient details reducer set details works incorrectly', () => {
         const state = ingredientDetailsReducer(
             {

@@ -10,7 +10,7 @@ const orderDetailsMock = {
     number: 43562,
 };
 
-describe.skip('Order details reducer test', () => {
+describe('Order details reducer test', () => {
     test('Order details reducer get order number works incorrectly', () => {
         const state = orderDetailsReducer(
             {

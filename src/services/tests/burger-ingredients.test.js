@@ -37,7 +37,7 @@ const ingredients = [
     },
 ];
 
-describe.skip('Burger-ingredients actions and reducer test', () => {
+describe('Burger-ingredients actions and reducer test', () => {
     describe('Burger-ingredients action creators', () => {
         it('creates request action correctly', () => {
             expect(actionCreators.fetchIngredientsRequest()).toEqual({ type: GET_INGREDIENTS });

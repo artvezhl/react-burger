@@ -56,7 +56,7 @@ const costructorMock = {
     IDs: ['60d3b41abdacab0026a733cd', '60d3b41abdacab0026a733c7'],
 };
 
-describe.skip('Constructor-list reducer test', () => {
+describe('Constructor-list reducer test', () => {
     test('Constructor-list reducer add ingredient works incorrectly', () => {
         const state = constructorReducer(
             { bun: {}, ingredients: [], total: 0, ingredientIDs: [] },
