@@ -1,4 +1,4 @@
-#[React Burger App](https://artvezhl.github.io/react-burger/index.html)
+#[React Burger App](https://artvezhl.github.io/react-burger/)
 
 ## Available Scripts
 

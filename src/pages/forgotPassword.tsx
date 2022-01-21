@@ -9,6 +9,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { forgotPassword } from '../services/actions/auth';
 import { useDispatch, useSelector } from 'react-redux';
 import { CommonStateType } from '../services/reducers/reducers-types';
+import { DEPLOY_URL } from '../services/constants';
 const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
 
 export const ForgotPasswordPage = (): ReactElement => {
@@ -57,13 +58,13 @@ export const ForgotPasswordPage = (): ReactElement => {
                 </form>
                 <p className={`${formStyles.auth__text} text text_type_main-default mt-4`}>
                     Вспомнили пароль?{' '}
-                    <Link to="/login" className={formStyles.auth__link}>
+                    <Link to={`/${DEPLOY_URL}login`} className={formStyles.auth__link}>
                         Войти
                     </Link>
                 </p>
             </AuthForm>
         </div>
     ) : (
-        <Redirect to={'/reset-password'} />
+        <Redirect to={`/${DEPLOY_URL}reset-password`} />
     );
 };

@@ -6,6 +6,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { logoutRequest } from '../services/actions/auth';
 import { useDispatch, useSelector } from 'react-redux';
 import { CommonStateType } from '../services/reducers/reducers-types';
+import { DEPLOY_URL } from '../services/constants';
 
 export const ProfilePage = (): ReactElement | null => {
     const user = useSelector((state: CommonStateType) => state.auth.user);
@@ -31,14 +32,17 @@ export const ProfilePage = (): ReactElement | null => {
         <div className={profileStyles.profile}>
             <ul className={`pl-5 ${profileStyles.profile__list}`}>
                 <li className={profileStyles.profile__item}>
-                    <Link to="/profile" className={`text text_type_main-medium ${activeRouteHandler('/profile')}`}>
+                    <Link
+                        to={`/${DEPLOY_URL}profile`}
+                        className={`text text_type_main-medium ${activeRouteHandler(`/${DEPLOY_URL}profile`)}`}
+                    >
                         Профиль
                     </Link>
                 </li>
                 <li className={profileStyles.profile__item}>
                     <Link
-                        to="/profile/orders"
-                        className={`text text_type_main-medium ${activeRouteHandler('/profile/orders')} ${
+                        to={`/${DEPLOY_URL}profile/orders`}
+                        className={`text text_type_main-medium ${activeRouteHandler(`/${DEPLOY_URL}profile/orders`)} ${
                             profileStyles.profile__link
                         }`}
                     >
@@ -48,7 +52,7 @@ export const ProfilePage = (): ReactElement | null => {
                 <li className={profileStyles.profile__item}>
                     <Link
                         onClick={logout}
-                        to="/"
+                        to={`/${DEPLOY_URL}`}
                         className={`text text_type_main-medium ${profileStyles.profile__link}`}
                     >
                         Выход

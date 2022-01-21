@@ -6,6 +6,7 @@ import ingredientStyles from './ingredient.module.css';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useLocation } from 'react-router-dom';
 import { TIngredientProps } from './ingredient-types';
+import { DEPLOY_URL } from '../../../services/constants';
 
 const Ingredient: FC<TIngredientProps> = ({ ingredient }) => {
     const [, ingredientRef] = useDrag({
@@ -17,7 +18,7 @@ const Ingredient: FC<TIngredientProps> = ({ ingredient }) => {
     return (
         <Link
             to={{
-                pathname: `/ingredients/${ingredient._id}`,
+                pathname: `/${DEPLOY_URL}ingredients/${ingredient._id}`,
                 state: { background: location },
             }}
             ref={ingredientRef}

@@ -3,6 +3,7 @@ import React, { FC } from 'react';
 import { Redirect, Route, useLocation } from 'react-router-dom';
 import { useSelector } from '../../services/hooks';
 import { CommonStateType } from '../../services/reducers/reducers-types';
+import { DEPLOY_URL } from '../../services/constants';
 
 type TProtectedRouteProps = { path: string; exact: boolean };
 
@@ -10,26 +11,19 @@ const ProtectedRoute: FC<TProtectedRouteProps> = ({ children, path, ...rest }) =
     const user = useSelector((state: CommonStateType) => state.auth.user);
     const location = useLocation();
 
-    // if (!user && path === '/profile/orders') {
-    //     return (
-    //         <Redirect
-    //             to={{
-    //                 pathname: '/login',
-    //             }}
-    //         />
-    //     );
-    // }
-
-    const profilePages: string = '/profile' || '/profile/orders';
+    const profilePages: string = `/${DEPLOY_URL}profile` || `/${DEPLOY_URL}profile/orders`;
 
     if (
         user &&
-        (path === '/login' || path === '/register' || path === '/forgot-password' || path === '/reset-password')
+        (path === `/${DEPLOY_URL}login` ||
+            path === `/${DEPLOY_URL}register` ||
+            path === `/${DEPLOY_URL}forgot-password` ||
+            path === `/${DEPLOY_URL}reset-password`)
     ) {
         return (
             <Redirect
                 to={{
-                    pathname: '/',
+                    pathname: `/${DEPLOY_URL}`,
                     state: location,
                 }}
             />
@@ -39,7 +33,9 @@ const ProtectedRoute: FC<TProtectedRouteProps> = ({ children, path, ...rest }) =
     return (
         <Route
             {...rest}
-            render={() => (!user && path === profilePages ? <Redirect to={{ pathname: '/login' }} /> : children)}
+            render={() =>
+                !user && path === profilePages ? <Redirect to={{ pathname: '/react-burger/login' }} /> : children
+            }
         />
     );
 };

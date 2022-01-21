@@ -5,7 +5,7 @@ import formStyles from '../components/auth-form/auth-form.module.css';
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, Redirect, useHistory } from 'react-router-dom';
 import { resetPassword } from '../services/actions/auth';
-import { SET_PASSWORD_RESET } from '../services/constants';
+import { DEPLOY_URL, SET_PASSWORD_RESET } from '../services/constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { CommonStateType } from '../services/reducers/reducers-types';
 
@@ -28,7 +28,7 @@ export const ResetPasswordPage = (): ReactElement => {
                     passwordIsReset: false,
                 });
                 history.replace({
-                    pathname: '/login',
+                    pathname: `/${DEPLOY_URL}login`,
                 });
             } catch (e) {
                 console.log(e);
@@ -75,13 +75,13 @@ export const ResetPasswordPage = (): ReactElement => {
                 </form>
                 <p className={`${formStyles.auth__text} text text_type_main-default mt-4`}>
                     Вспомнили пароль?{' '}
-                    <Link to="/login" className={formStyles.auth__link}>
+                    <Link to={`/${DEPLOY_URL}login`} className={formStyles.auth__link}>
                         Войти
                     </Link>
                 </p>
             </AuthForm>
         </div>
     ) : (
-        <Redirect to="/forgot-password" />
+        <Redirect to={`/${DEPLOY_URL}forgot-password`} />
     );
 };
