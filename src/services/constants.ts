@@ -1,6 +1,6 @@
 const REQUEST_URL = 'https://norma.nomoreparties.space/api' as const;
 const WS_URL = 'wss://norma.nomoreparties.space/orders' as const;
-const DEPLOY_URL = 'react-burger/';
+const DEPLOY_URL = process.env.PRODUCTION ? 'react-burger/' : '';
 
 const GET_USER_SUCCESS = 'GET_USER_SUCCESS' as const;
 const GET_USER_FAILED = 'GET_USER_FAILED' as const;

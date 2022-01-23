@@ -54,7 +54,6 @@ export const getOrderNumber: AppThunk = (orderIDs: Array<string>) => (dispatch: 
             if (res && res.ok) {
                 res.json().then((res) => {
                     dispatch(setOrderNumber(res.order.number));
-                    // return res.order.number;
                 });
             } else {
                 dispatch({

@@ -34,7 +34,7 @@ const ProtectedRoute: FC<TProtectedRouteProps> = ({ children, path, ...rest }) =
         <Route
             {...rest}
             render={() =>
-                !user && path === profilePages ? <Redirect to={{ pathname: '/react-burger/login' }} /> : children
+                !user && path === profilePages ? <Redirect to={{ pathname: `/${DEPLOY_URL}login` }} /> : children
             }
         />
     );
