@@ -24,7 +24,7 @@ import { getUserInfo } from '../../services/actions/auth';
 import { getCookie } from '../../utils';
 import { getIngredients } from '../../services/actions/burger-ingredients';
 import { TLocationState } from './app-types';
-import Feed from '../feed/feed';
+import { DEPLOY_URL } from '../../services/constants';
 
 const App = (): ReactElement => {
     const history = useHistory();
@@ -45,57 +45,51 @@ const App = (): ReactElement => {
     const action = history.action === 'PUSH' || history.action === 'REPLACE';
     const modalOpen = action && location.state && location.state.background;
 
-    // useEffect(() => {
-    // console.log('modalIngredientOpen is ', modalIngredientOpen);
-    // console.log('action is ', action);
-    //     console.log('location is ', location);
-    // }, [location]);
-
     return (
         <>
             <AppHeader />
             <main className={styles.main}>
                 <Switch location={modalOpen || location}>
-                    <Route path="/" exact={true} component={HomePage} />
-                    <ProtectedRoute path="/login" exact={true}>
+                    <Route path={`/${DEPLOY_URL}`} exact={true} component={HomePage} />
+                    <ProtectedRoute path={`/${DEPLOY_URL}login`} exact={true}>
                         <LoginPage />
                     </ProtectedRoute>
-                    <ProtectedRoute path="/register" exact={true}>
+                    <ProtectedRoute path={`/${DEPLOY_URL}register`} exact={true}>
                         <RegisterPage />
                     </ProtectedRoute>
-                    <ProtectedRoute path="/forgot-password" exact={true}>
+                    <ProtectedRoute path={`/${DEPLOY_URL}forgot-password`} exact={true}>
                         <ForgotPasswordPage />
                     </ProtectedRoute>
-                    <ProtectedRoute path="/reset-password" exact={true}>
+                    <ProtectedRoute path={`/${DEPLOY_URL}reset-password`} exact={true}>
                         <ResetPasswordPage />
                     </ProtectedRoute>
-                    <ProtectedRoute path="/profile" exact={true}>
+                    <ProtectedRoute path={`/${DEPLOY_URL}profile`} exact={true}>
                         <ProfilePage />
                     </ProtectedRoute>
-                    <ProtectedRoute path="/profile/orders" exact={true}>
+                    <ProtectedRoute path={`/${DEPLOY_URL}profile/orders`} exact={true}>
                         <ProfilePage />
                     </ProtectedRoute>
-                    <Route path="/ingredients/:id" exact={true} component={Ingredient} />
-                    <Route path="/feed" exact={true} component={OrderFeedPage} />
-                    <Route path="/feed/:id" exact={true} component={OrderPage} />
+                    <Route path={`/${DEPLOY_URL}ingredients/:id`} exact={true} component={Ingredient} />
+                    <Route path={`/${DEPLOY_URL}feed`} exact={true} component={OrderFeedPage} />
+                    <Route path={`/${DEPLOY_URL}feed/:id`} exact={true} component={OrderPage} />
                     <Route component={NotFoundPage} />
                 </Switch>
                 {modalOpen && (
-                    <Route path="/ingredients/:id">
+                    <Route path={`/${DEPLOY_URL}ingredients/:id`}>
                         <Modal onClose={back}>
                             <IngredientDetails />
                         </Modal>
                     </Route>
                 )}
                 {modalOpen && (
-                    <Route path="/feed/:id">
+                    <Route path={`/${DEPLOY_URL}feed/:id`}>
                         <Modal onClose={back}>
                             <OrderPage />
                         </Modal>
                     </Route>
                 )}
                 {modalOpen && (
-                    <Route path="/profile/:id">
+                    <Route path={`/${DEPLOY_URL}profile/:id`}>
                         <Modal onClose={back}>
                             <OrderPage />
                         </Modal>

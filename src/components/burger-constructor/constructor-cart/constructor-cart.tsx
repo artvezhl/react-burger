@@ -41,7 +41,7 @@ const ConstructorCart: FC = () => {
         user
             ? openModal()
             : history.replace({
-                  pathname: '/login',
+                  pathname: 'login',
               });
     };
 

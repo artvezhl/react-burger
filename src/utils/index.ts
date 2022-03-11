@@ -86,10 +86,7 @@ export const orderSumFunc = (IDs: Array<string>, ingredients: Array<TIngredient>
     return result;
 };
 
-export const orderIngredients = (
-    order: TFeedOrder | undefined,
-    ingredients: Array<TIngredient>,
-): Array<TIngredient> | null => {
+export const orderIngredients = (order: TFeedOrder, ingredients: Array<TIngredient>): Array<TIngredient> | null => {
     if (order) {
         const result = order.ingredients.reduce((arr: Array<TIngredient>, ingredientID) => {
             for (const item of arr) {

@@ -10,6 +10,7 @@ import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-component
 import { Link, Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { CommonStateType } from '../services/reducers/reducers-types';
+import { DEPLOY_URL } from '../services/constants';
 
 export type TForm = {
     email: string;
@@ -71,13 +72,13 @@ export const RegisterPage = (): ReactElement => {
                     </form>
                     <p className={`${formStyles.auth__text} text text_type_main-default mt-4`}>
                         Уже зарегистрированы?{' '}
-                        <Link to="/login" className={formStyles.auth__link}>
+                        <Link to={`/${DEPLOY_URL}login`} className={formStyles.auth__link}>
                             Войти
                         </Link>
                     </p>
                 </AuthForm>
             ) : (
-                <Redirect to="/" />
+                <Redirect to={`/${DEPLOY_URL}`} />
             )}
         </div>
     );

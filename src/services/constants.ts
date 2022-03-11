@@ -1,5 +1,6 @@
 const REQUEST_URL = 'https://norma.nomoreparties.space/api' as const;
 const WS_URL = 'wss://norma.nomoreparties.space/orders' as const;
+const DEPLOY_URL = process.env.NODE_ENV !== 'production' ? '' : 'react-burger/';
 
 const GET_USER_SUCCESS = 'GET_USER_SUCCESS' as const;
 const GET_USER_FAILED = 'GET_USER_FAILED' as const;
@@ -39,6 +40,7 @@ const RESET_ORDER_NUMBER = 'RESET_ORDER_NUMBER' as const;
 export {
     REQUEST_URL,
     WS_URL,
+    DEPLOY_URL,
     GET_USER_SUCCESS,
     GET_USER_FAILED,
     SET_USER,

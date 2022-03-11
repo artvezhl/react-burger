@@ -8,6 +8,7 @@ import { dataFunc, orderSumFunc } from '../../../utils';
 import { TIngredient } from '../../burger-ingredients/ingredient/ingredient-types';
 import { TCircleIngredientProps } from '../../circle-ingredient/circle-ingredient';
 import { useSelector } from '../../../services/hooks';
+import { DEPLOY_URL } from '../../../services/constants';
 
 type TFeedOrderProps = {
     readonly id: string;
@@ -60,7 +61,7 @@ const FeedOrder: FC<TFeedOrderProps> = ({ id, number, name, date, ingredientsIDs
     return (
         <Link
             to={{
-                pathname: `/feed/${id}`,
+                pathname: `/${DEPLOY_URL}feed/${id}`,
                 state: { background: location },
             }}
             className={`pt-6 pb-6 pl-6 pr-6 mt-5 mr-4 ${styles.main}`}

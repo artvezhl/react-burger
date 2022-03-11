@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import { loginRequest } from '../services/actions/auth';
 import { useDispatch } from 'react-redux';
 import { TICons } from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/icons';
+import { DEPLOY_URL } from '../services/constants';
 
 export type TForm = {
     email: string;
@@ -75,13 +76,13 @@ export const LoginPage = (): ReactElement => {
                 </form>
                 <p className={`${formStyles.auth__text} text text_type_main-default mt-4`}>
                     Вы новый пользователь?
-                    <Link to="/register" className={formStyles.auth__link}>
+                    <Link to={`/${DEPLOY_URL}register`} className={formStyles.auth__link}>
                         Зарегистрироваться
                     </Link>
                 </p>
                 <p className={`${formStyles.auth__text} text text_type_main-default mt-4`}>
                     Забыли пароль?
-                    <Link to="/forgot-password" className={formStyles.auth__link}>
+                    <Link to={`/${DEPLOY_URL}forgot-password`} className={formStyles.auth__link}>
                         Восстановить пароль
                     </Link>
                 </p>

@@ -8,6 +8,13 @@ import {
 import { AppThunk, AppDispatch } from '../thunk-types';
 import { getCookie } from '../../utils';
 
+const setOrderNumber = (number: number) => {
+    return {
+        type: GET_ORDER_NUMBER_SUCCESS,
+        number,
+    };
+};
+
 export interface IGetOrderNumber {
     readonly type: typeof GET_ORDER_NUMBER;
 }
@@ -46,11 +53,7 @@ export const getOrderNumber: AppThunk = (orderIDs: Array<string>) => (dispatch: 
         .then((res) => {
             if (res && res.ok) {
                 res.json().then((res) => {
-                    dispatch({
-                        type: GET_ORDER_NUMBER_SUCCESS,
-                        number: res.order.number,
-                    });
-                    return res.order.number;
+                    dispatch(setOrderNumber(res.order.number));
                 });
             } else {
                 dispatch({
